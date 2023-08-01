@@ -7,14 +7,17 @@ import { getStorage } from 'firebase/storage';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCWneIK8i2gU3EKH5ex5VQGkWvKplQsiSY",
-  authDomain: "project-scran.firebaseapp.com",
-  projectId: "project-scran",
-  storageBucket: "project-scran.appspot.com",
-  messagingSenderId: "85753190958",
-  appId: "1:85753190958:web:d0197ce2953cbc98495dbf"
+  apiKey: "AIzaSyA2I7cq6ALajxVnegz8wx7Pv4bTIvDcnnU",
+  authDomain: "scran-vite-2b11a.firebaseapp.com",
+  projectId: "scran-vite-2b11a",
+  storageBucket: "scran-vite-2b11a.appspot.com",
+  messagingSenderId: "369718663107",
+  appId: "1:369718663107:web:00c9f91c826505b65b0f76",
+  measurementId: "G-JVS26LETH9"
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
