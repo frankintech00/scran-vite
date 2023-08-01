@@ -54,7 +54,7 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Vite Docs Test
+            Deploy Test with Github actions
           </a>
         </p>
         <img src={poweredBy} className="mx-auto my-8" alt="powered-by" />
