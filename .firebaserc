@@ -4,12 +4,7 @@
   },
   "targets": {
     "project-scran": {
-      "hosting": {
-        "scran-vite": [
-          "1:85753190958:web:d0197ce2953cbc98495dbf",
-          "scran-vite"
-        ]
-      }
+      "hosting": {}
     }
   },
   "etags": {}
