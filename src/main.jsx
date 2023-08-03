@@ -1,11 +1,19 @@
+// Importing necessary libraries, components and styles
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 
-ReactDOM.render(
+// Getting the root DOM node where the app will be attached
+const rootContainer = document.getElementById("root");
+
+// Creating a root for the app in concurrent mode
+const root = createRoot(rootContainer);
+
+// Rendering the app component into the root DOM node
+// Wrapping the app component with React.StrictMode for additional checks during development
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
