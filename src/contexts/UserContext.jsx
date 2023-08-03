@@ -131,6 +131,10 @@ export const UserProvider = ({ children }) => {
         setError(null);
         console.log("User created successfully.");
         console.log(user);
+        // Navigate to user home page
+        navigate("/user-home");
+        // Set loading to false
+        setLoading(false);
       }
     } catch (error) {
       // Handle any error from user creation process.
@@ -139,11 +143,6 @@ export const UserProvider = ({ children }) => {
       setTimeout(() => setError(null), 10000);
       console.error(error.code);
       console.error(error);
-    } finally {
-      // Navigate to user home page
-      navigate("/user-home");
-      // Set loading to false
-      setLoading(false);
     }
   };
 
@@ -156,15 +155,19 @@ export const UserProvider = ({ children }) => {
    * @throws Will throw an error if the `signInWithEmailAndPassword` promise is rejected.
    */
   const signIn = async (email, password) => {
+    // Set loading to true
+    setLoading(true);
     try {
       // Sign in user with email and password
       await signInWithEmailAndPassword(auth, email, password);
-      // Navigate to user home page
-      navigate("/user-home");
       // Set error to null and log user data
       setError(null);
       console.log("User Signed In Successfully.");
       console.log(user);
+      // Navigate to user home page
+      navigate("/user-home");
+      // Set loading to false
+      setLoading(false);
     } catch (error) {
       // Handle any error from sign in process.
       setError(getErrorMessage(error.code));
@@ -382,6 +385,7 @@ export const UserProvider = ({ children }) => {
     getErrorMessage,
     sendPasswordReset,
     loading,
+    setLoading,
   };
 
   /**
