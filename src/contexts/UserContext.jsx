@@ -68,7 +68,7 @@ export const UserProvider = ({ children }) => {
       return;
     }
 
-    // Set loading to true
+    // Set loading to true before starting the user creation process
     setLoading(true);
 
     try {
@@ -143,6 +143,9 @@ export const UserProvider = ({ children }) => {
       setTimeout(() => setError(null), 10000);
       console.error(error.code);
       console.error(error);
+    } finally {
+      // Set loading to false
+      setLoading(false);
     }
   };
 
@@ -154,12 +157,12 @@ export const UserProvider = ({ children }) => {
    * @param {string} password - The password of the user.
    * @throws Will throw an error if the `signInWithEmailAndPassword` promise is rejected.
    */
-  const signIn = async (email, password) => {
-    // Set loading to true
-    setLoading(true);
+  async function signIn(email, password) {
     try {
       // Sign in user with email and password
       await signInWithEmailAndPassword(auth, email, password);
+      // Set loading to true
+      setLoading(true);
       // Set error to null and log user data
       setError(null);
       console.log("User Signed In Successfully.");
@@ -177,7 +180,7 @@ export const UserProvider = ({ children }) => {
       console.error(error.code);
       console.error(error);
     }
-  };
+  }
 
   /**
    * Asynchronously updates a user's display name and optional image.
@@ -397,3 +400,5 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
+
+//TODO: change arrow function to function declaration
