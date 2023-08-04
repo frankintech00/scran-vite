@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { UserContext } from "../contexts/UserContext";
-import { Loading } from "../components";
+import { UserContext } from "../../contexts/UserContext";
+import { Loading } from "..";
 
-const Signup = () => {
+const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -132,4 +132,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUp;

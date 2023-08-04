@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { UserContext } from "../contexts/UserContext";
-import { Loading } from "../components";
+import { UserContext } from "../../contexts/UserContext";
+import { ErrorMessage, Loading } from "..";
 
-function LoginPage() {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,6 +12,7 @@ function LoginPage() {
 
   return (
     <div className="flex flex-col items-center h-screen mt-10 text-primary">
+      <ErrorMessage />
       {loading ? (
         <Loading />
       ) : (
@@ -84,4 +85,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default Login;

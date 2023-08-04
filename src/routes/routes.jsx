@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes as Router } from "react-router-dom";
-import { LoginPage, Signup, ForgotUpdatePassword, UserHome } from "../pages";
+import { Login, SignUp, ForgotUpdatePassword } from "../components";
+import UserHome from "../pages/UserHome";
 import ProtectedRoute from "./protectedRoutes";
 import { Loading } from "../components";
 /**
@@ -16,9 +17,9 @@ function AppRoutes() {
   return (
     <Router>
       {/* Default route that renders the HomePage  */}
-      <Route path="/" element={<LoginPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/sign-up" element={<Signup />} />
+      <Route path="/" element={<Login />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/sign-up" element={<SignUp />} />
       <Route path="/forgot-password" element={<ForgotUpdatePassword />} />
       <Route path="/loading" element={<Loading />} />
       <Route
