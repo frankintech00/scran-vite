@@ -2,31 +2,30 @@
  * @file This file provides user context for the application and includes functions for user authentication.
  */
 
-// Firebase and React imports
 // Importing necessary hooks from React
 import { createContext, useEffect, useState } from "react";
 
 // Importing navigation hook from React Router
 import { useNavigate } from "react-router-dom";
 
+// Importing Firebase configuration
+import { db, storage, auth } from "../services/firebase";
+
 // Importing Firebase authentication functions
 import {
-  GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
   getAuth,
   onAuthStateChanged,
   sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
   updateProfile,
+  signOut,
 } from "firebase/auth";
 
 // Importing Firebase storage functions
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
-// Importing Firebase configuration
-import { db, storage, auth } from "../services/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // Importing error handling function
 import getErrorMessage from "../helpers/errorHandling";
@@ -34,10 +33,18 @@ import getErrorMessage from "../helpers/errorHandling";
 // Creating UserContext
 export const UserContext = createContext();
 
-// Creating UserProvider component
+/**
+ * UserProvider component provides user authentication state and related functions to its children components.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The child components to be wrapped by the UserProvider.
+ * @returns {ReactNode} The wrapped child components with access to user authentication state and functions.
+ */
 export const UserProvider = ({ children }) => {
   // Setting up state for user, loading, and error
   const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -55,24 +62,22 @@ export const UserProvider = ({ children }) => {
    * @param {File} image - The profile image of the new user.
    * @throws Will throw an error if the `createUserWithEmailAndPassword` promise is rejected.
    */
-  const createUser = async (
+  async function createUser(
     email,
     password,
     displayName,
     confirmPassword,
     image
-  ) => {
+  ) {
     // Check if password matches confirmed password
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
 
-    // Set loading to true before starting the user creation process
     setLoading(true);
 
     try {
-      // Create user with email and password
       const { user } = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -80,74 +85,47 @@ export const UserProvider = ({ children }) => {
       );
 
       if (user) {
-        // If an image is provided
         if (image) {
-          // Create a reference to the storage location
           const storageRef = ref(storage, `profile_pictures/${user.uid}`);
+          const uploadTask = uploadBytes(storageRef, image);
 
-          // Create a task to upload the image and get the download URL
-          const uploadImageToStorage = async (storageRef, image) => {
-            return new Promise((resolve, reject) => {
-              const uploadTask = uploadBytesResumable(storageRef, image);
-              uploadTask.on(
-                "state_changed",
-                (snapshot) => {},
-                (error) => {
-                  // handle the error
-                  reject(error);
-                },
-                () => {
-                  // Upload completed successfully get the downloadURL
-                  getDownloadURL(uploadTask.snapshot.ref).then(
-                    (downloadURL) => {
-                      resolve(downloadURL);
-                    }
-                  );
-                }
-              );
+          const uploadTaskSnapshot = await uploadTask;
+          if (uploadTaskSnapshot.state === "success") {
+            const downloadURL = await getDownloadURL(storageRef);
+
+            await updateProfile(user, {
+              displayName: displayName,
+              photoURL: downloadURL,
             });
-          };
-
-          const downloadURL = await uploadImageToStorage(storageRef, image);
-
-          // Update user profile with displayName and photoURL
-          await updateProfile(user, {
-            displayName: displayName,
-            photoURL: downloadURL,
-          });
+          }
         } else {
-          // Default photoURL if user doesn't provide one
           const defaultPhotoURL =
             "https://firebasestorage.googleapis.com/v0/b/project-scran.appspot.com/o/profile_pictures%2Fdefault-user.png?alt=media&token=77bba9bd-e471-4efe-b8b5-90e69133fe07";
 
-          // Update user profile with displayName and default photoURL
           await updateProfile(user, {
             displayName: displayName,
             photoURL: defaultPhotoURL,
           });
         }
 
-        // Set error to null and log user data
         setError(null);
+        setUser(user);
+        setIsLoggedIn(true);
+
         console.log("User created successfully.");
         console.log(user);
-        // Navigate to user home page
+
         navigate("/user-home");
-        // Set loading to false
-        setLoading(false);
       }
     } catch (error) {
-      // Handle any error from user creation process.
       setError(getErrorMessage(error.code));
-      // Remove error after a timeout
       setTimeout(() => setError(null), 10000);
       console.error(error.code);
       console.error(error);
     } finally {
-      // Set loading to false
       setLoading(false);
     }
-  };
+  }
 
   /**
    * Asynchronously signs in a user using an email and password.
@@ -158,27 +136,43 @@ export const UserProvider = ({ children }) => {
    * @throws Will throw an error if the `signInWithEmailAndPassword` promise is rejected.
    */
   async function signIn(email, password) {
+    // Set loading to true to display loading spinner
+    setLoading(true);
+
     try {
       // Sign in user with email and password
-      await signInWithEmailAndPassword(auth, email, password);
-      // Set loading to true
-      setLoading(true);
-      // Set error to null and log user data
-      setError(null);
-      console.log("User Signed In Successfully.");
-      console.log(user);
-      // Navigate to user home page
-      navigate("/user-home");
-      // Set loading to false
-      setLoading(false);
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+
+      if (user) {
+        // Set error to null and log user data
+        setError(null);
+
+        //console log user object
+        console.log("User Signed In Successfully.");
+        console.log(user);
+
+        // Set user state to user object
+        setUser(user);
+
+        // Set isLoggedIn to true
+        setIsLoggedIn(true);
+
+        // Navigate to user home page
+        navigate("/user-home");
+      }
     } catch (error) {
       // Handle any error from sign in process.
       setError(getErrorMessage(error.code));
+
       // Remove error after a timeout
       setTimeout(() => setError(null), 10000);
-      // Log error code and error
+
+      // Console log error code and error
       console.error(error.code);
       console.error(error);
+    } finally {
+      // Set loading to false
+      setLoading(false);
     }
   }
 
@@ -190,13 +184,19 @@ export const UserProvider = ({ children }) => {
    * @param {File} [image] - The new profile image of the user (optional).
    * @throws Will throw an error if the `updateProfile` or `uploadBytesResumable` promises are rejected.
    */
-  const updateUser = async (displayName, image) => {
+  async function updateUser(displayName, image) {
     const auth = getAuth();
     const user = auth.currentUser;
 
     // Check if user is not null
     if (user) {
       try {
+        // Set loading to true before starting the user update process
+        setLoading(true);
+
+        let photoURL =
+          "https://firebasestorage.googleapis.com/v0/b/project-scran.appspot.com/o/profile_pictures%2Fdefault-user.png?alt=media&token=77bba9bd-e471-4efe-b8b5-90e69133fe07";
+
         // If an image is provided
         if (image) {
           // Create a reference to the storage location
@@ -214,40 +214,28 @@ export const UserProvider = ({ children }) => {
             },
             async () => {
               // On successful upload to Storage, get the download URL
-              getDownloadURL(uploadTask.snapshot.ref).then(
-                async (downloadURL) => {
-                  // Update user profile with displayName and new photoURL
-                  await updateProfile(user, {
-                    displayName: displayName,
-                    photoURL: downloadURL,
-                  });
-                  // Navigate to user home page
-                  navigate("/user-home");
-                  // Set error to null and log user data
-                  setError(null);
-                  console.log("User profile updated successfully.");
-                  console.log(user);
-                }
-              );
+              photoURL = await getDownloadURL(uploadTask.snapshot.ref);
             }
           );
-        } else {
-          // Default photoURL if user doesn't provide one
-          const defaultPhotoURL =
-            "https://firebasestorage.googleapis.com/v0/b/project-scran.appspot.com/o/profile_pictures%2Fdefault-user.png?alt=media&token=77bba9bd-e471-4efe-b8b5-90e69133fe07";
-
-          // Update user profile with displayName and default photoURL
-          await updateProfile(user, {
-            displayName: displayName,
-            photoURL: defaultPhotoURL,
-          });
-          // Navigate to user home page
-          navigate("/user-home");
-          // Set error to null and log user data
-          setError(null);
-          console.log("User profile updated successfully.");
-          console.log(user);
         }
+
+        // Update user profile with displayName and photoURL
+        await updateProfile(user, {
+          displayName: displayName,
+          photoURL: photoURL,
+        });
+
+        // Reload user data
+        await user.reload();
+        setUser(user);
+
+        // Set error to null and log user data
+        setError(null);
+        console.log("User profile updated successfully.");
+        console.log(user);
+
+        // Navigate to user home page
+        navigate("/user-home");
       } catch (error) {
         // Handle any error from user updating process.
         setError(getErrorMessage(error.code));
@@ -256,9 +244,12 @@ export const UserProvider = ({ children }) => {
         // Log error code and error
         console.error(error.code);
         console.error(error);
+      } finally {
+        // Set loading to false
+        setLoading(false);
       }
     }
-  };
+  }
 
   /**
    * Asynchronously signs in a user using Google authentication.
@@ -266,15 +257,26 @@ export const UserProvider = ({ children }) => {
    * @async
    * @throws Will throw an error if the `signInWithPopup` promise is rejected.
    */
-  const signInWithGoogle = async () => {
+  async function signInWithGoogle() {
     // Instantiate a new GoogleAuthProvider object
     const provider = new GoogleAuthProvider();
 
     try {
+      // Set loading to true before starting the Google sign-in process
+      setLoading(true);
+
       // Sign in using a popup window
-      await signInWithPopup(auth, provider);
+      const { user } = await signInWithPopup(auth, provider);
+
+      // Set user state with the signed-in user data
+      setUser(user);
+
+      // Set isLoggedIn to true
+      setIsLoggedIn(true);
+
       // Navigate to user home page
       navigate("/user-home");
+
       // Set error to null and log user data
       setError(null);
       console.log("User Signed In with Google successfully.");
@@ -282,13 +284,18 @@ export const UserProvider = ({ children }) => {
     } catch (error) {
       // Handle any error from Google sign-in process
       setError(getErrorMessage(error.code));
+
       // Remove error after a timeout
       setTimeout(() => setError(null), 10000);
+
       // Log error code and error
       console.error(error.code);
       console.error(error);
+    } finally {
+      // Set loading to false
+      setLoading(false);
     }
-  };
+  }
 
   /**
    * Asynchronously sends a password reset email to a user.
@@ -298,13 +305,14 @@ export const UserProvider = ({ children }) => {
    * @returns {Promise<boolean>} A promise that resolves to true if the email was sent successfully, and false otherwise.
    * @throws Will throw an error if the `sendPasswordResetEmail` promise is rejected.
    */
-  const sendPasswordReset = async (email) => {
+  async function sendPasswordReset(email) {
     try {
       // Send password reset email
       await sendPasswordResetEmail(auth, email);
       // Set error to null and log success message
       setError(null);
       console.log("Password reset email sent.");
+      // Return true if email was sent successfully
       return true;
     } catch (error) {
       // Handle any error from the password reset email sending process
@@ -314,9 +322,10 @@ export const UserProvider = ({ children }) => {
       // Log error code and error
       console.error(error.code);
       console.error(error);
+      // Return false if email was not sent successfully
       return false;
     }
-  };
+  }
 
   /**
    * Asynchronously logs out a user.
@@ -331,13 +340,17 @@ export const UserProvider = ({ children }) => {
       await signOut(auth);
       // Set the user state to null
       setUser(null);
+      // Set isLoggedIn to false
+      setIsLoggedIn(false);
       // Navigate to home page
       navigate("/");
       // Set error to null and log success message
       setError(null);
+
       console.log("User Signed Out Successfully.");
       console.log(user);
     } catch (error) {
+      //TODO: where is the error message displayed?
       // Handle any error from the logout process
       setError(getErrorMessage(error.code));
       // Remove error after a timeout
@@ -378,17 +391,16 @@ export const UserProvider = ({ children }) => {
    */
   const providerValue = {
     user,
+    isLoggedIn,
     createUser,
     signIn,
     signInWithGoogle,
     updateUser,
+    sendPasswordReset,
     logout,
     error,
-    setError,
     getErrorMessage,
-    sendPasswordReset,
     loading,
-    setLoading,
   };
 
   /**
@@ -400,5 +412,3 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
-
-//TODO: change arrow function to function declaration
