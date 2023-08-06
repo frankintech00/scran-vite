@@ -87,17 +87,15 @@ export const UserProvider = ({ children }) => {
       if (user) {
         if (image) {
           const storageRef = ref(storage, `profile_pictures/${user.uid}`);
-          const uploadTask = uploadBytes(storageRef, image);
+          await uploadBytes(storageRef, image);
 
-          const uploadTaskSnapshot = await uploadTask;
-          if (uploadTaskSnapshot.state === "success") {
-            const downloadURL = await getDownloadURL(storageRef);
+          const downloadURL = await getDownloadURL(storageRef);
+          console.log("Download URL:", downloadURL);
 
-            await updateProfile(user, {
-              displayName: displayName,
-              photoURL: downloadURL,
-            });
-          }
+          await updateProfile(user, {
+            displayName: displayName,
+            photoURL: downloadURL,
+          });
         } else {
           const defaultPhotoURL =
             "https://firebasestorage.googleapis.com/v0/b/project-scran.appspot.com/o/profile_pictures%2Fdefault-user.png?alt=media&token=77bba9bd-e471-4efe-b8b5-90e69133fe07";
@@ -189,65 +187,65 @@ export const UserProvider = ({ children }) => {
     const user = auth.currentUser;
 
     // Check if user is not null
-    if (user) {
-      try {
-        // Set loading to true before starting the user update process
-        setLoading(true);
+    if (!user) {
+      console.error("User not authenticated.");
+      return;
+    }
 
-        let photoURL =
-          "https://firebasestorage.googleapis.com/v0/b/project-scran.appspot.com/o/profile_pictures%2Fdefault-user.png?alt=media&token=77bba9bd-e471-4efe-b8b5-90e69133fe07";
+    // Set photoURL to user's current photoURL
+    let photoURL = user.photoURL;
+    console.log("Initial photoURL:", photoURL);
 
-        // If an image is provided
-        if (image) {
-          // Create a reference to the storage location
-          const storageRef = ref(storage, `profile_pictures/${user.uid}`);
-          // Create a task to upload the image
-          const uploadTask = uploadBytesResumable(storageRef, image);
+    try {
+      // Set loading to true before starting the user update process
+      setLoading(true);
+      console.log("Starting user update process...");
 
-          // Listen for state changes, errors, and completion of the upload.
-          uploadTask.on(
-            "state_changed",
-            (snapshot) => {},
-            (error) => {
-              // Log any errors that occur during upload
-              console.error(error);
-            },
-            async () => {
-              // On successful upload to Storage, get the download URL
-              photoURL = await getDownloadURL(uploadTask.snapshot.ref);
-            }
-          );
-        }
+      // If an image is provided
+      if (image) {
+        console.log("Image provided. Uploading...");
+        // Create a reference to the storage location
+        const storageRef = ref(storage, `profile_pictures/${user.uid}`);
+        // Upload the image
+        await uploadBytes(storageRef, image);
+        console.log("Image uploaded successfully.");
 
-        // Update user profile with displayName and photoURL
-        await updateProfile(user, {
-          displayName: displayName,
-          photoURL: photoURL,
-        });
-
-        // Reload user data
-        await user.reload();
-        setUser(user);
-
-        // Set error to null and log user data
-        setError(null);
-        console.log("User profile updated successfully.");
-        console.log(user);
-
-        // Navigate to user home page
-        navigate("/user-home");
-      } catch (error) {
-        // Handle any error from user updating process.
-        setError(getErrorMessage(error.code));
-        // Remove error after a timeout
-        setTimeout(() => setError(null), 10000);
-        // Log error code and error
-        console.error(error.code);
-        console.error(error);
-      } finally {
-        // Set loading to false
-        setLoading(false);
+        // Get the download URL and update photoURL
+        photoURL = await getDownloadURL(storageRef);
+        console.log("New photoURL:", photoURL);
+      } else {
+        console.log("No new image provided. Using existing photoURL.");
       }
+
+      // Update user profile with displayName and updated photoURL
+      console.log("Updating user profile...");
+      await updateProfile(user, {
+        displayName: displayName,
+        photoURL: photoURL,
+      });
+      console.log("User profile updated.");
+
+      // Reload user data
+      await user.reload();
+      setUser(user);
+      console.log("User data reloaded.");
+
+      // Navigate to user home page
+      navigate("/user-home");
+      console.log("Navigating to user home page.");
+    } catch (error) {
+      // Handle any error from user updating process.
+      setError(getErrorMessage(error.code));
+      console.error("Error updating user:", error.code, error);
+      // Remove error after a timeout
+      setTimeout(() => {
+        setError(null);
+        console.log("Error message cleared.");
+      }, 10000);
+    } finally {
+      // Set loading to false
+      setLoading(false);
+      console.log("Loading set to false.");
     }
   }
 
