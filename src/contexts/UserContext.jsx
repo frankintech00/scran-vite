@@ -224,7 +224,7 @@ export const UserProvider = ({ children }) => {
         photoURL: photoURL,
       });
       console.log("User profile updated.");
-
+      console.log(user);
       // Reload user data
       await user.reload();
       setUser(user);
@@ -368,10 +368,11 @@ export const UserProvider = ({ children }) => {
    */
   useEffect(() => {
     // Subscribe to onAuthStateChanged event
-    // The observer receives a function that will be called every time the user login state changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       // Set the user state to the current user object
       setUser(currentUser);
+      // If currentUser is not null, it means the user is logged in
+      setIsLoggedIn(!!currentUser);
       // Set loading to false once we've received the auth state
       setLoading(false);
     });
@@ -381,7 +382,8 @@ export const UserProvider = ({ children }) => {
       // Unsubscribe the listener to prevent memory leaks
       unsubscribe();
     };
-  }, []); // Run once on component mount due to empty dependency array
+  }, []);
+  // Run once on component mount due to empty dependency array
 
   /**
    * The value prop for the UserContext.Provider.

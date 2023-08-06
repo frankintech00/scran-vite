@@ -6,6 +6,8 @@ import { UserContext } from "../contexts/UserContext";
 function UserHome() {
   const { user, logout, isLoggedIn } = useContext(UserContext);
 
+  console.log(user);
+
   //TODO: just temporary, will be replaced with a proper profile page
 
   return (
