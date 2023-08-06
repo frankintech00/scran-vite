@@ -1,6 +1,11 @@
 import React from "react";
 import { Route, Routes as Router } from "react-router-dom";
-import { Login, SignUp, ForgotUpdatePassword } from "../components";
+import {
+  Login,
+  SignUp,
+  ForgotUpdatePassword,
+  UpdateProfile,
+} from "../components";
 import UserHome from "../pages/UserHome";
 import ProtectedRoute from "./protectedRoutes";
 import { Loading } from "../components";
@@ -27,6 +32,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <UserHome />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/update-profile"
+        element={
+          <ProtectedRoute>
+            <UpdateProfile />
           </ProtectedRoute>
         }
       />

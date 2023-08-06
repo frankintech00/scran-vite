@@ -6,6 +6,7 @@ import HamburgerIcon from "./header/HamburgerIcon";
 import ForgotUpdatePassword from "./user/ForgotUpdatePassword";
 import Login from "./user/Login";
 import SignUp from "./user/SignUp";
+import UpdateProfile from "./user/UpdateProfile";
 
 export {
   Loading,
@@ -16,4 +17,5 @@ export {
   Login,
   SignUp,
   ErrorMessage,
+  UpdateProfile,
 };
