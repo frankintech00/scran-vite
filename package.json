@@ -5,7 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest --reporter verbose"
+    "test": "vitest"
   },
   "dependencies": {
     "firebase": "^10.1.0",
@@ -15,8 +15,11 @@
     "react-router-dom": "^6.14.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^14.0.0",
     "@vitejs/plugin-react": "^4.0.4",
     "daisyui": "^3.5.0",
+    "jsdom": "^22.1.0",
     "prettier": "^3.0.0",
     "prettier-plugin-tailwindcss": "^0.4.1",
     "vitawind": "^2.2.4",

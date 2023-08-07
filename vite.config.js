@@ -9,4 +9,10 @@ export default defineConfig({
     jsxFactory: "React.createElement",
     jsxFragment: "React.Fragment",
   },
+  test: {
+    environment: "jsdom",
+    setupFiles: ["./src/tests/setup.js"],
+    globals: true,
+    css: true,
+  },
 });
