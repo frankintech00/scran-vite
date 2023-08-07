@@ -10,6 +10,10 @@ export default defineConfig({
     jsxFragment: "React.Fragment",
   },
   test: {
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+    },
     environment: "jsdom",
     setupFiles: ["./src/tests/setup.js"],
     globals: true,
