@@ -6,9 +6,10 @@ import {
   ForgotUpdatePassword,
   UpdateProfile,
 } from "../components";
-import UserHome from "../pages/UserHome";
+import { UserHome, ErrorPage } from "../pages";
 import ProtectedRoute from "./protectedRoutes";
 import { Loading } from "../components";
+
 /**
  * AppRoutes function component
  *
@@ -43,6 +44,7 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route path="*" element={<ErrorPage />} />
     </Router>
   );
 }
