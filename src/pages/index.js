@@ -1,4 +1,4 @@
-import UserHome from "../pages";
-import ErrorPage from "../pages";
+import UserHome from "../pages/UserHome";
+import ErrorPage from "../pages/ErrorPage";
 
 export { UserHome, ErrorPage };
