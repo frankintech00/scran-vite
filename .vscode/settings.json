@@ -8,5 +8,6 @@
   },
   "editor.quickSuggestions": {
     "strings": true
-  }
+  },
+  "testing.automaticallyOpenPeekView": "never"
 }

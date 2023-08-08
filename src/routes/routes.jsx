@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes as Router } from "react-router-dom";
 import {
-  Login,
+  SignIn,
   SignUp,
   ForgotUpdatePassword,
   UpdateProfile,
@@ -22,8 +22,8 @@ function AppRoutes() {
   return (
     <Router>
       {/* Default route that renders the HomePage  */}
-      <Route path="/" element={<Login />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<SignIn />} />
+      <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/forgot-password" element={<ForgotUpdatePassword />} />
       <Route path="/loading" element={<Loading />} />
@@ -36,7 +36,7 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/update-profile"
+        path="/update-profile/:id"
         element={
           <ProtectedRoute>
             <UpdateProfile />

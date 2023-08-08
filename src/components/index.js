@@ -4,9 +4,13 @@ import Logo from "./common/Logo";
 import Header from "./header/Header";
 import HamburgerIcon from "./header/HamburgerIcon";
 import ForgotUpdatePassword from "./user/ForgotUpdatePassword";
-import Login from "./user/Login";
+import SignIn from "./user/SignIn";
 import SignUp from "./user/SignUp";
 import UpdateProfile from "./user/UpdateProfile";
+import NavMenu from "./header/NavMenu";
+import AvatarDropdown from "./header/AvatarDropdown";
+import SignInDropdown from "./header/SignInDropdown";
+import SearchInput from "./header/SearchInput";
 
 export {
   Loading,
@@ -14,8 +18,12 @@ export {
   Logo,
   HamburgerIcon,
   ForgotUpdatePassword,
-  Login,
+  SignIn,
   SignUp,
   ErrorMessage,
   UpdateProfile,
+  NavMenu,
+  AvatarDropdown,
+  SignInDropdown,
+  SearchInput,
 };

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { ErrorMessage, Loading } from "..";
 
-function Login() {
+function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -85,4 +85,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignIn;
