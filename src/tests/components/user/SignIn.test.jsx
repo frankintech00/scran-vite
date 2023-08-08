@@ -24,14 +24,8 @@ test("signs in with a mock username and password", async () => {
   const mockContextValue = {
     user: null,
     isLoggedIn: false,
-    createUser: vitest.fn(),
     signIn: mockSignIn,
-    signInWithGoogle: vitest.fn(),
-    updateUser: vitest.fn(),
-    sendPasswordReset: vitest.fn(),
-    logout: vitest.fn(),
     error: null,
-    getErrorMessage: vitest.fn(),
     loading: false,
   };
 
