@@ -1,21 +1,24 @@
 import { useState } from "react";
 import { FiDelete } from "react-icons/fi";
 
-function DirectionsList({ directions, setDirections }) {
+function DirectionsList({ recipe, setRecipe }) {
   const [directionInput, setDirectionInput] = useState("");
 
   const handleDirectionSubmit = (e) => {
     e.preventDefault();
     if (directionInput.trim() !== "") {
-      setDirections([...directions, directionInput]);
+      setRecipe({
+        ...recipe,
+        directions: [...recipe.directions, directionInput],
+      });
       setDirectionInput("");
     }
   };
 
   const handleDirectionDelete = (index) => {
-    const newDirections = [...directions];
+    const newDirections = [...recipe.directions];
     newDirections.splice(index, 1);
-    setDirections(newDirections);
+    setRecipe({ ...recipe, directions: newDirections });
   };
 
   return (
@@ -38,20 +41,21 @@ function DirectionsList({ directions, setDirections }) {
         Add Direction
       </button>
       <ol className="mt-2 space-y-2">
-        {directions.map((direction, index) => (
-          <li
-            key={index}
-            className="flex items-center justify-between p-2 rounded-lg bg-primary bg-opacity-5"
-          >
-            <span>{direction}</span>
-            <button
-              className="ml-6"
-              onClick={() => handleDirectionDelete(index)}
+        {recipe.directions &&
+          recipe.directions.map((direction, index) => (
+            <li
+              key={index}
+              className="flex items-center justify-between p-2 rounded-lg bg-primary bg-opacity-5"
             >
-              <FiDelete color="red" />
-            </button>
-          </li>
-        ))}
+              <span>{direction}</span>
+              <button
+                className="ml-6"
+                onClick={() => handleDirectionDelete(index)}
+              >
+                <FiDelete color="red" />
+              </button>
+            </li>
+          ))}
       </ol>
     </div>
   );

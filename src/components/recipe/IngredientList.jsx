@@ -1,21 +1,24 @@
 import { useState } from "react";
 import { FiDelete } from "react-icons/fi";
 
-function IngredientsList({ ingredients, setIngredients }) {
+function IngredientsList({ recipe, setRecipe }) {
   const [ingredientInput, setIngredientInput] = useState("");
 
   const handleIngredientSubmit = (e) => {
     e.preventDefault();
     if (ingredientInput.trim() !== "") {
-      setIngredients([...ingredients, ingredientInput]);
+      setRecipe({
+        ...recipe,
+        ingredients: [...recipe.ingredients, ingredientInput],
+      });
       setIngredientInput("");
     }
   };
 
   const handleIngredientDelete = (index) => {
-    const newIngredients = [...ingredients];
+    const newIngredients = [...recipe.ingredients];
     newIngredients.splice(index, 1);
-    setIngredients(newIngredients);
+    setRecipe({ ...recipe, ingredients: newIngredients });
   };
 
   return (
@@ -38,19 +41,20 @@ function IngredientsList({ ingredients, setIngredients }) {
         Add Ingredient
       </button>
       <ul className="mt-2 space-y-2">
-        {ingredients.map((ingredient, index) => (
-          <li
-            key={index}
-            className="flex items-center justify-between p-2 rounded-lg bg-primary bg-opacity-5"
-          >
-            <span>{ingredient}</span>
-            <FiDelete
-              color="red"
-              className="cursor-pointer"
-              onClick={() => handleIngredientDelete(index)}
-            />
-          </li>
-        ))}
+        {recipe.ingredients &&
+          recipe.ingredients.map((ingredient, index) => (
+            <li
+              key={index}
+              className="flex items-center justify-between p-2 rounded-lg bg-primary bg-opacity-5"
+            >
+              <span>{ingredient}</span>
+              <FiDelete
+                color="red"
+                className="cursor-pointer"
+                onClick={() => handleIngredientDelete(index)}
+              />
+            </li>
+          ))}
       </ul>
     </div>
   );

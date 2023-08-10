@@ -615,6 +615,9 @@ export const RecipeProvider = ({ children }) => {
 
       uploadTask.on(
         "state_changed",
+        (snapshot) => {
+          // You can use the snapshot to track the upload progress if needed
+        },
         (error) => {
           // Log the error and reject the promise
           console.log(error);

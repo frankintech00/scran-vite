@@ -11,11 +11,14 @@ import NavMenu from "./header/NavMenu";
 import AvatarDropdown from "./header/AvatarDropdown";
 import SignInDropdown from "./header/SignInDropdown";
 import SearchInput from "./header/SearchInput";
+import RecipeTitle from "./recipe/RecipeTitle";
 import ImageUpload from "./recipe/ImageUpload";
 import CategorySelection from "./recipe/CategorySelection";
+import RecipeDescription from "./recipe/RecipeDescription";
 import IngredientsList from "./recipe/IngredientList";
 import DirectionsList from "./recipe/DirectionsList";
 import RecipeInfo from "./recipe/RecipeInfo";
+import RecipeNotes from "./recipe/RecipeNotes";
 
 export {
   Loading,
@@ -31,9 +34,12 @@ export {
   AvatarDropdown,
   SignInDropdown,
   SearchInput,
+  RecipeTitle,
   ImageUpload,
+  RecipeDescription,
   CategorySelection,
   IngredientsList,
   DirectionsList,
   RecipeInfo,
+  RecipeNotes,
 };
