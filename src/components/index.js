@@ -11,6 +11,11 @@ import NavMenu from "./header/NavMenu";
 import AvatarDropdown from "./header/AvatarDropdown";
 import SignInDropdown from "./header/SignInDropdown";
 import SearchInput from "./header/SearchInput";
+import ImageUpload from "./recipe/ImageUpload";
+import CategorySelection from "./recipe/CategorySelection";
+import IngredientsList from "./recipe/IngredientList";
+import DirectionsList from "./recipe/DirectionsList";
+import RecipeInfo from "./recipe/RecipeInfo";
 
 export {
   Loading,
@@ -26,4 +31,9 @@ export {
   AvatarDropdown,
   SignInDropdown,
   SearchInput,
+  ImageUpload,
+  CategorySelection,
+  IngredientsList,
+  DirectionsList,
+  RecipeInfo,
 };

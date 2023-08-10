@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import Form from "../components/Form";
+import Form from "../../../components/sandbox/Form";
 
 describe("Form", () => {
   it("renders exactly two input text boxes", () => {

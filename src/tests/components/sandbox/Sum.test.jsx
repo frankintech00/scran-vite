@@ -1,4 +1,4 @@
-import { sum } from "../components/Sum";
+import { sum } from "../../../components/sandbox/Sum";
 
 describe("sum function", () => {
   it("adds two numbers correctly", () => {

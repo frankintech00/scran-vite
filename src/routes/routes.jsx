@@ -6,7 +6,12 @@ import {
   ForgotUpdatePassword,
   UpdateProfile,
 } from "../components";
-import { UserHome, ErrorPage } from "../pages";
+import {
+  UserHome,
+  ErrorPage,
+  CreateRecipePage,
+  ReadRecipePage,
+} from "../pages";
 import ProtectedRoute from "./protectedRoutes";
 import { Loading } from "../components";
 
@@ -28,6 +33,7 @@ function AppRoutes() {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/forgot-password" element={<ForgotUpdatePassword />} />
       <Route path="/loading" element={<Loading />} />
+      <Route path="/recipe/:id" element={<ReadRecipePage />} />
       <Route
         path="/user-home"
         element={
@@ -41,6 +47,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <UpdateProfile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/create-recipe"
+        element={
+          <ProtectedRoute>
+            <CreateRecipePage />
           </ProtectedRoute>
         }
       />
