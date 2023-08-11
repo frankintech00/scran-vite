@@ -16,7 +16,7 @@ import {
   ReadRecipeButtons,
   ReadRecipeReviews,
   ReadRecipeComments,
-  Loading,
+  ReadRecipeError,
 } from "../components";
 import { useParams, useLocation } from "react-router-dom";
 
@@ -39,7 +39,7 @@ function ReadRecipePage() {
   }, [id, getRecipe]);
 
   if (!recipe) {
-    return <div>Yer Maw</div>;
+    return <ReadRecipeError />;
   }
 
   const handleDeleteComment = async (comment) => {

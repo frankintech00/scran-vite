@@ -33,6 +33,7 @@ import ReadRecipeNotes from "./recipe/ReadRecipeNotes";
 import ReadRecipeButtons from "./recipe/ReadRecipeButtons";
 import ReadRecipeReviews from "./recipe/ReadRecipeReviews";
 import ReadRecipeComments from "./recipe/ReadRecipeComments";
+import ReadRecipeError from "./recipe/ReadRecipeError";
 
 export {
   Loading,
@@ -70,4 +71,5 @@ export {
   ReadRecipeButtons,
   ReadRecipeReviews,
   ReadRecipeComments,
+  ReadRecipeError,
 };

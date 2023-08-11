@@ -1,15 +1,20 @@
 import { Link } from "react-router-dom";
+import Cat from "../assets/cat.jpg";
 
-function ErrorPage() {
+const ErrorPage = () => {
   return (
-    <div className="flex flex-col justify-center items-center ">
-      <h1 className="text-8xl font-bold text-warning">404</h1>
-      <p className="text-4xl text-gray-700 mb-4">Page not found</p>
-      <Link to="/" className="text-blue-500 hover:underline text-2xl">
-        Back to home
+    <div className="flex flex-col items-center justify-top min-h-screen bg-primary bg-opacity-5 text-center shadow-xl rounded-lg py-10">
+      <h1 className="text-6xl font-bold text-warning">404</h1>
+      <h2 className="text-4xl font-semibold mb-4">Och Aye! Page No' Found!</h2>
+      <p className="text-xl mb-8">
+        Ye've wandered aff the path, laddie. There's nae page here!
+      </p>
+      <img src={Cat} alt="Scary Cat" className="w-1/2 mb-8" />
+      <Link to="/" className="text-2xl text-secondary hover:underline">
+        Return tae the Hame Page
       </Link>
     </div>
   );
-}
+};
 
 export default ErrorPage;
