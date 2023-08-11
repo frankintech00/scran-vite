@@ -19,6 +19,20 @@ import IngredientsList from "./recipe/IngredientList";
 import DirectionsList from "./recipe/DirectionsList";
 import RecipeInfo from "./recipe/RecipeInfo";
 import RecipeNotes from "./recipe/RecipeNotes";
+import ReadRecipeCategories from "./recipe/ReadRecipeCategories";
+import ReadRecipeTitle from "./recipe/ReadRecipeTitle";
+import ReadRecipeDescription from "./recipe/ReadRecipeDescription";
+import RecipeCreatorInfo from "./recipe/RecipeCreatorInfo";
+import ReadRecipeRating from "./recipe/ReadRecipeRating";
+import SocialShareButtons from "./recipe/SocialShareButtons";
+import ReadRecipeImage from "./recipe/ReadRecipeImage";
+import ReadRecipeInfo from "./recipe/ReadRecipeInfo";
+import ReadRecipeIngredients from "./recipe/ReadRecipeIngredients";
+import ReadRecipeDirections from "./recipe/ReadRecipeDirections";
+import ReadRecipeNotes from "./recipe/ReadRecipeNotes";
+import ReadRecipeButtons from "./recipe/ReadRecipeButtons";
+import ReadRecipeReviews from "./recipe/ReadRecipeReviews";
+import ReadRecipeComments from "./recipe/ReadRecipeComments";
 
 export {
   Loading,
@@ -42,4 +56,18 @@ export {
   DirectionsList,
   RecipeInfo,
   RecipeNotes,
+  SocialShareButtons,
+  ReadRecipeCategories,
+  ReadRecipeTitle,
+  ReadRecipeDescription,
+  RecipeCreatorInfo,
+  ReadRecipeRating,
+  ReadRecipeImage,
+  ReadRecipeInfo,
+  ReadRecipeIngredients,
+  ReadRecipeDirections,
+  ReadRecipeNotes,
+  ReadRecipeButtons,
+  ReadRecipeReviews,
+  ReadRecipeComments,
 };

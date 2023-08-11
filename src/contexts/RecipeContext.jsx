@@ -440,8 +440,8 @@ export const RecipeProvider = ({ children }) => {
         // Log the recipe data
         console.log("Recipe data:", docSnap.data());
 
-        // Return the recipe data
-        return docSnap.data();
+        // Return the recipe data, including the document ID
+        return { id: docSnap.id, ...docSnap.data() }; // Include the document ID
       } else {
         // Log that the recipe doesn't exist
         console.log("The recipe doesn't exist!");

@@ -3,6 +3,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import "@smastrom/react-rating/style.css";
 
 // Getting the root DOM node where the app will be attached
 const rootContainer = document.getElementById("root");
