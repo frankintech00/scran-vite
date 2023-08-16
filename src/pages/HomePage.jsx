@@ -1,8 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { RecipeContext } from "../contexts/RecipeContext";
 import { UserContext } from "../contexts/UserContext";
-import { RecipeCard, UserCard, NoUserCard } from "../components";
+import {
+  RecipeCard,
+  UserCard,
+  NoUserCard,
+  CategoryBadges,
+} from "../components";
 
 function HomePage() {
   const { recipes, fetchRecipes, fetchNextRecipes, hasMore } =
@@ -16,6 +20,7 @@ function HomePage() {
 
   return (
     <>
+      <CategoryBadges />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {isLoggedIn ? <UserCard user={user} /> : <NoUserCard />}
         {recipes.map((recipe) => (

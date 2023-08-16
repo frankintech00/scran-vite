@@ -55,7 +55,7 @@ function CreateRecipePage() {
   return (
     isLoggedIn && (
       <div className="flex flex-col items-center my-10 text-primary">
-        <div className="w-full max-w-screen-lg px-4 py-20 rounded-lg shadow-2xl bg-primary bg-opacity-5">
+        <div className="w-full max-w-screen-lg px-4 py-20 rounded-lg shadow-2xl bg-base-100">
           <h1 className="mb-6 text-3xl font-semibold text-center">
             Create a new recipe.
           </h1>

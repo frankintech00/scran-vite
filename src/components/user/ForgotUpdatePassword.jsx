@@ -12,7 +12,7 @@ function ForgotUpdatePassword() {
 
   return (
     <div className="flex flex-col items-center h-screen mt-10">
-      <div className="w-full max-w-md p-6 rounded-lg shadow-xl lg:max-w-xl">
+      <div className="w-full max-w-md p-6 rounded-lg shadow-2xl lg:max-w-xl">
         <h1 className="mb-6 text-3xl font-semibold text-center text-primary">
           Need a new password?
         </h1>

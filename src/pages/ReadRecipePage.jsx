@@ -48,7 +48,7 @@ function ReadRecipePage() {
   };
 
   return (
-    <article className="flex flex-col space-y-6 mx-auto bg-primary bg-opacity-5 rounded-lg p-6 text-primary max-w-screen-lg shadow-xl">
+    <article className="flex flex-col space-y-6 mx-auto rounded-lg p-6 text-primary max-w-screen-lg shadow-2xl">
       <ReadRecipeCategories categories={recipe ? recipe.category : []} />
 
       <div className="flex flex-wrap flex-col space-y-4 ">
