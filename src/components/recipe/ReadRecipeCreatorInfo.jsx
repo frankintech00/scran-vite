@@ -1,6 +1,6 @@
 import { BiUser } from "react-icons/bi";
 
-function RecipeCreatorInfo({ photoURL, displayName, createdAt }) {
+function ReadRecipeCreatorInfo({ photoURL, displayName, createdAt }) {
   const publishedDate = createdAt
     .toDate()
     .toLocaleString("en-US", {
@@ -41,4 +41,4 @@ function RecipeCreatorInfo({ photoURL, displayName, createdAt }) {
   );
 }
 
-export default RecipeCreatorInfo;
+export default ReadRecipeCreatorInfo;

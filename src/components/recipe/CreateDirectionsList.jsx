@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiDelete } from "react-icons/fi";
 
-function DirectionsList({ recipe, setRecipe }) {
+function CreateDirectionsList({ recipe, setRecipe }) {
   const [directionInput, setDirectionInput] = useState("");
 
   const handleDirectionSubmit = (e) => {
@@ -61,4 +61,4 @@ function DirectionsList({ recipe, setRecipe }) {
   );
 }
 
-export default DirectionsList;
+export default CreateDirectionsList;

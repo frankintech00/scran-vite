@@ -1,6 +1,6 @@
 import { CATEGORIES } from "../../constants/categories";
 
-function CategorySelection({ recipe, setRecipe }) {
+function CreateCategorySelection({ recipe, setRecipe }) {
   const handleCategoryChange = (e, category) => {
     if (e.target.checked) {
       setRecipe({
@@ -40,4 +40,4 @@ function CategorySelection({ recipe, setRecipe }) {
   );
 }
 
-export default CategorySelection;
+export default CreateCategorySelection;

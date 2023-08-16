@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ImageUpload({ onImageChange }) {
+function CreateImageUpload({ onImageChange }) {
   const [image, setImage] = useState(null);
   const [thumbUrl, setThumbUrl] = useState("");
 
@@ -32,4 +32,4 @@ function ImageUpload({ onImageChange }) {
   );
 }
 
-export default ImageUpload;
+export default CreateImageUpload;

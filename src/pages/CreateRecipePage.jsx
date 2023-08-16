@@ -3,14 +3,14 @@ import { useNavigate } from "react-router";
 import { RecipeContext } from "../contexts/RecipeContext";
 import { UserContext } from "../contexts/UserContext";
 import {
-  RecipeTitle,
-  CategorySelection,
-  ImageUpload,
-  RecipeInfo,
-  RecipeDescription,
-  IngredientsList,
-  DirectionsList,
-  RecipeNotes,
+  CreateRecipeTitle,
+  CreateCategorySelection,
+  CreateImageUpload,
+  CreateRecipeInfo,
+  CreateRecipeDescription,
+  CreateIngredientsList,
+  CreateDirectionsList,
+  CreateRecipeNotes,
 } from "../components";
 
 function CreateRecipePage() {
@@ -65,14 +65,14 @@ function CreateRecipePage() {
             className="w-10/12 space-y-4 form-control"
             onSubmit={(e) => e.preventDefault()}
           >
-            <RecipeTitle recipe={recipe} setRecipe={setRecipe} />
-            <ImageUpload onImageChange={(file) => setImage(file)} />{" "}
-            <CategorySelection recipe={recipe} setRecipe={setRecipe} />
-            <RecipeInfo recipe={recipe} setRecipe={setRecipe} />
-            <RecipeDescription recipe={recipe} setRecipe={setRecipe} />
-            <IngredientsList recipe={recipe} setRecipe={setRecipe} />
-            <DirectionsList recipe={recipe} setRecipe={setRecipe} />
-            <RecipeNotes recipe={recipe} setRecipe={setRecipe} />
+            <CreateRecipeTitle recipe={recipe} setRecipe={setRecipe} />
+            <CreateImageUpload onImageChange={(file) => setImage(file)} />{" "}
+            <CreateCategorySelection recipe={recipe} setRecipe={setRecipe} />
+            <CreateRecipeInfo recipe={recipe} setRecipe={setRecipe} />
+            <CreateRecipeDescription recipe={recipe} setRecipe={setRecipe} />
+            <CreateIngredientsList recipe={recipe} setRecipe={setRecipe} />
+            <CreateDirectionsList recipe={recipe} setRecipe={setRecipe} />
+            <CreateRecipeNotes recipe={recipe} setRecipe={setRecipe} />
             <button
               type="button"
               className="flex items-center justify-center w-10/12 mx-auto my-3 shadow-md btn btn-primary"

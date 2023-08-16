@@ -1,4 +1,4 @@
-function RecipeDescription({ recipe, setRecipe }) {
+function CreateRecipeDescription({ recipe, setRecipe }) {
   return (
     <div>
       <label className="label">
@@ -15,4 +15,4 @@ function RecipeDescription({ recipe, setRecipe }) {
   );
 }
 
-export default RecipeDescription;
+export default CreateRecipeDescription;

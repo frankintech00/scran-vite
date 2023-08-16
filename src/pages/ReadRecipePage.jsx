@@ -5,7 +5,7 @@ import {
   ReadRecipeCategories,
   ReadRecipeTitle,
   ReadRecipeDescription,
-  RecipeCreatorInfo,
+  ReadRecipeCreatorInfo,
   ReadRecipeRating,
   SocialShareButtons,
   ReadRecipeImage,
@@ -56,7 +56,7 @@ function ReadRecipePage() {
         <ReadRecipeTitle name={recipe ? recipe.recipeName : ""} />
         <ReadRecipeDescription description={recipe ? recipe.description : ""} />
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <RecipeCreatorInfo
+          <ReadRecipeCreatorInfo
             photoURL={recipe ? recipe.creatorPhotoURL : ""}
             displayName={recipe ? recipe.creatorDisplayName : ""}
             createdAt={recipe ? recipe.createdAt : new Date()}

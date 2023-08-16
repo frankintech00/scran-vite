@@ -1,4 +1,4 @@
-function RecipeNotes({ recipe, setRecipe }) {
+function CreateRecipeNotes({ recipe, setRecipe }) {
   return (
     <div>
       <label className="label">
@@ -15,4 +15,4 @@ function RecipeNotes({ recipe, setRecipe }) {
   );
 }
 
-export default RecipeNotes;
+export default CreateRecipeNotes;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiDelete } from "react-icons/fi";
 
-function IngredientsList({ recipe, setRecipe }) {
+function CreateIngredientsList({ recipe, setRecipe }) {
   const [ingredientInput, setIngredientInput] = useState("");
 
   const handleIngredientSubmit = (e) => {
@@ -60,4 +60,4 @@ function IngredientsList({ recipe, setRecipe }) {
   );
 }
 
-export default IngredientsList;
+export default CreateIngredientsList;

@@ -1,6 +1,6 @@
 import { DIFFICULTIES } from "../../constants/difficulties";
 
-function RecipeInfo({ recipe, setRecipe }) {
+function CreateRecipeInfo({ recipe, setRecipe }) {
   return (
     <div className="flex flex-wrap justify-between">
       <div className="w-full sm:w-1/2 lg:w-1/4 px-2">
@@ -77,4 +77,4 @@ function RecipeInfo({ recipe, setRecipe }) {
   );
 }
 
-export default RecipeInfo;
+export default CreateRecipeInfo;

@@ -11,18 +11,18 @@ import NavMenu from "./header/NavMenu";
 import AvatarDropdown from "./header/AvatarDropdown";
 import SignInDropdown from "./header/SignInDropdown";
 import SearchInput from "./header/SearchInput";
-import RecipeTitle from "./recipe/RecipeTitle";
-import ImageUpload from "./recipe/ImageUpload";
-import CategorySelection from "./recipe/CategorySelection";
-import RecipeDescription from "./recipe/RecipeDescription";
-import IngredientsList from "./recipe/IngredientList";
-import DirectionsList from "./recipe/DirectionsList";
-import RecipeInfo from "./recipe/RecipeInfo";
-import RecipeNotes from "./recipe/RecipeNotes";
+import CreateRecipeTitle from "./recipe/CreateRecipeTitle";
+import CreateImageUpload from "./recipe/CreateImageUpload";
+import CreateCategorySelection from "./recipe/CreateCategorySelection";
+import CreateRecipeDescription from "./recipe/CreateRecipeDescription";
+import CreateIngredientsList from "./recipe/CreateIngredientsList";
+import CreateDirectionsList from "./recipe/CreateDirectionsList";
+import CreateRecipeInfo from "./recipe/CreateRecipeInfo";
+import CreateRecipeNotes from "./recipe/CreateRecipeNotes";
 import ReadRecipeCategories from "./recipe/ReadRecipeCategories";
 import ReadRecipeTitle from "./recipe/ReadRecipeTitle";
 import ReadRecipeDescription from "./recipe/ReadRecipeDescription";
-import RecipeCreatorInfo from "./recipe/RecipeCreatorInfo";
+import ReadRecipeCreatorInfo from "./recipe/ReadRecipeCreatorInfo";
 import ReadRecipeRating from "./recipe/ReadRecipeRating";
 import SocialShareButtons from "./recipe/SocialShareButtons";
 import ReadRecipeImage from "./recipe/ReadRecipeImage";
@@ -49,19 +49,19 @@ export {
   AvatarDropdown,
   SignInDropdown,
   SearchInput,
-  RecipeTitle,
-  ImageUpload,
-  RecipeDescription,
-  CategorySelection,
-  IngredientsList,
-  DirectionsList,
-  RecipeInfo,
-  RecipeNotes,
+  CreateRecipeTitle,
+  CreateImageUpload,
+  CreateRecipeDescription,
+  CreateCategorySelection,
+  CreateIngredientsList,
+  CreateDirectionsList,
+  CreateRecipeInfo,
+  CreateRecipeNotes,
+  ReadRecipeCreatorInfo,
   SocialShareButtons,
   ReadRecipeCategories,
   ReadRecipeTitle,
   ReadRecipeDescription,
-  RecipeCreatorInfo,
   ReadRecipeRating,
   ReadRecipeImage,
   ReadRecipeInfo,
