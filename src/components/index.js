@@ -38,6 +38,7 @@ import ReadRecipeComments from "./recipe/ReadRecipeComments";
 import ReadRecipeError from "./recipe/ReadRecipeError";
 import RecipeCard from "./recipe/RecipeCard";
 import AverageRating from "./recipe/AverageRating";
+import CategoryBadges from "./common/CategoryBadges";
 
 export {
   Loading,
@@ -80,4 +81,5 @@ export {
   ReadRecipeError,
   RecipeCard,
   AverageRating,
+  CategoryBadges,
 };
