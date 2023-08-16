@@ -113,7 +113,7 @@ export const UserProvider = ({ children }) => {
         console.log("User created successfully.");
         console.log(user);
 
-        navigate("/user-home");
+        navigate("/");
       }
     } catch (error) {
       setError(getErrorMessage(error.code));
@@ -156,7 +156,7 @@ export const UserProvider = ({ children }) => {
         setIsLoggedIn(true);
 
         // Navigate to user home page
-        navigate("/user-home");
+        navigate("/");
       }
     } catch (error) {
       // Handle any error from sign in process.
@@ -231,7 +231,7 @@ export const UserProvider = ({ children }) => {
       console.log("User data reloaded.");
 
       // Navigate to user home page
-      navigate("/user-home");
+      navigate("/");
       console.log("Navigating to user home page.");
     } catch (error) {
       // Handle any error from user updating process.
@@ -273,7 +273,7 @@ export const UserProvider = ({ children }) => {
       setIsLoggedIn(true);
 
       // Navigate to user home page
-      navigate("/user-home");
+      navigate("/");
 
       // Set error to null and log user data
       setError(null);

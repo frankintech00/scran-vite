@@ -7,6 +7,8 @@ import ForgotUpdatePassword from "./user/ForgotUpdatePassword";
 import SignIn from "./user/SignIn";
 import SignUp from "./user/SignUp";
 import UpdateProfile from "./user/UpdateProfile";
+import UserCard from "./user/UserCard";
+import NoUserCard from "./user/NoUserCard";
 import NavMenu from "./header/NavMenu";
 import AvatarDropdown from "./header/AvatarDropdown";
 import SignInDropdown from "./header/SignInDropdown";
@@ -45,6 +47,8 @@ export {
   ForgotUpdatePassword,
   SignIn,
   SignUp,
+  UserCard,
+  NoUserCard,
   ErrorMessage,
   UpdateProfile,
   NavMenu,

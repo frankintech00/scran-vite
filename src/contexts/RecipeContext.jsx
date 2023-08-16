@@ -148,6 +148,7 @@ export const RecipeProvider = ({ children }) => {
 
         // Set the recipes data
         setRecipes(recipesData);
+        console.log(recipes);
 
         // Reset the error message
         setErrorMessage(null);

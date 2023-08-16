@@ -3,12 +3,9 @@ import { Link } from "react-router-dom";
 import { FiClock } from "react-icons/fi";
 import { Rating } from "@smastrom/react-rating";
 import { RecipeContext } from "../../contexts/RecipeContext";
+import truncateText from "../../helpers/truncateText";
 
 function RecipeCard({ recipe }) {
-  const totalTime = recipe.preparationTime + recipe.cookingTime;
-  const hours = Math.floor(totalTime / 60);
-  const minutes = totalTime % 60;
-
   const id = recipe.id ? recipe.id : recipe.objectID;
 
   const { fetchRecipesByCategory } = useContext(RecipeContext);
@@ -32,35 +29,38 @@ function RecipeCard({ recipe }) {
           />
         </Link>
       </figure>
-      <div className="card-body p-2 justify-around">
-        <div className="card-actions justify-start">
+      <div className="card-body p-2 justify-between">
+        <div className="card-actions">
           {recipe.category &&
             recipe.category.map((cat, index) => (
               <div
                 key={index}
-                className="badge badge-outline cursor-pointer"
+                className="badge badge-outline cursor-pointer badge-sm"
                 onClick={() => handleCategoryClick(cat)}
               >
                 {cat}
               </div>
             ))}
         </div>
+        <div className="card-actions">
+          <Link to={`/recipe/${recipe.id}`}>
+            <h2 className="card-title text-lg flex-wrap md:text-lg">
+              {recipe.recipeName}
+            </h2>
+          </Link>
+        </div>
+        <div className="card-actions">
+          <p className="text-xs">{truncateText(recipe.description, 20)}</p>
+        </div>
 
-        <Link to={`/recipe/${recipe.id}`} className="m-2">
-          <h2 className="card-title text-2xl flex-wrap md:text-xl">
-            {recipe.recipeName}
-          </h2>
-        </Link>
-
-        <div className="card-actions justify-between">
-          <div className="flex items-center space-x-1 text-lg md:text-base text-gray-500">
-            <FiClock />
-            <span>
-              {totalTime >= 60 ? `${hours} Hrs ` : ""}
-              {minutes} Mins
-            </span>
-          </div>
-          <Rating style={{ maxWidth: 120 }} value={3} readOnly />
+        <div className="card-actions">
+          {recipe.averageRating && recipe.averageRating !== 0 && (
+            <Rating
+              style={{ maxWidth: 80 }}
+              value={recipe.averageRating}
+              readOnly
+            />
+          )}
         </div>
       </div>
     </div>

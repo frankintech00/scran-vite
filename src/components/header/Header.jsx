@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   HamburgerIcon,
   AvatarDropdown,
@@ -6,16 +8,31 @@ import {
   NavMenu,
   Logo,
 } from "..";
-import { useContext } from "react";
 
 import { UserContext } from "../../contexts/UserContext";
+import { RecipeContext } from "../../contexts/RecipeContext";
 
 function Header() {
   const { isLoggedIn } = useContext(UserContext);
+  const { fetchRecipes } = useContext(RecipeContext);
+
+  const navigate = useNavigate();
+
+  const handleLogoClick = async () => {
+    try {
+      await fetchRecipes(); // 3. Fetch the recipes
+      navigate("/"); // 4. Then navigate to the root URL
+    } catch (error) {
+      console.error("Failed to fetch recipes:", error);
+    }
+  };
+
   return (
     <header className="w-full fixed inset-x-0 top-0 z-50 flex flex-wrap justify-around bg-base-100 shadow space-y-1 lg:space-y-0 p-2">
       <div className="w-10/12 order-2 lg:w-2/12 lg:order-1 flex justify-center items-center">
-        <Logo />
+        <div className="link" onClick={handleLogoClick}>
+          <Logo className="w-32 md:w-44" />
+        </div>
       </div>
       <div className="dropdown w-2/12 order-1 lg:hidden flex justify-center">
         <button tabIndex={0} className="btn btn-ghost">

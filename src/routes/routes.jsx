@@ -11,6 +11,7 @@ import {
   ErrorPage,
   CreateRecipePage,
   ReadRecipePage,
+  HomePage,
 } from "../pages";
 import ProtectedRoute from "./protectedRoutes";
 import { Loading } from "../components";
@@ -28,7 +29,7 @@ function AppRoutes() {
   return (
     <Router>
       {/* Default route that renders the HomePage  */}
-      <Route path="/" element={<SignIn />} />
+      <Route path="/" element={<HomePage />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/forgot-password" element={<ForgotUpdatePassword />} />
