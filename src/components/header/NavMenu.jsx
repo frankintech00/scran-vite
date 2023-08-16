@@ -1,6 +1,9 @@
 import { useContext, useRef, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { FaPlus, FaUtensils, FaHeart } from "react-icons/fa";
 
 import { UserContext } from "../../contexts/UserContext";
+import { RecipeContext } from "../../contexts/RecipeContext";
 
 function NavMenu({ isDropdown }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,7 +11,8 @@ function NavMenu({ isDropdown }) {
     ? "menu menu-sm dropdown-content mt-3 z-[1] shadow rounded-box w-52 p-2 bg-base-100 text-primary"
     : "menu menu-horizontal px-1 text-primary menu-lg flex";
 
-  const { isLoggedIn } = useContext(UserContext);
+  const { user, isLoggedIn } = useContext(UserContext);
+  const { fetchRecipesByUser } = useContext(RecipeContext);
 
   const navMenuRef = useRef(null);
 
@@ -26,41 +30,40 @@ function NavMenu({ isDropdown }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleYourRecipesClick = async () => {
+    try {
+      await fetchRecipesByUser(user.uid);
+    } catch (error) {
+      console.error("Failed to fetch user recipes:", error);
+    }
+  };
+
   return (
     <nav ref={navMenuRef}>
       <div>
         <ul className={`${navMenuClassnames}`}>
           {isLoggedIn && (
-            <li>
-              <a>Your Recipes</a>
-            </li>
+            <>
+              <li>
+                <Link onClick={handleYourRecipesClick}>
+                  <FaPlus className="mr-0.5" />
+                  Create Recipe
+                </Link>
+              </li>
+              <li>
+                <Link onClick={handleYourRecipesClick}>
+                  <FaUtensils className="mr-0.5" />
+                  Your Recipes
+                </Link>
+              </li>
+              <li>
+                <Link onClick={handleYourRecipesClick}>
+                  <FaHeart className="mr-0.5" />
+                  Your Favourites
+                </Link>
+              </li>
+            </>
           )}
-          <li tabIndex={0}>
-            <details>
-              <summary>Courses</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li tabIndex={0}>
-            <details>
-              <summary>Recipes</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
         </ul>
       </div>
     </nav>
