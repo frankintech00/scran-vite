@@ -538,8 +538,8 @@ export const RecipeProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      // Get a reference to the document to update
-      const docRef = doc(db, "recipes", id);
+      // Get a reference to the comments sub-collection for the specific recipe
+      const commentsRef = collection(db, "recipes", id, "comments");
 
       // Get the current timestamp
       const timestamp = Timestamp.now();
@@ -553,21 +553,35 @@ export const RecipeProvider = ({ children }) => {
         rating: rating,
       };
 
-      // Update the document with the new comment and rating
-      await updateDoc(docRef, {
-        comments: arrayUnion(newComment),
-        ratings: arrayUnion(rating),
-      });
+      // Add the new comment to the sub-collection
+      await addDoc(commentsRef, newComment);
 
       // Log the successful addition
       console.log("Comment and rating added successfully");
     } catch (e) {
       // Log the error message
-      console.error(getErrorMessage(e.code));
+      console.error("Error adding comment:", e);
     } finally {
       // Set loading state to false
       setLoading(false);
     }
+  };
+
+  const getComment = async (recipeId) => {
+    const commentsCollectionRef = collection(
+      db,
+      "recipes",
+      recipeId,
+      "comments"
+    );
+    const commentSnapshot = await getDocs(commentsCollectionRef);
+
+    const comments = [];
+    commentSnapshot.forEach((doc) => {
+      comments.push({ commentId: doc.id, ...doc.data() });
+    });
+
+    return comments;
   };
 
   /**
@@ -578,20 +592,9 @@ export const RecipeProvider = ({ children }) => {
    * @param {Object} comment - The comment to delete.
    * @throws Will throw an error if the `updateDoc` promise is rejected.
    */
-  const deleteComment = async (id, comment) => {
-    try {
-      // Get a reference to the document to update
-      const docRef = doc(db, "recipes", id);
-
-      // Update the document by removing the comment
-      await updateDoc(docRef, { comments: arrayRemove(comment) });
-
-      // Log the successful deletion
-      console.log("Comment deleted successfully");
-    } catch (e) {
-      // Log the error message
-      console.error(getErrorMessage(e.code));
-    }
+  const deleteComment = async (recipeId, commentId) => {
+    const commentDocRef = doc(db, "recipes", recipeId, "comments", commentId);
+    await deleteDoc(commentDocRef);
   };
 
   /**
@@ -647,6 +650,7 @@ export const RecipeProvider = ({ children }) => {
     updateRecipe, // Function to update a recipe
     deleteRecipe, // Function to delete a recipe
     addComment, // Function to add a comment to a recipe
+    getComment, // Function to get all comments for a recipe
     deleteComment, // Function to delete a comment from a recipe
     imageUpload, // Function to upload an image
     errorMessage, // The current error message

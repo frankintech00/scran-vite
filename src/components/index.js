@@ -34,6 +34,8 @@ import ReadRecipeButtons from "./recipe/ReadRecipeButtons";
 import ReadRecipeReviews from "./recipe/ReadRecipeReviews";
 import ReadRecipeComments from "./recipe/ReadRecipeComments";
 import ReadRecipeError from "./recipe/ReadRecipeError";
+import RecipeCard from "./recipe/RecipeCard";
+import AverageRating from "./recipe/AverageRating";
 
 export {
   Loading,
@@ -72,4 +74,6 @@ export {
   ReadRecipeReviews,
   ReadRecipeComments,
   ReadRecipeError,
+  RecipeCard,
+  AverageRating,
 };

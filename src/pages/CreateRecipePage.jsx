@@ -30,8 +30,6 @@ function CreateRecipePage() {
     ingredients: [],
     directions: [],
     notes: "",
-    comments: [],
-    ratings: [],
   });
 
   const [image, setImage] = useState(null); // Keep the image state here

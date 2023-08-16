@@ -14,16 +14,15 @@ import {
   ReadRecipeDirections,
   ReadRecipeNotes,
   ReadRecipeButtons,
-  ReadRecipeReviews,
   ReadRecipeComments,
   ReadRecipeError,
 } from "../components";
 import { useParams, useLocation } from "react-router-dom";
 
 function ReadRecipePage() {
-  const { getRecipe, addComment, deleteComment, deleteRecipe } =
+  const { getRecipe, deleteRecipe, addComment, getComment, deleteComment } =
     useContext(RecipeContext);
-  const { user } = useContext(UserContext);
+  const { user, isLoggedIn } = useContext(UserContext);
 
   const { id } = useParams();
   const location = useLocation();
@@ -62,11 +61,7 @@ function ReadRecipePage() {
             createdAt={recipe ? recipe.createdAt : new Date()}
           />
 
-          <ReadRecipeRating
-            ratings={recipe ? recipe.ratings : []}
-            getRecipe={getRecipe}
-            id={id}
-          />
+          <ReadRecipeRating recipe={recipe} />
 
           <SocialShareButtons
             recipeName={recipe.recipeName}
@@ -101,23 +96,17 @@ function ReadRecipePage() {
         deleteRecipe={deleteRecipe}
       />
 
-      <ReadRecipeReviews
-        recipe={recipe}
-        user={user}
-        handleDeleteComment={handleDeleteComment}
-      />
-
       <ReadRecipeComments
         user={user}
+        isLoggedIn={isLoggedIn}
         rating={rating}
         setRating={setRating}
         newComment={newComment}
         setNewComment={setNewComment}
+        getComment={getComment}
         addComment={addComment}
         deleteComment={deleteComment}
         id={id}
-        getRecipe={getRecipe}
-        setRecipe={setRecipe}
       />
 
       <div className="justify-between">

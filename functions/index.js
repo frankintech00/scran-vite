@@ -1,19 +1,45 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
-const {onRequest} = require("firebase-functions/v2/https");
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 const logger = require("firebase-functions/logger");
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+admin.initializeApp();
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
+const db = admin.firestore();
+
+exports.updateAverageRating = functions.firestore
+  .document("recipes/{recipeId}/comments/{commentId}")
+  .onWrite(async (change, context) => {
+    const recipeId = context.params.recipeId;
+
+    // Fetch all comments for the given recipe
+    const commentsSnapshot = await db
+      .collection("recipes")
+      .doc(recipeId)
+      .collection("comments")
+      .get();
+
+    // Extract ratings from comments
+    const ratings = commentsSnapshot.docs.map((doc) => doc.data().rating);
+
+    let avgRating = 0;
+
+    if (ratings.length) {
+      const totalRating = ratings.reduce((acc, curr) => acc + curr, 0);
+      avgRating = totalRating / ratings.length;
+    }
+
+    // Update the main recipe document with the new average rating
+    return db
+      .collection("recipes")
+      .doc(recipeId)
+      .update({
+        averageRating: avgRating.toFixed(2),
+        ratingCount: ratings.length,
+      });
+  });
+
+// Uncomment below if you want to test the default Hello World function
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//     logger.info("Hello logs!", {structuredData: true});
+//     response.send("Hello from Firebase!");
 // });
