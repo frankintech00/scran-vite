@@ -30,10 +30,10 @@ function AvatarDropdown() {
         <div>
           <ul
             tabIndex={0}
-            className="my-3 z-[1] p-6 shadow-xl dropdown-content rounded-box w-52 bg-base-100 menu menu-vertical"
+            className="my-3 z-[1] p-6 shadow-xl dropdown-content rounded-box w-72 bg-base-100 menu menu-vertical"
           >
             {isLoggedIn && (
-              <p className="p-2 text-base">
+              <p className="p-2 text-xl">
                 Hi - {user.displayName || user.email}
               </p>
             )}
@@ -41,14 +41,14 @@ function AvatarDropdown() {
             <li>
               <Link
                 to="/user-home"
-                className="justify-between"
+                className="justify-between text-xl"
                 onClick={handleLinkClick}
               >
                 Your Recipes
               </Link>
               <Link
                 to="/create-recipe"
-                className="justify-between"
+                className="justify-between text-xl"
                 onClick={handleLinkClick}
               >
                 Create a Recipe
@@ -56,7 +56,7 @@ function AvatarDropdown() {
               <div className="my-2 divider"></div>
               <Link
                 to={`/update-profile/${user.uid}`}
-                className="justify-between"
+                className="justify-between text-xl"
                 onClick={handleLinkClick}
               >
                 Edit Profile

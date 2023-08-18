@@ -25,11 +25,11 @@ function SearchInput() {
       <SearchBox
         searchAsYouType={true}
         submitIconComponent={() => (
-          <div className="btn btn-primary rounded-l-none">Search</div>
+          <div className="btn btn-primary rounded-l-none btn-sm">Search</div>
         )}
         classNames={{
           root: "w-full",
-          input: "input input-primary rounded-r-none",
+          input: "input input-primary rounded-r-none input-sm",
           reset: "hidden",
         }}
         placeholder="Search for a recipe..."

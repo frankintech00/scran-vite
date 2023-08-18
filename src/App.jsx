@@ -16,7 +16,7 @@ function App() {
         <RecipeProvider>
           <Header />
           {/* Applying global styles for the app */}
-          <div className="pt-36 md:pt-28 mx-5 mb-40 max-w-screen-xl xl:mx-auto">
+          <div className="pt-36 lg:pt-24 mx-5 mb-40 max-w-screen-xl xl:mx-auto">
             {/* Rendering the Routes for the app*/}
             <AppRoutes />
           </div>

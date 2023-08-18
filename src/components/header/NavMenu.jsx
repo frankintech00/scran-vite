@@ -45,7 +45,7 @@ function NavMenu({ isDropdown }) {
           {isLoggedIn && (
             <>
               <li>
-                <Link onClick={handleYourRecipesClick}>
+                <Link to="/create-recipe">
                   <FaPlus className="mr-0.5" />
                   Create Recipe
                 </Link>

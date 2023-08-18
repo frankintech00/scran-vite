@@ -20,22 +20,22 @@ const UpdateProfile = () => {
 
   return (
     <div className="flex flex-col items-center h-screen mt-10 text-primary">
-      <div className="w-full max-w-md p-6 rounded-lg shadow-2xl bg-primary bg-opacity-5 lg:max-w-xl">
+      <div className="w-full max-w-md p-6 rounded-lg shadow-2xl  lg:max-w-xl">
         <h1 className="mb-6 text-3xl font-semibold text-center">
           Edit Profile
         </h1>
         <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
           <div className="flex flex-col items-center space-y-6">
+            <div className="avatar">
+              <div className="avatar rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img src={thumbUrl} alt="Profile" height="20" />
+              </div>
+            </div>
             <label className="label">
               <span className="text-primary text-lg">
                 Choose a new profile picture
               </span>
             </label>
-            <div className="avatar">
-              <div className="w-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src={thumbUrl} alt="Profile" height="20" />
-              </div>
-            </div>
             <input
               className="file-input file-input-bordered file-input-primary w-full max-w-xs"
               type="file"

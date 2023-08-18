@@ -16,7 +16,7 @@ function SignIn() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="w-full max-w-md p-6 lg:max-w-xl rounded-lg shadow-2xl bg-primary bg-opacity-5">
+        <div className="w-full max-w-md p-6 lg:max-w-xl rounded-lg shadow-2xl ">
           <h1 className="mb-6 text-3xl font-semibold text-center">
             Sign in to your account.
           </h1>

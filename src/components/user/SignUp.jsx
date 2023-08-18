@@ -28,7 +28,7 @@ const SignUp = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div className="w-full max-w-md p-6 rounded-lg shadow-2xl bg-primary bg-opacity-5 lg:max-w-xl">
+        <div className="w-full max-w-md p-6 rounded-lg shadow-2xl lg:max-w-xl">
           <h1 className="mb-6 text-3xl font-semibold text-center">
             Create an Account
           </h1>

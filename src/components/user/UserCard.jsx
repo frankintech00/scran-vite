@@ -20,7 +20,7 @@ function UserCard() {
     <div className="card bg-base-100 shadow-2xl aspect-[3/4] text-primary ">
       <div className="card-body items-center justify-between">
         <div className="avatar">
-          <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          <div className="avatar rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
             <img src={user.photoURL} alt={user.displayName} />
           </div>
         </div>
