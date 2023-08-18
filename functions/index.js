@@ -33,13 +33,7 @@ exports.updateAverageRating = functions.firestore
       .collection("recipes")
       .doc(recipeId)
       .update({
-        averageRating: avgRating.toFixed(2),
+        averageRating: avgRating.toFixed(1),
         ratingCount: ratings.length,
       });
   });
-
-// Uncomment below if you want to test the default Hello World function
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//     logger.info("Hello logs!", {structuredData: true});
-//     response.send("Hello from Firebase!");
-// });
