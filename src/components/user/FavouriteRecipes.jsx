@@ -1,26 +1,33 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { UserContext } from "../../contexts/UserContext";
 
 const FavouriteRecipes = ({ recipeId }) => {
-  const { user, addToFavourites, removeFromFavourites } =
+  const { user, addUserFavourites, removeUserFavourites, isRecipeFavourited } =
     useContext(UserContext);
 
-  // Initialize local state for isFavourited
-  const [isFavourited, setIsFavourited] = useState(
-    user?.favourites?.includes(recipeId)
-  );
+  const [isFavourited, setIsFavourited] = useState(false);
+
+  useEffect(() => {
+    // Check if the recipe is already favourited
+    const checkFavouriteStatus = async () => {
+      const favourited = await isRecipeFavourited(user.uid, recipeId);
+      setIsFavourited(favourited);
+    };
+
+    if (user && user.uid) {
+      checkFavouriteStatus();
+    }
+  }, [user, recipeId, isRecipeFavourited]);
 
   const handleFavouriteClick = async () => {
-    // Log the current user.favourites array
-    console.log("Current favourites:", user.favourites);
-
+    // Toggle the favourited state and update in the database
     if (isFavourited) {
-      await removeFromFavourites(recipeId);
+      await removeUserFavourites(user.uid, recipeId);
       setIsFavourited(false);
       console.log("removed from favourites");
     } else {
-      await addToFavourites(recipeId);
+      await addUserFavourites(user.uid, recipeId);
       setIsFavourited(true);
       console.log("added to favourites");
     }

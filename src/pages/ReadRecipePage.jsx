@@ -16,6 +16,7 @@ import {
   ReadRecipeButtons,
   ReadRecipeComments,
   ReadRecipeError,
+  FavouriteRecipes,
 } from "../components";
 import { useParams, useLocation } from "react-router-dom";
 
@@ -108,6 +109,8 @@ function ReadRecipePage() {
         deleteComment={deleteComment}
         id={id}
       />
+
+      <FavouriteRecipes recipeId={id} />
 
       <div className="justify-between">
         <div className="flex align-middle space-x-2">
