@@ -24,6 +24,15 @@ import {
   signOut,
 } from "firebase/auth";
 
+import {
+  doc,
+  setDoc,
+  arrayUnion,
+  arrayRemove,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
+
 // Importing Firebase storage functions
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -105,6 +114,15 @@ export const UserProvider = ({ children }) => {
             photoURL: defaultPhotoURL,
           });
         }
+
+        // Create a new document in the 'users' collection
+        const userRef = doc(db, "users", user.uid);
+        await setDoc(userRef, {
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          favourites: [],
+        });
 
         setError(null);
         setUser(user);
@@ -360,6 +378,67 @@ export const UserProvider = ({ children }) => {
   };
 
   /**
+   * Asynchronously adds a recipeId to the user's favourites array.
+   *
+   * @async
+   * @param {string} userId - The user's UID.
+   * @param {string} recipeId - The recipeId to be added to the user's favourites.
+   * @throws Will throw an error if the Firestore update operation fails.
+   */
+  async function addUserFavourites(userId, recipeId) {
+    try {
+      const userRef = doc(db, "users", userId);
+      await updateDoc(userRef, {
+        favourites: arrayUnion(recipeId),
+      });
+      console.log("Added recipeId to favourites successfully.");
+    } catch (error) {
+      console.error("Error adding recipeId to favourites:", error);
+    }
+  }
+
+  /**
+   * Asynchronously removes a recipeId from the user's favourites array.
+   *
+   * @async
+   * @param {string} userId - The user's UID.
+   * @param {string} recipeId - The recipeId to be removed from the user's favourites.
+   * @throws Will throw an error if the Firestore update operation fails.
+   */
+  async function removeUserFavourites(userId, recipeId) {
+    try {
+      const userRef = doc(db, "users", userId);
+      await updateDoc(userRef, {
+        favourites: arrayRemove(recipeId),
+      });
+      console.log("Removed recipeId from favourites successfully.");
+    } catch (error) {
+      console.error("Error removing recipeId from favourites:", error);
+    }
+  }
+
+  const fetchUserFavourites = async (uid) => {
+    try {
+      const userRef = doc(db, "users", uid);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        return userData.favourites || [];
+      }
+    } catch (error) {
+      console.error("Error fetching user favourites:", error);
+    }
+
+    return []; // default return
+  };
+
+  const isRecipeFavourited = async (uid, recipeId) => {
+    const favourites = await fetchUserFavourites(uid);
+    return favourites.includes(recipeId);
+  };
+
+  /**
    * `useEffect` hook to listen for changes in the authentication state.
    * Sets user data upon state changes and controls the loading state.
    *
@@ -401,6 +480,10 @@ export const UserProvider = ({ children }) => {
     error,
     getErrorMessage,
     loading,
+    addUserFavourites,
+    removeUserFavourites,
+    fetchUserFavourites,
+    isRecipeFavourited,
   };
 
   /**
