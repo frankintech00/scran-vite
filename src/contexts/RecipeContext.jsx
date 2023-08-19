@@ -3,7 +3,13 @@
  */
 
 // Importing necessary hooks from React
-import { createContext, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 
 // Importing Firestore functions from Firebase
 import {
@@ -43,7 +49,7 @@ export const RecipeContext = createContext();
 // Creating RecipeProvider component
 export const RecipeProvider = ({ children }) => {
   // Getting user from UserContext
-  const { user } = useContext(UserContext);
+  const { user, fetchUserFavourites } = useContext(UserContext);
 
   // Setting up state for recipes, lastDoc, errorMessage, loading, and hasMore
   const [recipes, setRecipes] = useState([]);
@@ -113,6 +119,7 @@ export const RecipeProvider = ({ children }) => {
     } finally {
       // Set loading state to false
       setLoading(false);
+      setRecipeFetchType("DEFAULT");
     }
   }, []);
 
@@ -178,6 +185,7 @@ export const RecipeProvider = ({ children }) => {
         // Set the error message
         setErrorMessage(error.message);
       } finally {
+        setRecipeFetchType("DEFAULT");
         // Set loading state to false
         setLoading(false);
       }
@@ -263,7 +271,9 @@ export const RecipeProvider = ({ children }) => {
    * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
    * @throws Will throw an error if the `getDocs` promise is rejected or if no recipes were created by the user.
    */
-  const fetchRecipesByUser = useCallback(async (user, maxRecipes = 8) => {
+  const fetchRecipesByUser = useCallback(async (uid, maxRecipes = 8) => {
+    console.log(`Fetching recipes for UID: ${uid}`);
+
     // Set loading state to true
     setLoading(true);
 
@@ -271,7 +281,7 @@ export const RecipeProvider = ({ children }) => {
       // Create a query to get 'maxRecipes' number of recipes from the 'recipes' collection that were created by the user, ordered by 'createdAt' in descending order
       const q = query(
         collection(db, "recipes"),
-        where("userId", "==", user),
+        where("userId", "==", uid),
         orderBy("createdAt", "desc"),
         limit(maxRecipes)
       );
@@ -287,7 +297,6 @@ export const RecipeProvider = ({ children }) => {
 
       // If no recipes were created by the user, throw an error
       if (recipesData.length === 0) {
-        console.log(user);
         throw new Error("No recipes match your search. Please try again.");
       }
 
@@ -303,13 +312,9 @@ export const RecipeProvider = ({ children }) => {
       // Reset the error message
       setErrorMessage(null);
 
-      // Log the user and the recipes
-      console.log(user);
-      console.log(recipes);
-
       // Log the successful fetch
       console.log(
-        `Success: Recipes by user('${user.displayName}') fetched successfully.`
+        `Success: Recipes by user with UID: '${uid}' fetched successfully.`
       );
     } catch (error) {
       // Set the error message
@@ -317,7 +322,7 @@ export const RecipeProvider = ({ children }) => {
 
       // Log the error message
       console.error(
-        `Error fetching recipes by user('${user.displayName}'):`,
+        `Error fetching recipes by user with UID: '${uid}':`,
         error
       );
       console.error(getErrorMessage(error.code));
@@ -379,6 +384,7 @@ export const RecipeProvider = ({ children }) => {
     } finally {
       // Set loading state to false
       setLoading(false);
+      setRecipeFetchType("DEFAULT");
     }
   }, [lastDoc]);
 
@@ -648,6 +654,8 @@ export const RecipeProvider = ({ children }) => {
     });
   };
 
+
+
   // Define the value to be provided to all components in the RecipeContext
   const providerValue = {
     recipe, // The current recipe
@@ -672,6 +680,11 @@ export const RecipeProvider = ({ children }) => {
     setErrorMessage, // Function to update the error message
     loading, // Boolean indicating if the app is currently loading data
     setLoading, // Function to update the loading state
+    recipeFetchType, // The current recipe fetch type
+    setRecipeFetchType, // Function to update the recipe fetch type
+    selectedCategory, // The currently selected category
+    setSelectedCategory, // Function to update the currently selected category
+   
   };
 
   // Return the RecipeContext.Provider component with the providerValue

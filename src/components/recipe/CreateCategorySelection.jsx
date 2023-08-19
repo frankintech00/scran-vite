@@ -31,6 +31,7 @@ function CreateCategorySelection({ recipe, setRecipe }) {
               type="checkbox"
               value={category}
               onChange={(e) => handleCategoryChange(e, category)}
+              checked={recipe.category.includes(category)}
             />
             <label className="align-middle ml-4">{category}</label>
           </div>

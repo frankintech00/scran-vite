@@ -1,15 +1,31 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BiUser } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
+import { RecipeContext } from "../../contexts/RecipeContext";
 
 function AvatarDropdown() {
   const { user, isLoggedIn, logout } = useContext(UserContext);
+  const { setRecipeFetchType } = useContext(RecipeContext);
   const [isOpen, setIsOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleLinkClick = () => {
     setIsOpen(false);
   };
+
+  function handleYourRecipesClick() {
+    console.log("Clicked on Your Recipes!");
+    setRecipeFetchType("USER");
+    navigate("/");
+  }
+
+  function yourRecipesClick() {
+    handleYourRecipesClick();
+    handleLinkClick();
+  }
 
   return (
     <div className="dropdown dropdown-end">
@@ -40,9 +56,8 @@ function AvatarDropdown() {
             <div className="my-2 divider"></div>
             <li>
               <Link
-                to="/user-home"
                 className="justify-between text-xl"
-                onClick={handleLinkClick}
+                onClick={yourRecipesClick}
               >
                 Your Recipes
               </Link>

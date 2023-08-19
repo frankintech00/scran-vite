@@ -1,22 +1,17 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { FiClock } from "react-icons/fi";
 import { Rating } from "@smastrom/react-rating";
 import { RecipeContext } from "../../contexts/RecipeContext";
-import truncateText from "../../helpers/truncateText";
 import { FavouriteRecipes } from "..";
 
 function RecipeCard({ recipe }) {
   const id = recipe.id ? recipe.id : recipe.objectID;
 
-  const { fetchRecipesByCategory } = useContext(RecipeContext);
+  const { setRecipeFetchType, setSelectedCategory } = useContext(RecipeContext);
 
-  const handleCategoryClick = async (category) => {
-    try {
-      await fetchRecipesByCategory(category);
-    } catch (error) {
-      console.error("Failed to fetch recipes:", error);
-    }
+  const handleCategoryClick = (cat) => {
+    setSelectedCategory(cat);
+    setRecipeFetchType("CATEGORY");
   };
 
   return (

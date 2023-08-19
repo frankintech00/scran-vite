@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { RecipeContext } from "../contexts/RecipeContext";
 import { UserContext } from "../contexts/UserContext";
@@ -19,7 +19,23 @@ function CreateRecipePage() {
   const { isLoggedIn } = useContext(UserContext);
 
   const navigate = useNavigate();
-  const [image, setImage] = useState(null); // Keep the image state here
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    // Reset the recipe state to its default values
+    setRecipe({
+      recipeName: "",
+      category: [],
+      difficulty: "",
+      preparationTime: "",
+      cookingTime: "",
+      servings: "",
+      description: "",
+      ingredients: [],
+      directions: [],
+      notes: "",
+    });
+  }, [setRecipe]);
 
   const handleCreateRecipe = async (recipe) => {
     const imageUrl = await handleUploadImage();

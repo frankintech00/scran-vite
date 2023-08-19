@@ -7,13 +7,14 @@ import { CATEGORIES } from "../../constants/categories";
 const categories = ["All Recipes", ...CATEGORIES];
 
 function CategoryBadges() {
-  const { fetchRecipesByCategory, fetchRecipes } = useContext(RecipeContext);
+  const { setRecipeFetchType, setSelectedCategory } = useContext(RecipeContext);
 
   const handleCategoryClick = (category) => {
     if (category === "All Recipes") {
-      fetchRecipes();
+      setRecipeFetchType("ALL");
     } else {
-      fetchRecipesByCategory(category);
+      setSelectedCategory(category);
+      setRecipeFetchType("CATEGORY");
     }
   };
 
