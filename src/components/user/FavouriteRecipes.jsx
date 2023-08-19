@@ -34,13 +34,16 @@ const FavouriteRecipes = ({ recipeId }) => {
   };
 
   return (
+    // <div className="md:w-1/2 flex justify-end">
+    //   <p className="text-lg"> Save this Recipe</p>
     <div onClick={handleFavouriteClick}>
       {isFavourited ? (
-        <FaHeart className="text-red-500" />
+        <FaHeart className="text-red-500 w-6 h-6 mx-2" />
       ) : (
-        <FaRegHeart className="text-red-500" />
+        <FaRegHeart className="text-red-500 w-6 h-6 mx-2" />
       )}
     </div>
+    // </div>
   );
 };
 

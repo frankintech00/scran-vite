@@ -55,19 +55,23 @@ function ReadRecipePage() {
       <div className="flex flex-wrap flex-col space-y-4 ">
         <ReadRecipeTitle name={recipe ? recipe.recipeName : ""} />
         <ReadRecipeDescription description={recipe ? recipe.description : ""} />
-        <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="flex flex-col md:flex-row flex-wrap justify-between items-center space-y-4">
           <ReadRecipeCreatorInfo
             photoURL={recipe ? recipe.creatorPhotoURL : ""}
             displayName={recipe ? recipe.creatorDisplayName : ""}
             createdAt={recipe ? recipe.createdAt : new Date()}
           />
-
+          <div className="md:w-1/2 flex justify-end">
+            <p className="text-lg"> Save this Recipe</p>
+            <FavouriteRecipes recipeId={id} />
+          </div>
           <ReadRecipeRating recipe={recipe} />
-
-          <SocialShareButtons
-            recipeName={recipe.recipeName}
-            location={location}
-          />
+          <div className="flex flex-col gap-1 my-4 w-1/2 items-end">
+            <SocialShareButtons
+              recipeName={recipe.recipeName}
+              location={location}
+            />
+          </div>
         </div>
       </div>
 
@@ -110,16 +114,12 @@ function ReadRecipePage() {
         id={id}
       />
 
-      <FavouriteRecipes recipeId={id} />
-
-      <div className="justify-between">
-        <div className="flex align-middle space-x-2">
-          <h3 className="text-xl text-primary">Share this recipe - </h3>
-          <SocialShareButtons
-            recipeName={recipe.recipeName}
-            location={location}
-          />
-        </div>
+      <div className="flex">
+        <h3 className="text-xl text-primary mr-2">Share this recipe - </h3>
+        <SocialShareButtons
+          recipeName={recipe.recipeName}
+          location={location}
+        />
       </div>
     </article>
   );

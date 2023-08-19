@@ -6,12 +6,12 @@ function ReadRecipeRating({ recipe }) {
   }
 
   if (!recipe.ratingCount || recipe.ratingCount === 0) {
-    return <p className="text-lg my-3">Not yet rated</p>;
+    return <p className="text-lg my-3 md:w-1/2">Not yet rated</p>;
   }
 
   return (
-    <div className="flex flex-col gap-1 my-4 lg:my-2">
-      <div className="flex justify-end">
+    <div>
+      <div className="flex">
         <Rating
           style={{ maxWidth: 120 }}
           value={Number(recipe.averageRating)}

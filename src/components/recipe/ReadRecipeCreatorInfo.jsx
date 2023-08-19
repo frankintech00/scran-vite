@@ -15,7 +15,7 @@ function ReadRecipeCreatorInfo({ photoURL, displayName, createdAt }) {
     .replace(/,/g, "");
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center md:w-1/2">
       {photoURL ? (
         <img
           src={photoURL}

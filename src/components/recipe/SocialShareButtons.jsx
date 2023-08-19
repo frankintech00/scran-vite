@@ -16,7 +16,7 @@ function SocialShareButtons({ recipeName, location }) {
   console.log(fullUrl);
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-2">
       <FacebookShareButton url={fullUrl} quote={title} className="button-class">
         <FacebookIcon size={32} round={true} />
       </FacebookShareButton>
