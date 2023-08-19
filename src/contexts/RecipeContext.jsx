@@ -69,6 +69,37 @@ export const RecipeProvider = ({ children }) => {
     directions: [],
     notes: "",
   });
+  const [recipeFetchType, setRecipeFetchType] = useState("DEFAULT");
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  useEffect(() => {
+    console.log("useEffect triggered with recipeFetchType:", recipeFetchType);
+
+    switch (recipeFetchType) {
+      case "USER":
+        console.log("Fetching recipes for the user:", user.uid);
+        fetchRecipesByUser(user.uid);
+        break;
+      case "FAVOURITES":
+        console.log("Fetching recipes for the favourites:", user.uid);
+        fetchRecipesByUserFavourites(user.uid);
+        break;
+      case "ALL":
+        console.log("Fetching all recipes");
+        fetchRecipes();
+        break;
+      case "CATEGORY":
+        console.log("Fetching category recipes");
+        console.log("Selected category:", selectedCategory);
+        fetchRecipesByCategory(selectedCategory);
+        break;
+      case "DEFAULT":
+        break;
+      default:
+        console.log("Fetching default case: all recipes");
+        fetchRecipes();
+    }
+  }, [recipeFetchType]);
 
   /**
    * Asynchronously fetches a limited number of recipes from the 'recipes' collection, ordered by creation date.
@@ -333,6 +364,48 @@ export const RecipeProvider = ({ children }) => {
   }, []);
 
   //TODO: fixed fetchNextRecipes to alter the query  to include category etc..
+
+  async function fetchRecipesByUserFavourites(uid) {
+    try {
+      // Step 1: Fetch user's favourite recipe IDs
+      const favRecipeIds = await fetchUserFavourites(uid);
+
+      // If there are no favourites, set an empty array to recipes and exit
+      if (!favRecipeIds.length) {
+        setRecipes([]);
+        console.log("No favourite recipes found for the user.");
+        return;
+      }
+
+      // Step 2: Fetch a maximum of 20 recipes from the database
+      const q = query(
+        collection(db, "recipes"),
+        orderBy("createdAt", "desc"),
+        limit(20)
+      );
+
+      const querySnapshot = await getDocs(q);
+      let allFetchedRecipes = [];
+
+      querySnapshot.forEach((doc) => {
+        allFetchedRecipes.push({ id: doc.id, ...doc.data() });
+      });
+
+      // Step 3: Filter the fetched recipes based on the user's favourite recipe IDs
+      const userFavRecipes = allFetchedRecipes.filter((recipe) =>
+        favRecipeIds.includes(recipe.id)
+      );
+
+      // Step 4: Update the recipes state
+      setRecipes(userFavRecipes);
+
+      console.log("Success: User's favourite recipes fetched and set.");
+    } catch (error) {
+      console.error("Error fetching recipes by user favourites:", error);
+    } finally {
+      setRecipeFetchType("DEFAULT");
+    }
+  }
 
   /**
    * Asynchronously fetches the next set of recipes from the 'recipes' collection, starting after the last document fetched.
@@ -654,8 +727,6 @@ export const RecipeProvider = ({ children }) => {
     });
   };
 
-
-
   // Define the value to be provided to all components in the RecipeContext
   const providerValue = {
     recipe, // The current recipe
@@ -684,7 +755,6 @@ export const RecipeProvider = ({ children }) => {
     setRecipeFetchType, // Function to update the recipe fetch type
     selectedCategory, // The currently selected category
     setSelectedCategory, // Function to update the currently selected category
-   
   };
 
   // Return the RecipeContext.Provider component with the providerValue
