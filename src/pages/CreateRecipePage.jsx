@@ -72,9 +72,9 @@ function CreateRecipePage() {
             <CreateDirectionsList recipe={recipe} setRecipe={setRecipe} />
             <CreateRecipeNotes recipe={recipe} setRecipe={setRecipe} />
             <button
-              type="submit"
+              type="button"
               className="flex items-center justify-center w-10/12 mx-auto my-3 shadow-md btn btn-primary"
-              onSubmit={() => handleCreateRecipe(recipe)}
+              onClick={() => handleCreateRecipe(recipe)}
             >
               Create a New Recipe
             </button>

@@ -7,7 +7,6 @@ function CreateRecipeTitle({ recipe, setRecipe }) {
       <input
         className="w-full input input-bordered input-primary"
         type="text"
-        required
         placeholder="Enter the name of your recipe..."
         value={recipe.recipeName}
         onChange={(e) => setRecipe({ ...recipe, recipeName: e.target.value })}

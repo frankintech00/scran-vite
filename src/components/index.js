@@ -35,7 +35,6 @@ import ReadRecipeNotes from "./recipe/ReadRecipeNotes";
 import ReadRecipeButtons from "./recipe/ReadRecipeButtons";
 import ReadRecipeReviews from "./recipe/ReadRecipeReviews";
 import ReadRecipeComments from "./recipe/ReadRecipeComments";
-import ReadRecipeError from "./recipe/ReadRecipeError";
 import RecipeCard from "./recipe/RecipeCard";
 import AverageRating from "./recipe/AverageRating";
 import CategoryBadges from "./common/CategoryBadges";
@@ -79,7 +78,6 @@ export {
   ReadRecipeButtons,
   ReadRecipeReviews,
   ReadRecipeComments,
-  ReadRecipeError,
   RecipeCard,
   AverageRating,
   CategoryBadges,

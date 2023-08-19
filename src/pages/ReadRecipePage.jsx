@@ -15,8 +15,8 @@ import {
   ReadRecipeNotes,
   ReadRecipeButtons,
   ReadRecipeComments,
-  ReadRecipeError,
   FavouriteRecipes,
+  Loading,
 } from "../components";
 import { useParams, useLocation } from "react-router-dom";
 
@@ -39,14 +39,8 @@ function ReadRecipePage() {
   }, [id, getRecipe]);
 
   if (!recipe) {
-    return <ReadRecipeError />;
+    return <Loading />;
   }
-
-  const handleDeleteComment = async (comment) => {
-    await deleteComment(id, comment);
-    const updatedRecipe = await getRecipe(id);
-    setRecipe(updatedRecipe);
-  };
 
   return (
     <article className="flex flex-col space-y-6 mx-auto rounded-lg p-6 text-primary max-w-screen-lg shadow-2xl">
