@@ -12,6 +12,7 @@ import {
   CreateRecipePage,
   ReadRecipePage,
   HomePage,
+  UpdateRecipePage,
 } from "../pages";
 import ProtectedRoute from "./protectedRoutes";
 import { Loading } from "../components";
@@ -56,6 +57,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <CreateRecipePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/update-recipe/:id"
+        element={
+          <ProtectedRoute>
+            <UpdateRecipePage />
           </ProtectedRoute>
         }
       />

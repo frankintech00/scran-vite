@@ -15,7 +15,7 @@ function SignInDropdown() {
     <div className="dropdown dropdown-end">
       <label
         tabIndex={0}
-        className="btn btn-primary btn-block btn-md"
+        className="btn btn-primary btn-block btn-sm"
         onClick={() => setIsOpen(!isOpen)}
       >
         <p className="text-xs md:text-base">Sign In</p>

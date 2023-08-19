@@ -4,6 +4,7 @@ import { FiClock } from "react-icons/fi";
 import { Rating } from "@smastrom/react-rating";
 import { RecipeContext } from "../../contexts/RecipeContext";
 import truncateText from "../../helpers/truncateText";
+import { FavouriteRecipes } from "..";
 
 function RecipeCard({ recipe }) {
   const id = recipe.id ? recipe.id : recipe.objectID;
@@ -29,38 +30,38 @@ function RecipeCard({ recipe }) {
           />
         </Link>
       </figure>
-      <div className="card-body p-2 justify-between">
-        <div className="card-actions">
-          {recipe.category &&
-            recipe.category.map((cat, index) => (
-              <div
-                key={index}
-                className="badge badge-outline cursor-pointer badge-sm"
-                onClick={() => handleCategoryClick(cat)}
-              >
-                {cat}
-              </div>
-            ))}
+      <div className="card-body p-2 justify-around">
+        <div className="card-actions flex justify-between">
+          <div>
+            {" "}
+            {recipe.category &&
+              recipe.category.map((cat, index) => (
+                <div
+                  key={index}
+                  className="badge badge-outline cursor-pointer badge-lg mx-1"
+                  onClick={() => handleCategoryClick(cat)}
+                >
+                  {cat}
+                </div>
+              ))}{" "}
+          </div>
+          <FavouriteRecipes recipeId={id} />
         </div>
         <div className="card-actions">
           <Link to={`/recipe/${recipe.id}`}>
-            <h2 className="card-title text-lg flex-wrap md:text-lg">
+            <h2 className="card-title flex-wrap text-2xl">
               {recipe.recipeName}
             </h2>
           </Link>
         </div>
-        <div className="card-actions">
-          <p className="text-xs">{truncateText(recipe.description, 20)}</p>
-        </div>
-
-        <div className="card-actions">
+        <div className="card-actions ">
           {recipe.averageRating && recipe.averageRating !== 0 && (
             <Rating
-              style={{ maxWidth: 80 }}
+              style={{ maxWidth: 100 }}
               value={recipe.averageRating}
               readOnly
             />
-          )}
+          )}{" "}
         </div>
       </div>
     </div>

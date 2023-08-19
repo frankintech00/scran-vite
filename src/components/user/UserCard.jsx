@@ -20,21 +20,26 @@ function UserCard() {
     <div className="card bg-base-100 shadow-2xl aspect-[3/4] text-primary ">
       <div className="card-body items-center justify-between">
         <div className="avatar">
-          <div className="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          <div className="w-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
             <img src={user.photoURL} alt={user.displayName} />
           </div>
         </div>
         <h2 className="text-3xl mb-2 text-center">{user.displayName}</h2>
         <div className="flex justify-between flex-row space-x-4">
-          <Link to={`/update-profile/${user.uid}`}>
-            <button className="btn btn-primary btn-xs">Edit Profile</button>
-          </Link>
           <Link>
             <button
               onClick={handleYourRecipesClick}
               className="btn btn-primary btn-xs"
             >
               Your Recipes
+            </button>
+          </Link>
+          <Link>
+            <button
+              onClick={handleYourRecipesClick}
+              className="btn btn-primary btn-xs"
+            >
+              Your Favourites
             </button>
           </Link>
         </div>

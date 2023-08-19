@@ -51,6 +51,18 @@ export const RecipeProvider = ({ children }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [recipe, setRecipe] = useState({
+    recipeName: "",
+    category: [],
+    difficulty: "",
+    preparationTime: "",
+    cookingTime: "",
+    servings: "",
+    description: "",
+    ingredients: [],
+    directions: [],
+    notes: "",
+  });
 
   /**
    * Asynchronously fetches a limited number of recipes from the 'recipes' collection, ordered by creation date.
@@ -638,6 +650,8 @@ export const RecipeProvider = ({ children }) => {
 
   // Define the value to be provided to all components in the RecipeContext
   const providerValue = {
+    recipe, // The current recipe
+    setRecipe, // Function to update the current recipe
     recipes, // The current list of recipes
     setRecipes, // Function to update the list of recipes
     fetchRecipes, // Function to fetch all recipes

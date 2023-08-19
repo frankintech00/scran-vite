@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
+import { useParams } from "react-router";
 import { RecipeContext } from "../contexts/RecipeContext";
-import { UserContext } from "../contexts/UserContext";
 import {
   CreateRecipeTitle,
   CreateCategorySelection,
@@ -13,38 +13,44 @@ import {
   CreateRecipeNotes,
 } from "../components";
 
-function CreateRecipePage() {
-  const { createRecipe, imageUpload, recipe, setRecipe } =
-    useContext(RecipeContext);
-  const { isLoggedIn } = useContext(UserContext);
+function UpdateRecipePage() {
+  const { getRecipe, updateRecipe, imageUpload } = useContext(RecipeContext);
+  const { id } = useParams(); // Assuming the ID is passed as a parameter in the route
+  const [recipe, setRecipe] = useState(null);
+  const [image, setImage] = useState(null);
 
   const navigate = useNavigate();
-  const [image, setImage] = useState(null); // Keep the image state here
 
-  const handleCreateRecipe = async (recipe) => {
-    const imageUrl = await handleUploadImage();
-    const recipeId = await createRecipe({
-      ...recipe,
-      recipeImageURL: imageUrl,
-    });
-    console.log(recipeId);
-    navigate(`/recipe/${recipeId}`);
-  };
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      const currentRecipe = await getRecipe(id);
+      if (currentRecipe) {
+        setRecipe(currentRecipe);
+      }
+    };
+    fetchRecipe();
+  }, [id, getRecipe]);
 
-  const handleUploadImage = async () => {
-    let imageUrl = null;
-    if (image) {
-      imageUrl = await imageUpload(image);
+  const handleUpdateRecipe = async () => {
+    try {
+      const imageUrl = image ? await imageUpload(image) : recipe.recipeImageURL;
+      const updatedRecipe = {
+        ...recipe,
+        recipeImageURL: imageUrl,
+      };
+      await updateRecipe(id, updatedRecipe);
+      navigate(`/recipe/${id}`);
+    } catch (error) {
+      console.error("Error updating the recipe:", error);
     }
-    return imageUrl;
   };
 
   return (
-    isLoggedIn && (
-      <div className="flex flex-col items-center my-10 text-primary">
+    <div className="flex flex-col items-center my-10 text-primary">
+      {recipe && (
         <div className="w-full max-w-screen-lg px-4 py-20 rounded-lg shadow-2xl bg-base-100">
           <h1 className="mb-6 text-3xl font-semibold text-center">
-            Create a new recipe.
+            Update Recipe
           </h1>
           <form
             className="w-10/12 space-y-4 form-control"
@@ -61,15 +67,16 @@ function CreateRecipePage() {
             <button
               type="button"
               className="flex items-center justify-center w-10/12 mx-auto my-3 shadow-md btn btn-primary"
-              onClick={() => handleCreateRecipe(recipe)}
+              onClick={handleUpdateRecipe}
             >
-              Create a New Recipe
+              Update Recipe
             </button>
           </form>
         </div>
-      </div>
-    )
+      )}
+      {!recipe && <p>Loading recipe...</p>}
+    </div>
   );
 }
 
-export default CreateRecipePage;
+export default UpdateRecipePage;
