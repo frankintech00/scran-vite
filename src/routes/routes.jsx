@@ -7,12 +7,12 @@ import {
   UpdateProfile,
 } from "../components";
 import {
-  UserHome,
   ErrorPage,
   CreateRecipePage,
   ReadRecipePage,
   HomePage,
   UpdateRecipePage,
+  SearchResultsPage,
 } from "../pages";
 import ProtectedRoute from "./protectedRoutes";
 import { Loading } from "../components";
@@ -31,19 +31,13 @@ function AppRoutes() {
     <Router>
       {/* Default route that renders the HomePage  */}
       <Route path="/" element={<HomePage />} />
+      <Route path="/search-results" element={<SearchResultsPage />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/forgot-password" element={<ForgotUpdatePassword />} />
       <Route path="/loading" element={<Loading />} />
       <Route path="/recipe/:id" element={<ReadRecipePage />} />
-      <Route
-        path="/user-home"
-        element={
-          <ProtectedRoute>
-            <UserHome />
-          </ProtectedRoute>
-        }
-      />
+
       <Route
         path="/update-profile/:id"
         element={

@@ -53,6 +53,7 @@ export const RecipeProvider = ({ children }) => {
 
   // Setting up state for recipes, lastDoc, errorMessage, loading, and hasMore
   const [recipes, setRecipes] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [lastDoc, setLastDoc] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -755,6 +756,8 @@ export const RecipeProvider = ({ children }) => {
     setRecipeFetchType, // Function to update the recipe fetch type
     selectedCategory, // The currently selected category
     setSelectedCategory, // Function to update the currently selected category
+    searchResults, // The current search results
+    setSearchResults, // Function to update the search results
   };
 
   // Return the RecipeContext.Provider component with the providerValue
