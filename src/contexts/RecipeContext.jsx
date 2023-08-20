@@ -57,7 +57,7 @@ export const RecipeProvider = ({ children }) => {
   const [lastDoc, setLastDoc] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
   const [recipe, setRecipe] = useState({
     recipeName: "",
     category: [],
@@ -87,7 +87,7 @@ export const RecipeProvider = ({ children }) => {
         break;
       case "ALL":
         console.log("Fetching all recipes");
-        fetchRecipes();
+        fetchRecipes(7);
         break;
       case "CATEGORY":
         console.log("Fetching category recipes");
@@ -109,7 +109,7 @@ export const RecipeProvider = ({ children }) => {
    * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
    * @throws Will throw an error if the `getDocs` promise is rejected.
    */
-  const fetchRecipes = useCallback(async (maxRecipes = 8) => {
+  const fetchRecipes = useCallback(async (maxRecipes = 7) => {
     // Set loading state to true
     setLoading(true);
 
@@ -151,6 +151,7 @@ export const RecipeProvider = ({ children }) => {
     } finally {
       // Set loading state to false
       setLoading(false);
+      setHasMore(true);
       setRecipeFetchType("DEFAULT");
     }
   }, []);
@@ -164,7 +165,7 @@ export const RecipeProvider = ({ children }) => {
    * @throws Will throw an error if the `getDocs` promise is rejected or if no recipes match the category.
    */
   const fetchRecipesByCategory = useCallback(
-    async (category, maxRecipes = 8) => {
+    async (category, maxRecipes = 7) => {
       // Set loading state to true
       setLoading(true);
 
@@ -201,6 +202,13 @@ export const RecipeProvider = ({ children }) => {
         setRecipes(recipesData);
         console.log(recipes);
 
+        // Check if the number of fetched recipes is less than 8
+        if (recipesData.length > 8) {
+          setHasMore(true);
+        } else {
+          setHasMore(false);
+        }
+
         // Reset the error message
         setErrorMessage(null);
 
@@ -226,76 +234,6 @@ export const RecipeProvider = ({ children }) => {
   );
 
   /**
-   * Asynchronously fetches a limited number of recipes from the 'recipes' collection that contain a specific ingredient, ordered by creation date.
-   *
-   * @async
-   * @param {string} ingredient - The ingredient to search for in the recipes.
-   * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
-   * @throws Will throw an error if the `getDocs` promise is rejected or if no recipes contain the ingredient.
-   */
-  const fetchRecipesByIngredient = useCallback(
-    async (ingredient, maxRecipes = 8) => {
-      // Set loading state to true
-      setLoading(true);
-
-      try {
-        // Create a query to get 'maxRecipes' number of recipes from the 'recipes' collection that contain the ingredient, ordered by 'createdAt' in descending order
-        const q = query(
-          collection(db, "recipes"),
-          where("ingredient", "array-contains", ingredient),
-          orderBy("createdAt", "desc"),
-          limit(maxRecipes)
-        );
-
-        // Get the query snapshot
-        const querySnapshot = await getDocs(q);
-        let recipesData = [];
-
-        // For each document in the snapshot, add the document data to the 'recipesData' array
-        querySnapshot.forEach((doc) => {
-          recipesData.push({ id: doc.id, ...doc.data() });
-        });
-
-        // If no recipes contain the ingredient, throw an error
-        if (recipesData.length === 0) {
-          throw new Error("No recipes match your search. Please try again.");
-        }
-
-        // Get the last visible document in the snapshot
-        const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-
-        // Set the last visible document
-        setLastDoc(lastVisible);
-
-        // Set the recipes data
-        setRecipes(recipesData);
-
-        // Reset the error message
-        setErrorMessage(null);
-
-        // Log the successful fetch
-        console.log(
-          `Success: Recipes by ingredient('${ingredient}') fetched successfully.`
-        );
-      } catch (error) {
-        // Log the error message
-        console.error(
-          `Error fetching recipes by ingredient('${ingredient}'):`,
-          error
-        );
-        console.error(getErrorMessage(error.code));
-
-        // Set the error message
-        setErrorMessage(error.message);
-      } finally {
-        // Set loading state to false
-        setLoading(false);
-      }
-    },
-    []
-  );
-
-  /**
    * Asynchronously fetches a limited number of recipes from the 'recipes' collection that were created by a specific user, ordered by creation date.
    *
    * @async
@@ -303,7 +241,7 @@ export const RecipeProvider = ({ children }) => {
    * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
    * @throws Will throw an error if the `getDocs` promise is rejected or if no recipes were created by the user.
    */
-  const fetchRecipesByUser = useCallback(async (uid, maxRecipes = 8) => {
+  const fetchRecipesByUser = useCallback(async (uid, maxRecipes = 7) => {
     console.log(`Fetching recipes for UID: ${uid}`);
 
     // Set loading state to true
@@ -363,8 +301,6 @@ export const RecipeProvider = ({ children }) => {
       setLoading(false);
     }
   }, []);
-
-  //TODO: fixed fetchNextRecipes to alter the query  to include category etc..
 
   async function fetchRecipesByUserFavourites(uid) {
     try {
@@ -736,7 +672,6 @@ export const RecipeProvider = ({ children }) => {
     setRecipes, // Function to update the list of recipes
     fetchRecipes, // Function to fetch all recipes
     fetchRecipesByCategory, // Function to fetch recipes by category
-    fetchRecipesByIngredient, // Function to fetch recipes by ingredient
     fetchRecipesByUser, // Function to fetch recipes by user
     fetchNextRecipes, // Function to fetch the next set of recipes (for pagination)
     hasMore, // Boolean indicating if there are more recipes to fetch

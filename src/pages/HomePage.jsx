@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { RecipeContext } from "../contexts/RecipeContext";
 import { UserContext } from "../contexts/UserContext";
 import {
@@ -9,8 +9,13 @@ import {
 } from "../components";
 
 function HomePage() {
-  const { recipes, fetchNextRecipes, hasMore } = useContext(RecipeContext);
+  const { recipes, fetchNextRecipes, hasMore, fetchRecipes } =
+    useContext(RecipeContext);
   const { isLoggedIn, user } = useContext(UserContext);
+
+  useEffect(() => {
+    fetchRecipes(7);
+  }, []);
 
   return (
     <>
