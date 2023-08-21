@@ -79,26 +79,29 @@ export const RecipeProvider = ({ children }) => {
     switch (recipeFetchType) {
       case "USER":
         console.log("Fetching recipes for the user:", user.uid);
-        fetchRecipesByUser(user.uid);
+        fetchRecipes({ type: "USER", uid: user.uid });
         break;
       case "FAVOURITES":
         console.log("Fetching recipes for the favourites:", user.uid);
-        fetchRecipesByUserFavourites(user.uid);
+        fetchRecipes({ type: "FAVOURITES", uid: user.uid });
         break;
       case "ALL":
         console.log("Fetching all recipes");
-        fetchRecipes(7);
+        fetchRecipes({ type: "ALL", maxRecipes: 7 });
         break;
       case "CATEGORY":
-        console.log("Fetching category recipes");
-        console.log("Selected category:", selectedCategory);
-        fetchRecipesByCategory(selectedCategory);
+        console.log("Fetching category recipes for:", selectedCategory);
+        fetchRecipes({ type: "CATEGORY", category: selectedCategory });
         break;
       case "DEFAULT":
+        // You can either fetch default recipes or do nothing based on your requirements
+        // For instance:
+        // fetchRecipes({ type: "ALL" });
         break;
       default:
         console.log("Fetching default case: all recipes");
-        fetchRecipes();
+        fetchRecipes({ type: "ALL" });
+        break;
     }
   }, [recipeFetchType]);
 
@@ -109,240 +112,274 @@ export const RecipeProvider = ({ children }) => {
    * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
    * @throws Will throw an error if the `getDocs` promise is rejected.
    */
-  const fetchRecipes = useCallback(async (maxRecipes = 7) => {
-    // Set loading state to true
+  const fetchRecipes = async ({
+    type = "ALL",
+    uid = null,
+    category = null,
+    maxRecipes = 7,
+  }) => {
     setLoading(true);
+    let q;
+    let favRecipeIds = []; // <-- Declare here, at the top of the function.
 
     try {
-      // Create a query to get 'maxRecipes' number of recipes from the 'recipes' collection, ordered by 'createdAt' in descending order
-      const q = query(
-        collection(db, "recipes"),
-        orderBy("createdAt", "desc"),
-        limit(maxRecipes)
-      );
+      switch (type) {
+        case "USER":
+          q = query(
+            collection(db, "recipes"),
+            where("userId", "==", uid),
+            orderBy("createdAt", "desc"),
+            limit(maxRecipes)
+          );
+          break;
 
-      // Get the query snapshot
-      const querySnapshot = await getDocs(q);
-      let recipesData = [];
+        case "FAVOURITES":
+          favRecipeIds = await fetchUserFavourites(uid); // <-- Assign value here.
+          if (!favRecipeIds.length) {
+            setRecipes([]);
+            setLoading(false);
+            console.log("No favourite recipes found for the user.");
+            return;
+          }
+          q = query(
+            collection(db, "recipes"),
+            orderBy("createdAt", "desc"),
+            limit(50) // or some other appropriate limit
+          );
+          break;
 
-      // For each document in the snapshot, add the document data to the 'recipesData' array
-      querySnapshot.forEach((doc) => {
-        recipesData.push({ id: doc.id, ...doc.data() });
-      });
+        case "CATEGORY":
+          q = query(
+            collection(db, "recipes"),
+            where("category", "array-contains", category),
+            orderBy("createdAt", "desc"),
+            limit(maxRecipes)
+          );
+          break;
 
-      // Get the last visible document in the snapshot
-      const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-
-      // Set the last visible document
-      setLastDoc(lastVisible);
-
-      // Set the recipes data
-      setRecipes(recipesData);
-
-      // Reset the error message
-      setErrorMessage(null);
-
-      // Log the successful fetch
-      console.log("Success: Recipes fetched successfully.");
-    } catch (error) {
-      // Log the error message
-      console.error("Error fetching recipes:", error);
-      console.error(getErrorMessage(error.code));
-    } finally {
-      // Set loading state to false
-      setLoading(false);
-      setHasMore(true);
-      setRecipeFetchType("DEFAULT");
-    }
-  }, []);
-
-  /**
-   * Asynchronously fetches a limited number of recipes from the 'recipes' collection that match a specific category, ordered by creation date.
-   *
-   * @async
-   * @param {string} category - The category of recipes to fetch.
-   * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
-   * @throws Will throw an error if the `getDocs` promise is rejected or if no recipes match the category.
-   */
-  const fetchRecipesByCategory = useCallback(
-    async (category, maxRecipes = 7) => {
-      // Set loading state to true
-      setLoading(true);
-
-      try {
-        // Create a query to get 'maxRecipes' number of recipes from the 'recipes' collection that match the category, ordered by 'createdAt' in descending order
-        const q = query(
-          collection(db, "recipes"),
-          where("category", "array-contains", category),
-          orderBy("createdAt", "desc"),
-          limit(maxRecipes)
-        );
-
-        // Get the query snapshot
-        const querySnapshot = await getDocs(q);
-        let recipesData = [];
-
-        // For each document in the snapshot, add the document data to the 'recipesData' array
-        querySnapshot.forEach((doc) => {
-          recipesData.push({ id: doc.id, ...doc.data() });
-        });
-
-        // If no recipes match the category, throw an error
-        if (recipesData.length === 0) {
-          throw new Error("No recipes match your search. Please try again.");
-        }
-
-        // Get the last visible document in the snapshot
-        const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-
-        // Set the last visible document
-        setLastDoc(lastVisible);
-
-        // Set the recipes data
-        setRecipes(recipesData);
-        console.log(recipes);
-
-        // Check if the number of fetched recipes is less than 8
-        if (recipesData.length > 8) {
-          setHasMore(true);
-        } else {
-          setHasMore(false);
-        }
-
-        // Reset the error message
-        setErrorMessage(null);
-
-        // Log the successful fetch
-        console.log("Success: Recipes by category fetched successfully.");
-      } catch (error) {
-        // Log the error message
-        console.error(
-          `Error fetching recipes by category (${category}):`,
-          error
-        );
-        console.error(getErrorMessage(error.code));
-
-        // Set the error message
-        setErrorMessage(error.message);
-      } finally {
-        setRecipeFetchType("DEFAULT");
-        // Set loading state to false
-        setLoading(false);
+        case "ALL":
+        default:
+          q = query(
+            collection(db, "recipes"),
+            orderBy("createdAt", "desc"),
+            limit(maxRecipes)
+          );
+          break;
       }
-    },
-    []
-  );
 
-  /**
-   * Asynchronously fetches a limited number of recipes from the 'recipes' collection that were created by a specific user, ordered by creation date.
-   *
-   * @async
-   * @param {Object} user - The user object to search for in the recipes.
-   * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
-   * @throws Will throw an error if the `getDocs` promise is rejected or if no recipes were created by the user.
-   */
-  const fetchRecipesByUser = useCallback(async (uid, maxRecipes = 7) => {
-    console.log(`Fetching recipes for UID: ${uid}`);
-
-    // Set loading state to true
-    setLoading(true);
-
-    try {
-      // Create a query to get 'maxRecipes' number of recipes from the 'recipes' collection that were created by the user, ordered by 'createdAt' in descending order
-      const q = query(
-        collection(db, "recipes"),
-        where("userId", "==", uid),
-        orderBy("createdAt", "desc"),
-        limit(maxRecipes)
-      );
-
-      // Get the query snapshot
       const querySnapshot = await getDocs(q);
       let recipesData = [];
-
-      // For each document in the snapshot, add the document data to the 'recipesData' array
       querySnapshot.forEach((doc) => {
         recipesData.push({ id: doc.id, ...doc.data() });
       });
 
-      // If no recipes were created by the user, throw an error
+      if (type === "FAVOURITES") {
+        recipesData = recipesData.filter(
+          (recipe) => favRecipeIds.includes(recipe.id) // <-- Now it's accessible here.
+        );
+      }
+
       if (recipesData.length === 0) {
         throw new Error("No recipes match your search. Please try again.");
       }
 
-      // Get the last visible document in the snapshot
-      const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-
-      // Set the last visible document
-      setLastDoc(lastVisible);
-
-      // Set the recipes data
       setRecipes(recipesData);
-
-      // Reset the error message
-      setErrorMessage(null);
-
-      // Log the successful fetch
-      console.log(
-        `Success: Recipes by user with UID: '${uid}' fetched successfully.`
-      );
+      console.log("Success: Recipes fetched successfully.");
     } catch (error) {
-      // Set the error message
-      setErrorMessage(error.message);
-
-      // Log the error message
-      console.error(
-        `Error fetching recipes by user with UID: '${uid}':`,
-        error
-      );
-      console.error(getErrorMessage(error.code));
+      console.error("Error fetching recipes:", error);
     } finally {
-      // Set loading state to false
       setLoading(false);
-    }
-  }, []);
-
-  async function fetchRecipesByUserFavourites(uid) {
-    try {
-      // Step 1: Fetch user's favourite recipe IDs
-      const favRecipeIds = await fetchUserFavourites(uid);
-
-      // If there are no favourites, set an empty array to recipes and exit
-      if (!favRecipeIds.length) {
-        setRecipes([]);
-        console.log("No favourite recipes found for the user.");
-        return;
-      }
-
-      // Step 2: Fetch a maximum of 20 recipes from the database
-      const q = query(
-        collection(db, "recipes"),
-        orderBy("createdAt", "desc"),
-        limit(20)
-      );
-
-      const querySnapshot = await getDocs(q);
-      let allFetchedRecipes = [];
-
-      querySnapshot.forEach((doc) => {
-        allFetchedRecipes.push({ id: doc.id, ...doc.data() });
-      });
-
-      // Step 3: Filter the fetched recipes based on the user's favourite recipe IDs
-      const userFavRecipes = allFetchedRecipes.filter((recipe) =>
-        favRecipeIds.includes(recipe.id)
-      );
-
-      // Step 4: Update the recipes state
-      setRecipes(userFavRecipes);
-
-      console.log("Success: User's favourite recipes fetched and set.");
-    } catch (error) {
-      console.error("Error fetching recipes by user favourites:", error);
-    } finally {
       setRecipeFetchType("DEFAULT");
     }
-  }
+  };
+
+  // /**
+  //  * Asynchronously fetches a limited number of recipes from the 'recipes' collection that match a specific category, ordered by creation date.
+  //  *
+  //  * @async
+  //  * @param {string} category - The category of recipes to fetch.
+  //  * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
+  //  * @throws Will throw an error if the `getDocs` promise is rejected or if no recipes match the category.
+  //  */
+  // const fetchRecipesByCategory = useCallback(
+  //   async (category, maxRecipes = 7) => {
+  //     // Set loading state to true
+  //     setLoading(true);
+
+  //     try {
+  //       // Create a query to get 'maxRecipes' number of recipes from the 'recipes' collection that match the category, ordered by 'createdAt' in descending order
+  //       const q = query(
+  //         collection(db, "recipes"),
+  //         where("category", "array-contains", category),
+  //         orderBy("createdAt", "desc"),
+  //         limit(maxRecipes)
+  //       );
+
+  //       // Get the query snapshot
+  //       const querySnapshot = await getDocs(q);
+  //       let recipesData = [];
+
+  //       // For each document in the snapshot, add the document data to the 'recipesData' array
+  //       querySnapshot.forEach((doc) => {
+  //         recipesData.push({ id: doc.id, ...doc.data() });
+  //       });
+
+  //       // If no recipes match the category, throw an error
+  //       if (recipesData.length === 0) {
+  //         throw new Error("No recipes match your search. Please try again.");
+  //       }
+
+  //       // Get the last visible document in the snapshot
+  //       const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+  //       // Set the last visible document
+  //       setLastDoc(lastVisible);
+
+  //       // Set the recipes data
+  //       setRecipes(recipesData);
+  //       console.log(recipes);
+
+  //       // Check if the number of fetched recipes is less than 8
+  //       if (recipesData.length > 8) {
+  //         setHasMore(true);
+  //       } else {
+  //         setHasMore(false);
+  //       }
+
+  //       // Reset the error message
+  //       setErrorMessage(null);
+
+  //       // Log the successful fetch
+  //       console.log("Success: Recipes by category fetched successfully.");
+  //     } catch (error) {
+  //       // Log the error message
+  //       console.error(
+  //         `Error fetching recipes by category (${category}):`,
+  //         error
+  //       );
+  //       console.error(getErrorMessage(error.code));
+
+  //       // Set the error message
+  //       setErrorMessage(error.message);
+  //     } finally {
+  //       setRecipeFetchType("DEFAULT");
+  //       // Set loading state to false
+  //       setLoading(false);
+  //     }
+  //   },
+  //   []
+  // );
+
+  // /**
+  //  * Asynchronously fetches a limited number of recipes from the 'recipes' collection that were created by a specific user, ordered by creation date.
+  //  *
+  //  * @async
+  //  * @param {Object} user - The user object to search for in the recipes.
+  //  * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
+  //  * @throws Will throw an error if the `getDocs` promise is rejected or if no recipes were created by the user.
+  //  */
+  // const fetchRecipesByUser = useCallback(async (uid, maxRecipes = 7) => {
+  //   console.log(`Fetching recipes for UID: ${uid}`);
+
+  //   // Set loading state to true
+  //   setLoading(true);
+
+  //   try {
+  //     // Create a query to get 'maxRecipes' number of recipes from the 'recipes' collection that were created by the user, ordered by 'createdAt' in descending order
+  //     const q = query(
+  //       collection(db, "recipes"),
+  //       where("userId", "==", uid),
+  //       orderBy("createdAt", "desc"),
+  //       limit(maxRecipes)
+  //     );
+
+  //     // Get the query snapshot
+  //     const querySnapshot = await getDocs(q);
+  //     let recipesData = [];
+
+  //     // For each document in the snapshot, add the document data to the 'recipesData' array
+  //     querySnapshot.forEach((doc) => {
+  //       recipesData.push({ id: doc.id, ...doc.data() });
+  //     });
+
+  //     // If no recipes were created by the user, throw an error
+  //     if (recipesData.length === 0) {
+  //       throw new Error("No recipes match your search. Please try again.");
+  //     }
+
+  //     // Get the last visible document in the snapshot
+  //     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+  //     // Set the last visible document
+  //     setLastDoc(lastVisible);
+
+  //     // Set the recipes data
+  //     setRecipes(recipesData);
+
+  //     // Reset the error message
+  //     setErrorMessage(null);
+
+  //     // Log the successful fetch
+  //     console.log(
+  //       `Success: Recipes by user with UID: '${uid}' fetched successfully.`
+  //     );
+  //   } catch (error) {
+  //     // Set the error message
+  //     setErrorMessage(error.message);
+
+  //     // Log the error message
+  //     console.error(
+  //       `Error fetching recipes by user with UID: '${uid}':`,
+  //       error
+  //     );
+  //     console.error(getErrorMessage(error.code));
+  //   } finally {
+  //     // Set loading state to false
+  //     setLoading(false);
+  //   }
+  // }, []);
+
+  // async function fetchRecipesByUserFavourites(uid) {
+  //   try {
+  //     // Step 1: Fetch user's favourite recipe IDs
+  //     const favRecipeIds = await fetchUserFavourites(uid);
+
+  //     // If there are no favourites, set an empty array to recipes and exit
+  //     if (!favRecipeIds.length) {
+  //       setRecipes([]);
+  //       console.log("No favourite recipes found for the user.");
+  //       return;
+  //     }
+
+  //     // Step 2: Fetch a maximum of 20 recipes from the database
+  //     const q = query(
+  //       collection(db, "recipes"),
+  //       orderBy("createdAt", "desc"),
+  //       limit(20)
+  //     );
+
+  //     const querySnapshot = await getDocs(q);
+  //     let allFetchedRecipes = [];
+
+  //     querySnapshot.forEach((doc) => {
+  //       allFetchedRecipes.push({ id: doc.id, ...doc.data() });
+  //     });
+
+  //     // Step 3: Filter the fetched recipes based on the user's favourite recipe IDs
+  //     const userFavRecipes = allFetchedRecipes.filter((recipe) =>
+  //       favRecipeIds.includes(recipe.id)
+  //     );
+
+  //     // Step 4: Update the recipes state
+  //     setRecipes(userFavRecipes);
+
+  //     console.log("Success: User's favourite recipes fetched and set.");
+  //   } catch (error) {
+  //     console.error("Error fetching recipes by user favourites:", error);
+  //   } finally {
+  //     setRecipeFetchType("DEFAULT");
+  //   }
+  // }
 
   /**
    * Asynchronously fetches the next set of recipes from the 'recipes' collection, starting after the last document fetched.
@@ -671,8 +708,8 @@ export const RecipeProvider = ({ children }) => {
     recipes, // The current list of recipes
     setRecipes, // Function to update the list of recipes
     fetchRecipes, // Function to fetch all recipes
-    fetchRecipesByCategory, // Function to fetch recipes by category
-    fetchRecipesByUser, // Function to fetch recipes by user
+    // fetchRecipesByCategory, // Function to fetch recipes by category
+    // fetchRecipesByUser, // Function to fetch recipes by user
     fetchNextRecipes, // Function to fetch the next set of recipes (for pagination)
     hasMore, // Boolean indicating if there are more recipes to fetch
     createRecipe, // Function to create a new recipe
