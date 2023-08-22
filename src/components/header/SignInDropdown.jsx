@@ -13,13 +13,13 @@ function SignInDropdown() {
 
   return (
     <div className="dropdown dropdown-end">
-      <label
+      <button
         tabIndex={0}
         className="btn btn-primary btn-block btn-sm"
         onClick={() => setIsOpen(!isOpen)}
       >
         <p className="text-xs md:text-base">Sign In</p>
-      </label>
+      </button>
       {isOpen && (
         <div className="my-3 z-[1] p-6 shadow-xl dropdown-content rounded-box w-72 bg-base-100">
           <div className="flex flex-col justify-center space-y-3">
