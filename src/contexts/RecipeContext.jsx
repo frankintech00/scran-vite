@@ -14,8 +14,6 @@ import {
 // Importing Firestore functions from Firebase
 import {
   addDoc,
-  arrayRemove,
-  arrayUnion,
   collection,
   deleteDoc,
   doc,
@@ -93,14 +91,11 @@ export const RecipeProvider = ({ children }) => {
         console.log("Fetching category recipes for:", selectedCategory);
         fetchRecipes({ type: "CATEGORY", category: selectedCategory });
         break;
-      case "DEFAULT":
-        // You can either fetch default recipes or do nothing based on your requirements
-        // For instance:
-        // fetchRecipes({ type: "ALL" });
-        break;
       default:
         console.log("Fetching default case: all recipes");
         fetchRecipes({ type: "ALL" });
+        break;
+      case "DEFAULT":
         break;
     }
   }, [recipeFetchType]);
