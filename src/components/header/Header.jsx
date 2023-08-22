@@ -23,6 +23,7 @@ function Header() {
       <div className="w-10/12 order-2 lg:w-2/12 lg:order-1 flex justify-center items-center">
         <div
           className="link"
+          data-testid="logo"
           onClick={() => {
             setRecipeFetchType("ALL");
             navigate("/");
@@ -32,16 +33,25 @@ function Header() {
           <Logo className="w-32 md:w-44" />
         </div>
       </div>
-      <div className="dropdown w-2/12 order-1 lg:hidden flex justify-center">
+      <div
+        className="dropdown w-2/12 order-1 lg:hidden flex justify-center"
+        data-testid="hamburgerIcon"
+      >
         <button tabIndex={0} className="btn btn-ghost">
           <HamburgerIcon />
         </button>
         <NavMenu isDropdown={true} />
       </div>
-      <div className="hidden w-3/12 order-1 lg:flex lg:w-5/12 lg:order-2  justify-center items-center">
+      <div
+        className="hidden w-3/12 order-1 lg:flex lg:w-5/12 lg:order-2  justify-center items-center"
+        data-testid="navMenu"
+      >
         <NavMenu isDropdown={false} />
       </div>
-      <div className="w-9/12 order-3 lg:w-3/12 flex justify-center items-center">
+      <div
+        className="w-9/12 order-3 lg:w-3/12 flex justify-center items-center"
+        data-testid="searchInput"
+      >
         <SearchInput />
       </div>
       <div className="w-3/12 order-4 lg:w-2/12  flex justify-center items-center lg:justify-center">
