@@ -703,8 +703,6 @@ export const RecipeProvider = ({ children }) => {
     recipes, // The current list of recipes
     setRecipes, // Function to update the list of recipes
     fetchRecipes, // Function to fetch all recipes
-    // fetchRecipesByCategory, // Function to fetch recipes by category
-    // fetchRecipesByUser, // Function to fetch recipes by user
     fetchNextRecipes, // Function to fetch the next set of recipes (for pagination)
     hasMore, // Boolean indicating if there are more recipes to fetch
     createRecipe, // Function to create a new recipe

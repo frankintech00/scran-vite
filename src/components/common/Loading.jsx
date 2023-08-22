@@ -5,7 +5,10 @@ function Loading() {
     <>
       <div>
         Loading...
-        <span className="loading loading-spinner loading-lg mt-8"></span>
+        <span
+          className="loading loading-spinner loading-lg mt-8"
+          data-testid="loading-spinner"
+        ></span>
       </div>
     </>
   );

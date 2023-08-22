@@ -362,7 +362,6 @@ export const UserProvider = ({ children }) => {
       navigate("/");
       // Set error to null and log success message
       setError(null);
-
       console.log("User Signed Out Successfully.");
       console.log(user);
     } catch (error) {
