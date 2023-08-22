@@ -15,7 +15,10 @@ function RecipeCard({ recipe }) {
   };
 
   return (
-    <div className="card bg-base-100 shadow-2xl aspect-[3/4]">
+    <div
+      className="card bg-base-100 shadow-2xl aspect-[3/4]"
+      data-testid={`recipe-${recipe.category}`}
+    >
       <figure className="relative aspect-square h-3/5">
         <Link to={`/recipe/${id}`} className="m-2">
           <img

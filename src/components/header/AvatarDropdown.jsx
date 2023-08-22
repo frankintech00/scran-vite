@@ -29,7 +29,7 @@ function AvatarDropdown() {
 
   return (
     <div className="dropdown dropdown-end">
-      <label
+      <button
         tabIndex={0}
         className=" btn btn-ghost btn-circle btn-md avatar"
         onClick={() => setIsOpen(!isOpen)}
@@ -41,7 +41,7 @@ function AvatarDropdown() {
             <BiUser size={52} className="text-accent" />
           )}
         </div>
-      </label>
+      </button>
       {isOpen && (
         <div>
           <ul
