@@ -35,6 +35,7 @@ function RecipeCard({ recipe }) {
             {recipe.category &&
               recipe.category.map((cat, index) => (
                 <div
+                  data-testid={`category${cat}`}
                   key={index}
                   className="badge badge-outline cursor-pointer badge-lg mx-1"
                   onClick={() => handleCategoryClick(cat)}
@@ -47,7 +48,10 @@ function RecipeCard({ recipe }) {
         </div>
         <div className="card-actions">
           <Link to={`/recipe/${recipe.id}`}>
-            <h2 className="card-title flex-wrap text-2xl">
+            <h2
+              className="card-title flex-wrap text-2xl"
+              data-testid={`category${recipe.recipeName}`}
+            >
               {recipe.recipeName}
             </h2>
           </Link>
@@ -55,6 +59,7 @@ function RecipeCard({ recipe }) {
         <div className="card-actions ">
           {recipe.averageRating && recipe.averageRating !== 0 && (
             <Rating
+              data-testid={`rating${recipe.recipeName}`}
               style={{ maxWidth: 100 }}
               value={recipe.averageRating}
               readOnly

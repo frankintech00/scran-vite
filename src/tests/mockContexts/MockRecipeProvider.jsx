@@ -47,6 +47,7 @@ const MockRecipeProvider = ({ children, value }) => {
         imageUpload,
         handleDirectionSubmit,
         handleOnImageChange,
+        basename: "", // Add a default value for the basename property
       }}
     >
       {children}
