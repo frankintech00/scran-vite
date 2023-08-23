@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
-import { Loading } from "..";
+import { ErrorMessage, Loading } from "..";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -23,6 +23,14 @@ const SignUp = () => {
     }
   };
 
+  const handleCreateUser = () => {
+    createUser(email, password, displayName, confirmPassword, image);
+  };
+
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle();
+  };
+
   return (
     <div className="flex flex-col items-center h-screen mt-10 text-primary">
       {loading ? (
@@ -34,12 +42,14 @@ const SignUp = () => {
           </h1>
           <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
             <div>
-              <label className="label">
-                <span className="text-base label-text">Proifile Picture</span>
+              <label className="label" htmlFor="profilePicture">
+                <span className="text-primary text-lg">Profile Picture</span>
               </label>
               <input
                 className="file-input file-input-bordered file-input-primary w-full max-w-xs"
                 type="file"
+                id="profilePicture"
+                name="profilePicture"
                 onChange={handleImageChange}
               />
             </div>
@@ -47,36 +57,42 @@ const SignUp = () => {
               <img src={thumbUrl} alt="Thumbnail Preview" height="20" />
             )}
             <div>
-              <label className="label">
+              <label className="label" htmlFor="displayName">
                 <span className="text-primary text-lg">Display Name</span>
               </label>
               <input
                 required
                 type="text"
+                id="displayName"
+                name="displayName"
                 placeholder="Display Name"
                 className="w-full input input-bordered input-primary"
                 onChange={(e) => setDisplayName(e.target.value)}
               />
             </div>
             <div>
-              <label className="label">
+              <label className="label" htmlFor="email">
                 <span className="text-primary text-lg">Email</span>
               </label>
               <input
                 required
                 type="email"
+                id="email"
+                name="email"
                 placeholder="Email Address"
                 className="w-full input input-bordered input-primary"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
-              <label className="label">
+              <label className="label" htmlFor="password">
                 <span className="text-primary text-lg">Password</span>
               </label>
               <input
                 required
                 type="password"
+                id="password"
+                name="password"
                 placeholder="Password"
                 className="w-full input input-bordered input-primary"
                 onChange={(e) => setPassword(e.target.value)}
@@ -86,34 +102,28 @@ const SignUp = () => {
               <input
                 required
                 type="password"
+                id="confirmPassword"
+                name="confirmPassword"
                 placeholder="Confirm Password"
                 className="w-full input input-bordered input-primary"
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
             <div>
-              {error && <p className="my-5 text-error">{error}</p>}{" "}
+              <ErrorMessage />
               <button
                 type="button"
                 className="flex items-center justify-center shadow-md btn btn-block btn-primary"
-                onClick={() =>
-                  createUser(
-                    email,
-                    password,
-                    displayName,
-                    confirmPassword,
-                    image
-                  )
-                }
+                onClick={handleCreateUser}
               >
-                Create an Account
+                Create Account
               </button>
             </div>
             <div>
               <button
                 type="button"
                 className="btn btn-block bg-white text-[#4285F4] flex items-center justify-center shadow-md"
-                onClick={() => signInWithGoogle()}
+                onClick={handleSignInWithGoogle}
               >
                 <FcGoogle className="mr-2" />
                 Continue with Google

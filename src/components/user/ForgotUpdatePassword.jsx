@@ -22,12 +22,14 @@ function ForgotUpdatePassword() {
               Enter the email address you registerd with and we'll send you a
               link to reset your password.
             </span>
-            <label className="label">
+            <label className="label" htmlFor="email">
               <span className="text-base label-text">Email</span>
             </label>
             <input
               required
               type="email"
+              id="email"
+              name="email"
               placeholder="Email Address"
               className="w-full input input-bordered input-primary"
               onChange={(e) => setEmail(e.target.value)}

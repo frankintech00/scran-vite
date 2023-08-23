@@ -29,7 +29,6 @@ function AvatarDropdown() {
 
   return (
     <div className="dropdown dropdown-end" data-testid="avatarDropdown">
-      >
       <button
         tabIndex={0}
         className=" btn btn-ghost btn-circle btn-md avatar"

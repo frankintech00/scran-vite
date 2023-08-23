@@ -31,7 +31,7 @@ const UpdateProfile = () => {
                 <img src={thumbUrl} alt="Profile" height="20" />
               </div>
             </div>
-            <label className="label">
+            <label className="label" htmlFor="profilePicture">
               <span className="text-primary text-lg">
                 Choose a new profile picture
               </span>
@@ -39,16 +39,20 @@ const UpdateProfile = () => {
             <input
               className="file-input file-input-bordered file-input-primary w-full max-w-xs"
               type="file"
+              id="profilePicture"
+              name="profilePicture"
               onChange={handleImageChange}
             />
           </div>
           <div>
-            <label className="label">
+            <label className="label" htmlFor="displayName">
               <span className="text-primary text-lg">Display Name</span>
             </label>
             <input
               required
               type="text"
+              id="displayName"
+              name="displayName"
               placeholder="Display Name"
               className="w-full input input-bordered input-primary"
               value={displayName}

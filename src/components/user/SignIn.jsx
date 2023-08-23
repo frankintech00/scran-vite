@@ -10,9 +10,16 @@ function SignIn() {
 
   const { signIn, signInWithGoogle, error, loading } = useContext(UserContext);
 
+  const handleSignIn = () => {
+    signIn(email, password);
+  };
+
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle();
+  };
+
   return (
     <div className="flex flex-col items-center h-screen mt-10 text-primary">
-      <ErrorMessage />
       {loading ? (
         <Loading />
       ) : (
@@ -22,19 +29,21 @@ function SignIn() {
           </h1>
           <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
             <div>
-              <label className="label">
+              <label htmlFor="email" className="label">
                 <span className="text-primary text-lg label-text">Email</span>
               </label>
               <input
                 required
                 type="email"
+                id="email"
+                name="email"
                 placeholder="Email Address"
                 className="w-full input input-bordered input-primary"
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
-              <label className="label">
+              <label htmlFor="email" className="label">
                 <span className="text-primary text-lg label-text">
                   Password
                 </span>
@@ -42,6 +51,8 @@ function SignIn() {
               <input
                 required
                 type="password"
+                id="password"
+                name="password"
                 placeholder="Password"
                 className="w-full input input-bordered input-primary"
                 onChange={(e) => setPassword(e.target.value)}
@@ -53,11 +64,12 @@ function SignIn() {
               </Link>
             </div>
             <div>
-              {error && <p className="my-5 text-error">{error}</p>}{" "}
+              <ErrorMessage />
               <button
                 type="button"
+                data-testid="signInButton"
                 className="shadow-md btn btn-block btn-primary"
-                onClick={() => signIn(email, password)}
+                onClick={handleSignIn}
               >
                 Sign In.
               </button>
@@ -65,8 +77,9 @@ function SignIn() {
             <div>
               <button
                 type="button"
+                data-testid="signInWithGoogleButton"
                 className="btn btn-block bg-white text-[#4285F4] flex items-center justify-center shadow-md"
-                onClick={() => signInWithGoogle()}
+                onClick={handleSignInWithGoogle}
               >
                 <FcGoogle className="mr-2" />
                 Continue with Google
