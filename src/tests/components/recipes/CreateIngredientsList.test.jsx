@@ -5,7 +5,6 @@ import MockRecipeProvider from "../../mockContexts/MockRecipeProvider";
 import CreateIngredientsList from "../../../components/recipe/CreateIngredientsList";
 
 describe("CreateIngredientsList component", () => {
-  const category = "Breakfast";
   const recipe = {
     title: "Test Recipe",
     description: "Test Description",
@@ -18,7 +17,7 @@ describe("CreateIngredientsList component", () => {
     render(
       <BrowserRouter>
         <MockRecipeProvider>
-          <CreateIngredientsList category={category} recipe={recipe} />
+          <CreateIngredientsList recipe={recipe} />
         </MockRecipeProvider>
       </BrowserRouter>
     );
