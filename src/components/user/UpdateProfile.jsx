@@ -28,7 +28,7 @@ const UpdateProfile = () => {
           <div className="flex flex-col items-center space-y-6">
             <div className="avatar">
               <div className="avatar rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src={thumbUrl} alt="Profile" height="20" />
+                <img src={thumbUrl} alt={user.displayName} height="20" />
               </div>
             </div>
             <label className="label" htmlFor="profilePicture">
