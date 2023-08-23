@@ -22,9 +22,13 @@ describe("Header component", () => {
 
     const navMenuElement = screen.getByTestId("navMenu");
     expect(navMenuElement).toBeInTheDocument();
+    expect(navMenuElement.classList.contains("hidden")).toBe(true);
 
     const searchInputElement = screen.getByTestId("searchInput");
     expect(searchInputElement).toBeInTheDocument();
+
+    const signInDropdownElement = screen.getByTestId("signInDropdown");
+    expect(signInDropdownElement).toBeInTheDocument();
   });
   it("renders the Header component", () => {
     const isLoggedIn = true;
@@ -42,5 +46,8 @@ describe("Header component", () => {
         </MockUserProvider>
       </BrowserRouter>
     );
+
+    const avatarDropdownElement = screen.getByTestId("avatarDropdown");
+    expect(avatarDropdownElement).toBeInTheDocument();
   });
 });

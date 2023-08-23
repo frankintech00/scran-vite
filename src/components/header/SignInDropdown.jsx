@@ -12,7 +12,7 @@ function SignInDropdown() {
   };
 
   return (
-    <div className="dropdown dropdown-end">
+    <div className="dropdown dropdown-end" data-testid="signInDropdown">
       <button
         tabIndex={0}
         className="btn btn-primary btn-block btn-sm"
