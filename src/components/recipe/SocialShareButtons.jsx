@@ -42,7 +42,11 @@ function SocialShareButtons({ recipeName, location }) {
       >
         <EmailIcon size={32} round={true} />
       </EmailShareButton>
-      <button onClick={() => window.print()} className="button-class">
+      <button
+        onClick={() => window.print()}
+        className="button-class"
+        data-testid="printButton"
+      >
         <FaPrint size={32} />
       </button>
     </div>

@@ -1,3 +1,4 @@
+import React from "react";
 import { Rating } from "@smastrom/react-rating";
 
 function ReadRecipeReviews({ recipe, user, handleDeleteComment }) {
@@ -28,20 +29,9 @@ function ReadRecipeReviews({ recipe, user, handleDeleteComment }) {
                     By: {comment.user}
                   </p>
                 )}
-                <p className="text-xs">
-                  {comment.time
-                    .toDate()
-                    .toLocaleDateString("en-US", {
-                      weekday: "short",
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    })
-                    .replace(/,/g, "")}
-                </p>
+                {comment.time instanceof Date && (
+                  <p className="text-xs">{comment.time.toDateString()}</p>
+                )}
                 {user && user.uid === comment.uid && (
                   <button
                     className="btn btn-xs btn-warning mt-3"
