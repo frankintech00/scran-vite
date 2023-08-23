@@ -30,8 +30,6 @@ function ReadRecipeComments({
       await addComment(id, newComment, user, rating);
       setNewComment("");
       setRating(0);
-      const updatedRecipe = await getRecipe(id);
-      setRecipe(updatedRecipe);
       const updatedComments = await getComment(id);
       setComments(updatedComments);
     }
@@ -48,7 +46,7 @@ function ReadRecipeComments({
       <div className="comments font-bold text-secondary text-xl mb-3 underline">
         Reviews
       </div>
-      <div>
+      <div data-testid="comment-container">
         {comments.length > 0 ? (
           comments.map((comment) => (
             <div
@@ -84,6 +82,9 @@ function ReadRecipeComments({
               {user && user.uid === comment.uid && (
                 <button
                   className="btn btn-xs btn-warning mt-3"
+                  type="button"
+                  name="Delete Review"
+                  id={comment.commentId}
                   onClick={() => handleDeleteComment(comment.commentId)}
                 >
                   Delete Review
@@ -115,6 +116,8 @@ function ReadRecipeComments({
               </div>
               <textarea
                 className="textarea textarea-ghost w-full p-3"
+                name="addReviewTextArea"
+                id="addReviewTextArea"
                 type="textarea"
                 placeholder="Add your review here..."
                 value={newComment}
@@ -122,6 +125,9 @@ function ReadRecipeComments({
               />
             </div>
             <button
+              name="addReview"
+              id="addReview"
+              data-testid="addReview"
               type="submit"
               className="flex items-center justify-center shadow-md btn btn-primary btn-sm my-3 w-40"
             >
