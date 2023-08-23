@@ -23,12 +23,14 @@ function CreateDirectionsList({ recipe, setRecipe }) {
 
   return (
     <div>
-      <label className="label">
+      <label className="label" htmlFor="directionsList">
         <span className="text-base label-text">Directions</span>
       </label>
       <input
         className="input input-bordered input-primary w-full"
         type="text"
+        id="directionsList"
+        name="directionsList"
         placeholder="Enter a direction..."
         value={directionInput}
         onChange={(e) => setDirectionInput(e.target.value)}
@@ -49,6 +51,8 @@ function CreateDirectionsList({ recipe, setRecipe }) {
             >
               <span>{direction}</span>
               <button
+                type="button"
+                data-testid="deleteDirectionButton"
                 className="ml-6"
                 onClick={() => handleDirectionDelete(index)}
               >

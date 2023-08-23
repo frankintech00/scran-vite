@@ -1,10 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
+import { CATEGORIES } from "../../../constants/categories";
 
 import CreateCategorySelection from "../../../components/recipe/CreateCategorySelection";
 
 describe("CreateCategorySelection component", () => {
-  const category = "Breakfast";
   const recipe = {
     title: "Test Recipe",
     description: "Test Description",
@@ -13,11 +13,21 @@ describe("CreateCategorySelection component", () => {
     category: ["Breakfast"],
     image: "Test Image",
   };
+  const setRecipe = vitest.fn(); // Mock the setRecipe function
+
   it("renders the CreateCategorySelection component", () => {
     render(
       <BrowserRouter>
-        <CreateCategorySelection category={category} recipe={recipe} />
+        <CreateCategorySelection recipe={recipe} setRecipe={setRecipe} />
       </BrowserRouter>
     );
+
+    const checkboxes = screen.getAllByRole("checkbox");
+    expect(checkboxes).toHaveLength(CATEGORIES.length);
+
+    const firstCheckbox = screen.getByLabelText(CATEGORIES[0]);
+    expect(firstCheckbox).toHaveAttribute("id", CATEGORIES[0]);
+    fireEvent.click(firstCheckbox);
+    expect(setRecipe).toHaveBeenCalledTimes(1);
   });
 });
