@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 
-function AverageRating() {
-  return <div>AverageRating</div>;
-}
+// function AverageRating() {
+//   return <div>AverageRating</div>;
+// }
 
-export default AverageRating;
+// export default AverageRating;

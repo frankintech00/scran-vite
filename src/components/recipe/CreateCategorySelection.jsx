@@ -17,7 +17,7 @@ function CreateCategorySelection({ recipe, setRecipe }) {
 
   return (
     <div className="form-control">
-      <label className="label cursor-pointer">
+      <label className="label cursor-pointer" htmlFor="category">
         <span className="text-base label-text underline">Categories</span>
       </label>
       <div className="flex flex-wrap">
@@ -29,6 +29,8 @@ function CreateCategorySelection({ recipe, setRecipe }) {
             <input
               className="checkbox checkbox-primary my-1 align-middle"
               type="checkbox"
+              name={category}
+              id={category}
               value={category}
               onChange={(e) => handleCategoryChange(e, category)}
               checked={recipe.category.includes(category)}
