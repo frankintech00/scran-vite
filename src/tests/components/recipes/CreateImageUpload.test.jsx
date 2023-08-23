@@ -1,23 +1,19 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 
-import CreateImageUpload from "../../../components/recipe/CreateCategorySelection";
+import CreateImageUpload from "../../../components/recipe/CreateImageUpload";
 
 describe("CreateImageUpload component", () => {
-  const category = "Breakfast";
-  const recipe = {
-    title: "Test Recipe",
-    description: "Test Description",
-    ingredients: "Test Ingredients",
-    directions: "Test Directions",
-    category: ["Breakfast"],
-    image: "Test Image",
-  };
   it("renders the CreateImageUpload component", () => {
     render(
       <BrowserRouter>
-        <CreateImageUpload category={category} recipe={recipe} />
+        <CreateImageUpload />
       </BrowserRouter>
     );
+
+    const fileInput = screen.getByRole("file-input", { type: "file" });
+    expect(fileInput).toBeInTheDocument();
+
+    fireEvent.click(fileInput);
   });
 });

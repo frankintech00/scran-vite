@@ -23,18 +23,21 @@ function CreateIngredientsList({ recipe, setRecipe }) {
 
   return (
     <div>
-      <label className="label">
+      <label className="label" htmlFor="ingredientsList">
         <span className="text-base label-text">Ingredients</span>
       </label>
       <input
         className="input input-bordered input-primary w-full"
         type="text"
+        name="ingredientsList"
+        id="ingredientsList"
         placeholder="Enter an ingredient..."
         value={ingredientInput}
         onChange={(e) => setIngredientInput(e.target.value)}
       />
       <button
         type="button"
+        data-testid="addIngredientButton"
         className="flex items-center justify-center shadow-md btn btn-primary my-3 btn-sm"
         onClick={handleIngredientSubmit}
       >

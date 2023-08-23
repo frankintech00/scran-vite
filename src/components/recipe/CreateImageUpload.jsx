@@ -19,12 +19,15 @@ function CreateImageUpload({ onImageChange }) {
 
   return (
     <div>
-      <label className="label">
+      <label className="label" htmlFor="recipeImage">
         <span className="text-base label-text">Recipe Image</span>
       </label>
       <input
+        role="file-input"
         className="file-input file-input-bordered file-input-primary w-full max-w-xs"
         type="file"
+        id="recipeImage"
+        name="recipeImage"
         onChange={handleImageChange}
       />
       {thumbUrl && <img src={thumbUrl} alt="Thumbnail Preview" height="20" />}

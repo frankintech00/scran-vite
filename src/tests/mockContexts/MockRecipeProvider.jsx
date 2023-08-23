@@ -21,6 +21,7 @@ const MockRecipeProvider = ({ children, value }) => {
   const deleteComment = vitest.fn();
   const imageUpload = vitest.fn();
   const handleDirectionSubmit = vitest.fn();
+  const handleOnImageChange = vitest.fn();
 
   return (
     <RecipeContext.Provider
@@ -45,6 +46,7 @@ const MockRecipeProvider = ({ children, value }) => {
         deleteComment,
         imageUpload,
         handleDirectionSubmit,
+        handleOnImageChange,
       }}
     >
       {children}
