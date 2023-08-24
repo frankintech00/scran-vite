@@ -31,17 +31,31 @@ describe("AvatarDropdown component", () => {
     const buttonElement = screen.getByRole("button");
     fireEvent.click(buttonElement);
 
-    const hiParagraph = screen.getByText(/Hi - Test User/i);
-    expect(hiParagraph).toBeInTheDocument();
+    const hiUserHeading = screen.getByText(/Hi - Test User/i);
+    expect(hiUserHeading).toBeInTheDocument();
 
     const yourRecipesLink = screen.getByText(/Your Recipes/i);
-    expect(yourRecipesLink).toBeInTheDocument();
-    expect(yourRecipesLink.href).toContain("/");
+    const yourRecipesAnchor = yourRecipesLink.closest("a");
+    fireEvent.click(yourRecipesAnchor);
+    expect(window.location.pathname).toBe("/");
 
-    const logoutButton = screen.getByRole("button", { name: "Logout" });
-    expect(logoutButton).toBeInTheDocument();
-    expect(logoutButton).toHaveClass(
-      "text-white btn btn-warning btn-block btn-sm"
-    );
+    fireEvent.click(buttonElement);
+
+    const createRecipeLink = screen.getByText(/Create a Recipe/i);
+    const createRecipeAnchor = createRecipeLink.closest("a");
+    fireEvent.click(createRecipeAnchor);
+    expect(window.location.pathname).toBe("/create-recipe");
+
+    fireEvent.click(buttonElement);
+
+    const editProfileLink = screen.getByText(/Edit Profile/i);
+    const editProfileAnchor = editProfileLink.closest("a");
+    fireEvent.click(editProfileAnchor);
+    expect(window.location.pathname).toBe(`/update-profile/${user.uid}`);
+
+    fireEvent.click(buttonElement);
+
+    const logoutButton = screen.getByRole("button", { name: /Logout/i });
+    fireEvent.click(logoutButton);
   });
 });
