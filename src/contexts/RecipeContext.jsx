@@ -168,6 +168,9 @@ export const RecipeProvider = ({ children }) => {
         recipesData.push({ id: doc.id, ...doc.data() });
       });
 
+      const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+      setLastDoc(lastVisible);
+
       if (type === "FAVOURITES") {
         recipesData = recipesData.filter((recipe) =>
           favRecipeIds.includes(recipe.id)
@@ -185,6 +188,7 @@ export const RecipeProvider = ({ children }) => {
     } finally {
       setLoading(false);
       setRecipeFetchType("DEFAULT");
+      setHasMore(true);
     }
   }
 
@@ -195,12 +199,16 @@ export const RecipeProvider = ({ children }) => {
    * @throws Will throw an error if the `getDocs` promise is rejected.
    */
   const fetchNextRecipes = useCallback(async () => {
+    console.log("fetchNextRecipes called");
     // Set loading state to true
     setLoading(true);
 
     try {
       // If there is no last document, return
-      if (!lastDoc) return;
+      if (!lastDoc) {
+        console.log("LastDoc is null or undefined"); // Debugging line
+        return;
+      }
 
       // Create a query to get the next 8 recipes from the 'recipes' collection, starting after the last document
       const q = query(collection(db, "recipes"), startAfter(lastDoc), limit(8));
