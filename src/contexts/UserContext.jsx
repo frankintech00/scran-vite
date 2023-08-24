@@ -350,7 +350,7 @@ export const UserProvider = ({ children }) => {
    * @returns {Promise<void>} A promise that resolves when the user is logged out.
    * @throws Will throw an error if the `signOut` promise is rejected.
    */
-  const logout = async () => {
+  async function logout() {
     try {
       // Sign out the user
       await signOut(auth);
@@ -365,7 +365,6 @@ export const UserProvider = ({ children }) => {
       console.log("User Signed Out Successfully.");
       console.log(user);
     } catch (error) {
-      //TODO: where is the error message displayed?
       // Handle any error from the logout process
       setError(getErrorMessage(error.code));
       // Remove error after a timeout
@@ -374,7 +373,7 @@ export const UserProvider = ({ children }) => {
       console.error(error.code);
       console.error(error);
     }
-  };
+  }
 
   /**
    * Asynchronously adds a recipeId to the user's favourites array.
@@ -416,7 +415,7 @@ export const UserProvider = ({ children }) => {
     }
   }
 
-  const fetchUserFavourites = async (uid) => {
+  async function fetchUserFavourites(uid) {
     try {
       const userRef = doc(db, "users", uid);
       const userDoc = await getDoc(userRef);
@@ -429,13 +428,13 @@ export const UserProvider = ({ children }) => {
       console.error("Error fetching user favourites:", error);
     }
 
-    return []; // default return
-  };
+    return [];
+  }
 
-  const isRecipeFavourited = async (uid, recipeId) => {
+  async function isRecipeFavourited(uid, recipeId) {
     const favourites = await fetchUserFavourites(uid);
     return favourites.includes(recipeId);
-  };
+  }
 
   /**
    * `useEffect` hook to listen for changes in the authentication state.

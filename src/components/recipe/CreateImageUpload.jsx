@@ -30,7 +30,14 @@ function CreateImageUpload({ onImageChange }) {
         name="recipeImage"
         onChange={handleImageChange}
       />
-      {thumbUrl && <img src={thumbUrl} alt="Thumbnail Preview" height="20" />}
+      {thumbUrl && (
+        <img
+          src={thumbUrl}
+          alt="Thumbnail Preview"
+          height="20"
+          className="my-4 rounded-xl shadow-xl"
+        />
+      )}
     </div>
   );
 }

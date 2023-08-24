@@ -107,15 +107,15 @@ export const RecipeProvider = ({ children }) => {
    * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
    * @throws Will throw an error if the `getDocs` promise is rejected.
    */
-  const fetchRecipes = async ({
+  async function fetchRecipes({
     type = "ALL",
     uid = null,
     category = null,
     maxRecipes = 7,
-  }) => {
+  }) {
     setLoading(true);
     let q;
-    let favRecipeIds = []; // <-- Declare here, at the top of the function.
+    let favRecipeIds = [];
 
     try {
       switch (type) {
@@ -129,7 +129,7 @@ export const RecipeProvider = ({ children }) => {
           break;
 
         case "FAVOURITES":
-          favRecipeIds = await fetchUserFavourites(uid); // <-- Assign value here.
+          favRecipeIds = await fetchUserFavourites(uid);
           if (!favRecipeIds.length) {
             setRecipes([]);
             setLoading(false);
@@ -139,7 +139,7 @@ export const RecipeProvider = ({ children }) => {
           q = query(
             collection(db, "recipes"),
             orderBy("createdAt", "desc"),
-            limit(50) // or some other appropriate limit
+            limit(50)
           );
           break;
 
@@ -169,8 +169,8 @@ export const RecipeProvider = ({ children }) => {
       });
 
       if (type === "FAVOURITES") {
-        recipesData = recipesData.filter(
-          (recipe) => favRecipeIds.includes(recipe.id) // <-- Now it's accessible here.
+        recipesData = recipesData.filter((recipe) =>
+          favRecipeIds.includes(recipe.id)
         );
       }
 
@@ -186,195 +186,7 @@ export const RecipeProvider = ({ children }) => {
       setLoading(false);
       setRecipeFetchType("DEFAULT");
     }
-  };
-
-  // /**
-  //  * Asynchronously fetches a limited number of recipes from the 'recipes' collection that match a specific category, ordered by creation date.
-  //  *
-  //  * @async
-  //  * @param {string} category - The category of recipes to fetch.
-  //  * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
-  //  * @throws Will throw an error if the `getDocs` promise is rejected or if no recipes match the category.
-  //  */
-  // const fetchRecipesByCategory = useCallback(
-  //   async (category, maxRecipes = 7) => {
-  //     // Set loading state to true
-  //     setLoading(true);
-
-  //     try {
-  //       // Create a query to get 'maxRecipes' number of recipes from the 'recipes' collection that match the category, ordered by 'createdAt' in descending order
-  //       const q = query(
-  //         collection(db, "recipes"),
-  //         where("category", "array-contains", category),
-  //         orderBy("createdAt", "desc"),
-  //         limit(maxRecipes)
-  //       );
-
-  //       // Get the query snapshot
-  //       const querySnapshot = await getDocs(q);
-  //       let recipesData = [];
-
-  //       // For each document in the snapshot, add the document data to the 'recipesData' array
-  //       querySnapshot.forEach((doc) => {
-  //         recipesData.push({ id: doc.id, ...doc.data() });
-  //       });
-
-  //       // If no recipes match the category, throw an error
-  //       if (recipesData.length === 0) {
-  //         throw new Error("No recipes match your search. Please try again.");
-  //       }
-
-  //       // Get the last visible document in the snapshot
-  //       const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-
-  //       // Set the last visible document
-  //       setLastDoc(lastVisible);
-
-  //       // Set the recipes data
-  //       setRecipes(recipesData);
-  //       console.log(recipes);
-
-  //       // Check if the number of fetched recipes is less than 8
-  //       if (recipesData.length > 8) {
-  //         setHasMore(true);
-  //       } else {
-  //         setHasMore(false);
-  //       }
-
-  //       // Reset the error message
-  //       setErrorMessage(null);
-
-  //       // Log the successful fetch
-  //       console.log("Success: Recipes by category fetched successfully.");
-  //     } catch (error) {
-  //       // Log the error message
-  //       console.error(
-  //         `Error fetching recipes by category (${category}):`,
-  //         error
-  //       );
-  //       console.error(getErrorMessage(error.code));
-
-  //       // Set the error message
-  //       setErrorMessage(error.message);
-  //     } finally {
-  //       setRecipeFetchType("DEFAULT");
-  //       // Set loading state to false
-  //       setLoading(false);
-  //     }
-  //   },
-  //   []
-  // );
-
-  // /**
-  //  * Asynchronously fetches a limited number of recipes from the 'recipes' collection that were created by a specific user, ordered by creation date.
-  //  *
-  //  * @async
-  //  * @param {Object} user - The user object to search for in the recipes.
-  //  * @param {number} maxRecipes - The maximum number of recipes to fetch. Defaults to 8.
-  //  * @throws Will throw an error if the `getDocs` promise is rejected or if no recipes were created by the user.
-  //  */
-  // const fetchRecipesByUser = useCallback(async (uid, maxRecipes = 7) => {
-  //   console.log(`Fetching recipes for UID: ${uid}`);
-
-  //   // Set loading state to true
-  //   setLoading(true);
-
-  //   try {
-  //     // Create a query to get 'maxRecipes' number of recipes from the 'recipes' collection that were created by the user, ordered by 'createdAt' in descending order
-  //     const q = query(
-  //       collection(db, "recipes"),
-  //       where("userId", "==", uid),
-  //       orderBy("createdAt", "desc"),
-  //       limit(maxRecipes)
-  //     );
-
-  //     // Get the query snapshot
-  //     const querySnapshot = await getDocs(q);
-  //     let recipesData = [];
-
-  //     // For each document in the snapshot, add the document data to the 'recipesData' array
-  //     querySnapshot.forEach((doc) => {
-  //       recipesData.push({ id: doc.id, ...doc.data() });
-  //     });
-
-  //     // If no recipes were created by the user, throw an error
-  //     if (recipesData.length === 0) {
-  //       throw new Error("No recipes match your search. Please try again.");
-  //     }
-
-  //     // Get the last visible document in the snapshot
-  //     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-
-  //     // Set the last visible document
-  //     setLastDoc(lastVisible);
-
-  //     // Set the recipes data
-  //     setRecipes(recipesData);
-
-  //     // Reset the error message
-  //     setErrorMessage(null);
-
-  //     // Log the successful fetch
-  //     console.log(
-  //       `Success: Recipes by user with UID: '${uid}' fetched successfully.`
-  //     );
-  //   } catch (error) {
-  //     // Set the error message
-  //     setErrorMessage(error.message);
-
-  //     // Log the error message
-  //     console.error(
-  //       `Error fetching recipes by user with UID: '${uid}':`,
-  //       error
-  //     );
-  //     console.error(getErrorMessage(error.code));
-  //   } finally {
-  //     // Set loading state to false
-  //     setLoading(false);
-  //   }
-  // }, []);
-
-  // async function fetchRecipesByUserFavourites(uid) {
-  //   try {
-  //     // Step 1: Fetch user's favourite recipe IDs
-  //     const favRecipeIds = await fetchUserFavourites(uid);
-
-  //     // If there are no favourites, set an empty array to recipes and exit
-  //     if (!favRecipeIds.length) {
-  //       setRecipes([]);
-  //       console.log("No favourite recipes found for the user.");
-  //       return;
-  //     }
-
-  //     // Step 2: Fetch a maximum of 20 recipes from the database
-  //     const q = query(
-  //       collection(db, "recipes"),
-  //       orderBy("createdAt", "desc"),
-  //       limit(20)
-  //     );
-
-  //     const querySnapshot = await getDocs(q);
-  //     let allFetchedRecipes = [];
-
-  //     querySnapshot.forEach((doc) => {
-  //       allFetchedRecipes.push({ id: doc.id, ...doc.data() });
-  //     });
-
-  //     // Step 3: Filter the fetched recipes based on the user's favourite recipe IDs
-  //     const userFavRecipes = allFetchedRecipes.filter((recipe) =>
-  //       favRecipeIds.includes(recipe.id)
-  //     );
-
-  //     // Step 4: Update the recipes state
-  //     setRecipes(userFavRecipes);
-
-  //     console.log("Success: User's favourite recipes fetched and set.");
-  //   } catch (error) {
-  //     console.error("Error fetching recipes by user favourites:", error);
-  //   } finally {
-  //     setRecipeFetchType("DEFAULT");
-  //   }
-  // }
+  }
 
   /**
    * Asynchronously fetches the next set of recipes from the 'recipes' collection, starting after the last document fetched.
@@ -438,7 +250,7 @@ export const RecipeProvider = ({ children }) => {
    * @throws Will throw an error if the `addDoc` promise is rejected.
    * @returns {string} The ID of the newly created recipe document.
    */
-  const createRecipe = async (recipe) => {
+  async function createRecipe(recipe) {
     // Set loading state to true
     setLoading(true);
 
@@ -475,7 +287,7 @@ export const RecipeProvider = ({ children }) => {
       // Set loading state to false
       setLoading(false);
     }
-  };
+  }
 
   /**
    * Asynchronously retrieves a recipe by its ID.
@@ -525,7 +337,7 @@ export const RecipeProvider = ({ children }) => {
    * @param {Object} image - The new image to upload.
    * @throws Will throw an error if the `updateDoc` promise is rejected.
    */
-  const updateRecipe = async (id, updatedRecipe, image) => {
+  async function updateRecipe(id, updatedRecipe, image) {
     // Set loading state to true
     setLoading(true);
 
@@ -553,7 +365,7 @@ export const RecipeProvider = ({ children }) => {
       // Set loading state to false
       setLoading(false);
     }
-  };
+  }
 
   /**
    * Asynchronously deletes a recipe from the 'recipes' collection.
@@ -562,7 +374,7 @@ export const RecipeProvider = ({ children }) => {
    * @param {string} id - The ID of the recipe to delete.
    * @throws Will throw an error if the `deleteDoc` promise is rejected.
    */
-  const deleteRecipe = async (id) => {
+  async function deleteRecipe(id) {
     // Set loading state to true
     setLoading(true);
 
@@ -582,7 +394,7 @@ export const RecipeProvider = ({ children }) => {
       // Set loading state to false
       setLoading(false);
     }
-  };
+  }
 
   /**
    * Asynchronously adds a comment and rating to a recipe in the 'recipes' collection.
@@ -594,7 +406,7 @@ export const RecipeProvider = ({ children }) => {
    * @param {number} rating - The rating to add.
    * @throws Will throw an error if the `updateDoc` promise is rejected.
    */
-  const addComment = async (id, comment, user, rating) => {
+  async function addComment(id, comment, user, rating) {
     // Set loading state to true
     setLoading(true);
 
@@ -626,9 +438,9 @@ export const RecipeProvider = ({ children }) => {
       // Set loading state to false
       setLoading(false);
     }
-  };
+  }
 
-  const getComment = async (recipeId) => {
+  async function getComment(recipeId) {
     const commentsCollectionRef = collection(
       db,
       "recipes",
@@ -643,7 +455,7 @@ export const RecipeProvider = ({ children }) => {
     });
 
     return comments;
-  };
+  }
 
   /**
    * Asynchronously deletes a comment from a recipe in the 'recipes' collection.
@@ -653,10 +465,10 @@ export const RecipeProvider = ({ children }) => {
    * @param {Object} comment - The comment to delete.
    * @throws Will throw an error if the `updateDoc` promise is rejected.
    */
-  const deleteComment = async (recipeId, commentId) => {
+  async function deleteComment(recipeId, commentId) {
     const commentDocRef = doc(db, "recipes", recipeId, "comments", commentId);
     await deleteDoc(commentDocRef);
-  };
+  }
 
   /**
    * Asynchronously uploads an image to Firebase storage and returns the download URL.
@@ -666,7 +478,7 @@ export const RecipeProvider = ({ children }) => {
    * @returns {Promise<string>} The download URL of the uploaded image.
    * @throws Will throw an error if the upload fails.
    */
-  const imageUpload = async (image) => {
+  async function imageUpload(image) {
     // If there is no image, return null
     if (!image) return null;
 
@@ -694,7 +506,7 @@ export const RecipeProvider = ({ children }) => {
         }
       );
     });
-  };
+  }
 
   // Define the value to be provided to all components in the RecipeContext
   const providerValue = {

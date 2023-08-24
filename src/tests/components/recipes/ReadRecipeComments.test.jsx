@@ -26,7 +26,7 @@ describe("ReadRecipeComments component", () => {
     ),
   }));
 
-  it("renders the 'Add Review' button when user is logged in", () => {
+  it("renders the ReadRecipeComments component", () => {
     render(
       <ReadRecipeComments
         user={user}
@@ -55,5 +55,6 @@ describe("ReadRecipeComments component", () => {
 
     const addReviewButton = screen.getByRole("button", { name: "Add Review" });
     expect(addReviewButton).toBeInTheDocument();
+    fireEvent.click(addReviewButton);
   });
 });
