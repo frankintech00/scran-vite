@@ -6,15 +6,19 @@ import { Link } from "react-router-dom";
 
 function UserCard() {
   const { user } = useContext(UserContext);
-  const { fetchRecipesByUser } = useContext(RecipeContext);
+  const { setRecipeFetchType } = useContext(RecipeContext);
 
-  const handleYourRecipesClick = async () => {
-    try {
-      await fetchRecipesByUser(user.uid);
-    } catch (error) {
-      console.error("Failed to fetch user recipes:", error);
-    }
-  };
+  function handleYourRecipesClick() {
+    console.log("Clicked on Your Recipes!");
+    setRecipeFetchType("USER");
+    navigate("/");
+  }
+
+  function handleYourFavouritesClick(event) {
+    event.preventDefault();
+    setRecipeFetchType("FAVOURITES");
+    navigate("/");
+  }
 
   return (
     <div className="card bg-base-100 shadow-2xl aspect-[3/4] text-primary ">
@@ -36,7 +40,7 @@ function UserCard() {
           </Link>
           <Link>
             <button
-              onClick={handleYourRecipesClick}
+              onClick={handleYourFavouritesClick}
               className="btn btn-primary btn-xs"
             >
               Your Favourites
