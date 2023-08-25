@@ -1,10 +1,10 @@
 export const CATEGORIES = [
+  "Breakfast",
   "Cake",
   "Dessert",
-  "Soup",
+  "Dinner",
+  "Lunch",
   "Salad",
   "Snack",
-  "Breakfast",
-  "Lunch",
-  "Dinner",
+  "Soup",
 ];
