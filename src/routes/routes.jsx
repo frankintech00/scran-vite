@@ -1,3 +1,6 @@
+/**
+ * Imports React and necessary components from react-router-dom and custom components.
+ */
 import React from "react";
 import { Route, Routes as Router } from "react-router-dom";
 import {
@@ -18,18 +21,14 @@ import ProtectedRoute from "./protectedRoutes";
 import { Loading } from "../components";
 
 /**
- * AppRoutes function component
+ * Renders the routes for the application using React Router.
  *
- * This component sets up the Routes for the app.
- * It uses the react-router-dom's Router (as Routes) and Route components
- * to handle the app's navigation.
- *
- * @returns {JSX.Element} A Router component with the app's Routes.
+ * @returns {JSX.Element} The Router component with the defined routes.
  */
 function AppRoutes() {
   return (
     <Router>
-      {/* Default route that renders the HomePage  */}
+      {/* Default route that renders the HomePage */}
       <Route path="/" element={<HomePage />} />
       <Route path="/search-results" element={<SearchResultsPage />} />
       <Route path="/sign-in" element={<SignIn />} />

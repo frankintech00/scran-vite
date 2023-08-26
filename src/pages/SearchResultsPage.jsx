@@ -2,6 +2,11 @@ import { useContext } from "react";
 import { RecipeContext } from "../contexts/RecipeContext";
 import { RecipeCard } from "../components";
 
+/**
+ * Renders the Search Results page.
+ *
+ * @returns {JSX.Element} The Search Results page component.
+ */
 function SearchResultsPage() {
   const { searchResults } = useContext(RecipeContext);
 

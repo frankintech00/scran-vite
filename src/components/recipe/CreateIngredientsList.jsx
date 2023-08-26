@@ -1,9 +1,27 @@
 import { useState } from "react";
 import { FiDelete } from "react-icons/fi";
 
+/**
+ * CreateIngredientsList Component
+ *
+ * This component allows the user to create a list of ingredients
+ * for a recipe and provides options to add or delete ingredients.
+ *
+ * @param {Object} props - The component properties.
+ * @param {Object} props.recipe - The current recipe object.
+ * @param {Function} props.setRecipe - Function to update the recipe.
+ * @returns {JSX.Element} The CreateIngredientsList component.
+ */
 function CreateIngredientsList({ recipe, setRecipe }) {
+  // State to hold the current ingredient input
   const [ingredientInput, setIngredientInput] = useState("");
 
+  /**
+   * Handles the submission of an ingredient to the list.
+   *
+   * @param {Event} e - The submit event.
+   * @returns {void}
+   */
   const handleIngredientSubmit = (e) => {
     e.preventDefault();
     if (ingredientInput.trim() !== "") {
@@ -15,6 +33,12 @@ function CreateIngredientsList({ recipe, setRecipe }) {
     }
   };
 
+  /**
+   * Deletes an ingredient from the list by index.
+   *
+   * @param {number} index - The index of the ingredient to delete.
+   * @returns {void}
+   */
   const handleIngredientDelete = (index) => {
     const newIngredients = [...recipe.ingredients];
     newIngredients.splice(index, 1);
@@ -23,6 +47,7 @@ function CreateIngredientsList({ recipe, setRecipe }) {
 
   return (
     <div>
+      {/* Ingredient Label and Input */}
       <label className="label" htmlFor="ingredientsList">
         <span className="text-base label-text">Ingredients</span>
       </label>
@@ -35,6 +60,8 @@ function CreateIngredientsList({ recipe, setRecipe }) {
         value={ingredientInput}
         onChange={(e) => setIngredientInput(e.target.value)}
       />
+
+      {/* Add Ingredient Button */}
       <button
         type="button"
         data-testid="addIngredientButton"
@@ -43,6 +70,8 @@ function CreateIngredientsList({ recipe, setRecipe }) {
       >
         Add Ingredient
       </button>
+
+      {/* Ingredient List */}
       <ul className="mt-2 space-y-2">
         {recipe.ingredients &&
           recipe.ingredients.map((ingredient, index) => (

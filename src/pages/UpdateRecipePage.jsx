@@ -13,6 +13,11 @@ import {
   CreateRecipeNotes,
 } from "../components";
 
+/**
+ * Renders the Update Recipe page.
+ *
+ * @returns {JSX.Element} The Update Recipe page component.
+ */
 function UpdateRecipePage() {
   const { getRecipe, updateRecipe, imageUpload } = useContext(RecipeContext);
   const { id } = useParams(); // Assuming the ID is passed as a parameter in the route
@@ -22,15 +27,27 @@ function UpdateRecipePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchRecipe = async () => {
-      const currentRecipe = await getRecipe(id);
+    /**
+     * Fetches the recipe data based on the provided ID.
+     *
+     * @param {string} recipeId - The ID of the recipe.
+     * @returns {void}
+     */
+    const fetchRecipe = async (recipeId) => {
+      const currentRecipe = await getRecipe(recipeId);
       if (currentRecipe) {
         setRecipe(currentRecipe);
       }
     };
-    fetchRecipe();
+
+    fetchRecipe(id);
   }, [id, getRecipe]);
 
+  /**
+   * Handles the update of the recipe.
+   *
+   * @returns {void}
+   */
   const handleUpdateRecipe = async () => {
     try {
       const imageUrl = image ? await imageUpload(image) : recipe.recipeImageURL;

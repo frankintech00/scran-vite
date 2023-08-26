@@ -2,14 +2,20 @@ import { useContext, useState, useEffect } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { UserContext } from "../../contexts/UserContext";
 
+/**
+ * A component that allows users to add or remove a recipe from their favourites.
+ * @param {string} recipeId - The ID of the recipe to be favourited.
+ */
 const FavouriteRecipes = ({ recipeId }) => {
   const { user, addUserFavourites, removeUserFavourites, isRecipeFavourited } =
     useContext(UserContext);
 
   const [isFavourited, setIsFavourited] = useState(false);
 
+  /**
+   * Checks if the recipe is already favourited and sets the state accordingly.
+   */
   useEffect(() => {
-    // Check if the recipe is already favourited
     const checkFavouriteStatus = async () => {
       const favourited = await isRecipeFavourited(user.uid, recipeId);
       setIsFavourited(favourited);
@@ -20,16 +26,16 @@ const FavouriteRecipes = ({ recipeId }) => {
     }
   }, [user, recipeId, isRecipeFavourited]);
 
+  /**
+   * Toggles the favourited state and updates the database.
+   */
   const handleFavouriteClick = async () => {
-    // Toggle the favourited state and update in the database
     if (isFavourited) {
       await removeUserFavourites(user.uid, recipeId);
       setIsFavourited(false);
-      console.log("removed from favourites");
     } else {
       await addUserFavourites(user.uid, recipeId);
       setIsFavourited(true);
-      console.log("added to favourites");
     }
   };
 

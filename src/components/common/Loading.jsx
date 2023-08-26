@@ -1,5 +1,8 @@
-import React from "react";
-
+/**
+ * Renders a loading component that displays a loading message and a spinner.
+ *
+ * @returns {JSX.Element} The loading component.
+ */
 function Loading() {
   return (
     <>

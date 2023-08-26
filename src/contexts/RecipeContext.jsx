@@ -71,29 +71,38 @@ export const RecipeProvider = ({ children }) => {
   const [recipeFetchType, setRecipeFetchType] = useState("DEFAULT");
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  /**
+   * useEffect hook to handle fetching recipes based on the recipeFetchType.
+   * Executes the fetchRecipes function based on the selected recipeFetchType.
+   *
+   * @function
+   * @returns {void}
+   */
   useEffect(() => {
-    console.log("useEffect triggered with recipeFetchType:", recipeFetchType);
+    // Log the recipeFetchType when useEffect is triggered
+    "useEffect triggered with recipeFetchType:", recipeFetchType;
 
+    // Switch statement to handle different recipeFetchTypes
     switch (recipeFetchType) {
       case "USER":
-        console.log("Fetching recipes for the user:", user.uid);
+        // Log the user ID and fetch recipes for the user
+        "Fetching recipes for the user:", user.uid;
         fetchRecipes({ type: "USER", uid: user.uid });
         break;
       case "FAVOURITES":
-        console.log("Fetching recipes for the favourites:", user.uid);
+        // Log the user ID and fetch favorite recipes
+        "Fetching recipes for the favorites:", user.uid;
         fetchRecipes({ type: "FAVOURITES", uid: user.uid });
         break;
       case "ALL":
-        console.log("Fetching all recipes");
+        // Fetch all recipes with a maximum of 7 recipes
+        "Fetching all recipes";
         fetchRecipes({ type: "ALL", maxRecipes: 7 });
         break;
       case "CATEGORY":
-        console.log("Fetching category recipes for:", selectedCategory);
+        // Log the selected category and fetch category recipes
+        "Fetching category recipes for:", selectedCategory;
         fetchRecipes({ type: "CATEGORY", category: selectedCategory });
-        break;
-      default:
-        console.log("Fetching default case: all recipes");
-        fetchRecipes({ type: "ALL" });
         break;
       case "DEFAULT":
         break;
@@ -133,7 +142,7 @@ export const RecipeProvider = ({ children }) => {
           if (!favRecipeIds.length) {
             setRecipes([]);
             setLoading(false);
-            console.log("No favourite recipes found for the user.");
+            ("No favourite recipes found for the user.");
             return;
           }
           q = query(
@@ -182,7 +191,7 @@ export const RecipeProvider = ({ children }) => {
       }
 
       setRecipes(recipesData);
-      console.log("Success: Recipes fetched successfully.");
+      ("Success: Recipes fetched successfully.");
     } catch (error) {
       console.error("Error fetching recipes:", error);
     } finally {
@@ -199,14 +208,14 @@ export const RecipeProvider = ({ children }) => {
    * @throws Will throw an error if the `getDocs` promise is rejected.
    */
   const fetchNextRecipes = useCallback(async () => {
-    console.log("fetchNextRecipes called");
+    ("fetchNextRecipes called");
     // Set loading state to true
     setLoading(true);
 
     try {
       // If there is no last document, return
       if (!lastDoc) {
-        console.log("LastDoc is null or undefined"); // Debugging line
+        ("LastDoc is null or undefined"); // Debugging line
         return;
       }
 
@@ -239,7 +248,7 @@ export const RecipeProvider = ({ children }) => {
       setRecipes((oldRecipes) => [...oldRecipes, ...newRecipes]);
 
       // Log the successful fetch
-      console.log("Success: Next set of recipes fetched successfully.");
+      ("Success: Next set of recipes fetched successfully.");
     } catch (error) {
       // Log the error message
       console.error("Error fetching the next set of recipes:", error);
@@ -263,7 +272,7 @@ export const RecipeProvider = ({ children }) => {
     setLoading(true);
 
     // Log the creation process
-    console.log(`Creating recipe at ${new Date().toISOString()}`, recipe);
+    `Creating recipe at ${new Date().toISOString()}`, recipe;
 
     try {
       // If the user did not provide a recipeImageURL, use the default image URL
@@ -282,7 +291,7 @@ export const RecipeProvider = ({ children }) => {
       });
 
       // Log the successful addition of the recipe
-      console.log("Recipe added successfully with ID: ", docRef.id);
+      "Recipe added successfully with ID: ", docRef.id;
 
       // Return the ID of the newly created recipe document
       return docRef.id;
@@ -319,13 +328,13 @@ export const RecipeProvider = ({ children }) => {
       // If the document exists
       if (docSnap.exists()) {
         // Log the recipe data
-        console.log("Recipe data:", docSnap.data());
+        "Recipe data:", docSnap.data();
 
         // Return the recipe data, including the document ID
         return { id: docSnap.id, ...docSnap.data() }; // Include the document ID
       } else {
         // Log that the recipe doesn't exist
-        console.log("The recipe doesn't exist!");
+        ("The recipe doesn't exist!");
       }
     } catch (e) {
       // Log the error message
@@ -365,7 +374,7 @@ export const RecipeProvider = ({ children }) => {
       await updateDoc(docRef, updatedRecipe);
 
       // Log the successful update
-      console.log("Recipe updated successfully");
+      ("Recipe updated successfully");
     } catch (e) {
       // Log the error message
       console.error(getErrorMessage(e.code));
@@ -394,7 +403,7 @@ export const RecipeProvider = ({ children }) => {
       await deleteDoc(docRef);
 
       // Log the successful deletion
-      console.log("Recipe deleted successfully");
+      ("Recipe deleted successfully");
     } catch (e) {
       // Log the error message
       console.error(getErrorMessage(e.code));
@@ -438,7 +447,7 @@ export const RecipeProvider = ({ children }) => {
       await addDoc(commentsRef, newComment);
 
       // Log the successful addition
-      console.log("Comment and rating added successfully");
+      ("Comment and rating added successfully");
     } catch (e) {
       // Log the error message
       console.error("Error adding comment:", e);
@@ -448,6 +457,14 @@ export const RecipeProvider = ({ children }) => {
     }
   }
 
+  /**
+   * Asynchronously retrieves comments for a recipe from the database.
+   *
+   * @async
+   * @param {string} recipeId - The ID of the recipe to retrieve comments for.
+   * @returns {Promise<Array>} A promise that resolves to an array of comments.
+   * @throws Will throw an error if there is an error retrieving the comments from the database.
+   */
   async function getComment(recipeId) {
     const commentsCollectionRef = collection(
       db,
@@ -504,7 +521,7 @@ export const RecipeProvider = ({ children }) => {
         },
         (error) => {
           // Log the error and reject the promise
-          console.log(error);
+          error;
           reject(error);
         },
         async () => {
@@ -545,7 +562,12 @@ export const RecipeProvider = ({ children }) => {
     setSearchResults, // Function to update the search results
   };
 
-  // Return the RecipeContext.Provider component with the providerValue
+  /**
+   * Renders a Provider component to provide a value to child components using RecipeContext.
+   *
+   * @param {Object} providerValue - The value to be provided to child components.
+   * @returns {JSX.Element} The Provider component with the provided value.
+   */
   return (
     <RecipeContext.Provider value={providerValue}>
       {children}

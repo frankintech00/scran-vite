@@ -1,3 +1,7 @@
+/**
+ * Component for updating user profile.
+ * @component
+ */
 import { useContext, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
@@ -15,6 +19,10 @@ const SignUp = () => {
     useContext(UserContext);
   const [displayName, setDisplayName] = useState("");
 
+  /**
+   * Handles the change event of the profile picture input.
+   * @param {object} e - The event object.
+   */
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -23,10 +31,16 @@ const SignUp = () => {
     }
   };
 
+  /**
+   * Handles the creation of a new user account.
+   */
   const handleCreateUser = () => {
     createUser(email, password, displayName, confirmPassword, image);
   };
 
+  /**
+   * Handles the sign in with Google.
+   */
   const handleSignInWithGoogle = () => {
     signInWithGoogle();
   };

@@ -7,7 +7,6 @@
  */
 
 const getErrorMessage = (errorCode) => {
-  console.log("Error code:", errorCode);
   switch (errorCode) {
     case "permission-denied":
       return "You don't have permission to access the requested resource.";

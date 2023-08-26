@@ -8,6 +8,11 @@ import {
   CategoryBadges,
 } from "../components";
 
+/**
+ * Renders the Home Page component.
+ *
+ * @returns {JSX.Element} The Home Page component.
+ */
 function HomePage() {
   const { recipes, fetchNextRecipes, hasMore, fetchRecipes } =
     useContext(RecipeContext);

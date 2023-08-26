@@ -17,7 +17,6 @@ function AvatarDropdown() {
   };
 
   function handleYourRecipesClick() {
-    console.log("Clicked on Your Recipes!");
     setRecipeFetchType("USER");
     navigate("/");
   }

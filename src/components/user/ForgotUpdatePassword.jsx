@@ -2,11 +2,15 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 
+/**
+ * Component for handling the password reset process.
+ * @returns {JSX.Element} ForgotUpdatePassword component.
+ */
 function ForgotUpdatePassword() {
   const [email, setEmail] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const { sendPasswordReset, error, setError } = useContext(UserContext);
+  const { sendPasswordReset, error } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -19,7 +23,7 @@ function ForgotUpdatePassword() {
         <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
           <div>
             <span className="mb-12 text-base">
-              Enter the email address you registerd with and we'll send you a
+              Enter the email address you registered with, and we'll send you a
               link to reset your password.
             </span>
             <label className="label" htmlFor="email">
@@ -41,9 +45,7 @@ function ForgotUpdatePassword() {
               onClick={async () => {
                 const result = await sendPasswordReset(email);
                 if (result) {
-                  setError(null);
                   setIsDialogOpen(true);
-                  console.log(isDialogOpen);
                 }
               }}
             >
@@ -62,7 +64,7 @@ function ForgotUpdatePassword() {
                 <div className="modal-action">
                   <button
                     className="btn btn-primary btn-sm"
-                    onClick={() => navigate("/login")}
+                    onClick={() => navigate("/sign-in")}
                   >
                     Sign in with New Password
                   </button>

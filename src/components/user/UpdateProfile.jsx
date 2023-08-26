@@ -2,12 +2,20 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 
+/**
+ * A component that allows the user to update their profile information.
+ * @returns {JSX.Element} The UpdateProfile component.
+ */
 const UpdateProfile = () => {
   const { user, updateUser, error } = useContext(UserContext);
   const [displayName, setDisplayName] = useState(user.displayName);
   const [image, setImage] = useState(null);
   const [thumbUrl, setThumbUrl] = useState(user.photoURL);
 
+  /**
+   * Handles the change event of the profile picture input element.
+   * @param {Object} e - The change event object.
+   */
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);

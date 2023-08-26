@@ -2,6 +2,26 @@ import React, { useEffect, useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import { Link } from "react-router-dom";
 
+/**
+ * ReadRecipeComments Component.
+ *
+ * This component displays comments and ratings of a recipe.
+ * Users can also add their comments and ratings if they are logged in.
+ *
+ * @param {Object} props - Component properties.
+ * @param {Object|null} props.user - User object containing user information.
+ * @param {boolean} props.isLoggedIn - Whether the user is logged in.
+ * @param {number} props.rating - Current rating value.
+ * @param {Function} props.setRating - Function to set rating value.
+ * @param {string} props.newComment - New comment string.
+ * @param {Function} props.setNewComment - Function to set new comment.
+ * @param {Function} props.addComment - Function to add a comment.
+ * @param {Function} props.deleteComment - Function to delete a comment.
+ * @param {string} props.id - The ID of the recipe.
+ * @param {Function} props.getComment - Function to get comments of the recipe.
+ *
+ * @returns {JSX.Element} - The ReadRecipeComments component.
+ */
 function ReadRecipeComments({
   user,
   isLoggedIn,
@@ -16,6 +36,7 @@ function ReadRecipeComments({
 }) {
   const [comments, setComments] = useState([]);
 
+  // Fetch comments when the component mounts or the recipe ID changes
   useEffect(() => {
     async function fetchComments() {
       const fetchedComments = await getComment(id);
@@ -24,6 +45,7 @@ function ReadRecipeComments({
     fetchComments();
   }, [id, getComment]);
 
+  // Handles adding a new comment
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (newComment.trim() !== "" || rating) {
@@ -35,6 +57,7 @@ function ReadRecipeComments({
     }
   };
 
+  // Handles deleting a comment
   const handleDeleteComment = async (commentId) => {
     await deleteComment(id, commentId);
     const updatedComments = await getComment(id);

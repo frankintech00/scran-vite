@@ -4,16 +4,29 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { ErrorMessage, Loading } from "..";
 
+/**
+ * A component that renders a sign-in form for users to sign in to their account.
+ * @function
+ * @returns {JSX.Element} A JSX element that renders the sign-in form.
+ */
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { signIn, signInWithGoogle, error, loading } = useContext(UserContext);
 
+  /**
+   * A function that handles the sign-in process when the user clicks the "Sign In" button.
+   * @function
+   */
   const handleSignIn = () => {
     signIn(email, password);
   };
 
+  /**
+   * A function that handles the sign-in process with Google when the user clicks the "Continue with Google" button.
+   * @function
+   */
   const handleSignInWithGoogle = () => {
     signInWithGoogle();
   };

@@ -1,14 +1,16 @@
-// Import the functions you need from the SDKs you need
+/**
+ * Imports necessary modules and components from Firebase and other libraries.
+ */
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-
+/**
+ * Configuration object for Firebase.
+ *
+ * @type {Object}
+ */
 const firebaseConfig = {
   apiKey: "AIzaSyA2I7cq6ALajxVnegz8wx7Pv4bTIvDcnnU",
   authDomain: "scran-vite-2b11a.firebaseapp.com",
@@ -19,11 +21,38 @@ const firebaseConfig = {
   measurementId: "G-JVS26LETH9",
 };
 
-// Initialize Firebase
+/**
+ * Initializes the Firebase app.
+ *
+ * @type {Object}
+ */
 const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
+/**
+ * Firebase authentication instance.
+ *
+ * @type {Object}
+ */
 export const auth = getAuth(app);
-export const storage = getStorage(app);
+
+/**
+ * Firebase authentication provider for Google sign-in.
+ *
+ * @type {Object}
+ */
 export const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
+
+/**
+ * Firebase Firestore instance.
+ *
+ * @type {Object}
+ */
+export const db = getFirestore(app);
+
+/**
+ * Firebase storage instance.
+ *
+ * @type {Object}
+ */
+export const storage = getStorage(app);

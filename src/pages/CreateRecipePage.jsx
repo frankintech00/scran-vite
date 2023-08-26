@@ -13,6 +13,11 @@ import {
   CreateRecipeNotes,
 } from "../components";
 
+/**
+ * Renders the Create Recipe page.
+ *
+ * @returns {JSX.Element} The Create Recipe page component.
+ */
 function CreateRecipePage() {
   const { createRecipe, imageUpload, recipe, setRecipe } =
     useContext(RecipeContext);
@@ -37,16 +42,26 @@ function CreateRecipePage() {
     });
   }, [setRecipe]);
 
+  /**
+   * Handles the creation of a new recipe.
+   *
+   * @param {Object} recipe - The recipe object.
+   * @returns {void}
+   */
   const handleCreateRecipe = async (recipe) => {
     const imageUrl = await handleUploadImage();
     const recipeId = await createRecipe({
       ...recipe,
       recipeImageURL: imageUrl,
     });
-    console.log(recipeId);
     navigate(`/recipe/${recipeId}`);
   };
 
+  /**
+   * Handles the upload of an image.
+   *
+   * @returns {Promise<string>} The URL of the uploaded image.
+   */
   const handleUploadImage = async () => {
     let imageUrl = null;
     if (image) {

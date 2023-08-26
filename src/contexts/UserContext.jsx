@@ -99,7 +99,7 @@ export const UserProvider = ({ children }) => {
           await uploadBytes(storageRef, image);
 
           const downloadURL = await getDownloadURL(storageRef);
-          console.log("Download URL:", downloadURL);
+          "Download URL:", downloadURL;
 
           await updateProfile(user, {
             displayName: displayName,
@@ -128,8 +128,8 @@ export const UserProvider = ({ children }) => {
         setUser(user);
         setIsLoggedIn(true);
 
-        console.log("User created successfully.");
-        console.log(user);
+        ("User created successfully.");
+        user;
 
         navigate("/");
       }
@@ -164,8 +164,8 @@ export const UserProvider = ({ children }) => {
         setError(null);
 
         //console log user object
-        console.log("User Signed In Successfully.");
-        console.log(user);
+        ("User Signed In Successfully.");
+        user;
 
         // Set user state to user object
         setUser(user);
@@ -212,45 +212,45 @@ export const UserProvider = ({ children }) => {
 
     // Set photoURL to user's current photoURL
     let photoURL = user.photoURL;
-    console.log("Initial photoURL:", photoURL);
+    "Initial photoURL:", photoURL;
 
     try {
       // Set loading to true before starting the user update process
       setLoading(true);
-      console.log("Starting user update process...");
+      ("Starting user update process...");
 
       // If an image is provided
       if (image) {
-        console.log("Image provided. Uploading...");
+        ("Image provided. Uploading...");
         // Create a reference to the storage location
         const storageRef = ref(storage, `profile_pictures/${user.uid}`);
         // Upload the image
         await uploadBytes(storageRef, image);
-        console.log("Image uploaded successfully.");
+        ("Image uploaded successfully.");
 
         // Get the download URL and update photoURL
         photoURL = await getDownloadURL(storageRef);
-        console.log("New photoURL:", photoURL);
+        "New photoURL:", photoURL;
       } else {
-        console.log("No new image provided. Using existing photoURL.");
+        ("No new image provided. Using existing photoURL.");
       }
 
       // Update user profile with displayName and updated photoURL
-      console.log("Updating user profile...");
+      ("Updating user profile...");
       await updateProfile(user, {
         displayName: displayName,
         photoURL: photoURL,
       });
-      console.log("User profile updated.");
-      console.log(user);
+      ("User profile updated.");
+      user;
       // Reload user data
       await user.reload();
       setUser(user);
-      console.log("User data reloaded.");
+      ("User data reloaded.");
 
       // Navigate to user home page
       navigate("/");
-      console.log("Navigating to user home page.");
+      ("Navigating to user home page.");
     } catch (error) {
       // Handle any error from user updating process.
       setError(getErrorMessage(error.code));
@@ -258,12 +258,12 @@ export const UserProvider = ({ children }) => {
       // Remove error after a timeout
       setTimeout(() => {
         setError(null);
-        console.log("Error message cleared.");
+        ("Error message cleared.");
       }, 10000);
     } finally {
       // Set loading to false
       setLoading(false);
-      console.log("Loading set to false.");
+      ("Loading set to false.");
     }
   }
 
@@ -309,8 +309,8 @@ export const UserProvider = ({ children }) => {
 
       // Set error to null and log user data
       setError(null);
-      console.log("User Signed In with Google successfully.");
-      console.log(user);
+      ("User Signed In with Google successfully.");
+      user;
     } catch (error) {
       // Handle any error from Google sign-in process
       setError(getErrorMessage(error.code));
@@ -341,7 +341,7 @@ export const UserProvider = ({ children }) => {
       await sendPasswordResetEmail(auth, email);
       // Set error to null and log success message
       setError(null);
-      console.log("Password reset email sent.");
+      ("Password reset email sent.");
       // Return true if email was sent successfully
       return true;
     } catch (error) {
@@ -376,8 +376,8 @@ export const UserProvider = ({ children }) => {
       navigate("/");
       // Set error to null and log success message
       setError(null);
-      console.log("User Signed Out Successfully.");
-      console.log(user);
+      ("User Signed Out Successfully.");
+      user;
     } catch (error) {
       // Handle any error from the logout process
       setError(getErrorMessage(error.code));
@@ -403,7 +403,7 @@ export const UserProvider = ({ children }) => {
       await updateDoc(userRef, {
         favourites: arrayUnion(recipeId),
       });
-      console.log("Added recipeId to favourites successfully.");
+      ("Added recipeId to favourites successfully.");
     } catch (error) {
       console.error("Error adding recipeId to favourites:", error);
     }
@@ -423,30 +423,56 @@ export const UserProvider = ({ children }) => {
       await updateDoc(userRef, {
         favourites: arrayRemove(recipeId),
       });
-      console.log("Removed recipeId from favourites successfully.");
+      ("Removed recipeId from favourites successfully.");
     } catch (error) {
       console.error("Error removing recipeId from favourites:", error);
     }
   }
 
+  /**
+   * Asynchronously fetches the favorite items of a user from the database.
+   *
+   * @async
+   * @param {string} uid - The ID of the user.
+   * @returns {Promise<Array>} A promise that resolves to an array of favorite items.
+   * @throws Will log an error message if there is an error fetching the user favorites.
+   */
   async function fetchUserFavourites(uid) {
     try {
+      // Get a reference to the user document
       const userRef = doc(db, "users", uid);
+
+      // Fetch the user document
       const userDoc = await getDoc(userRef);
 
       if (userDoc.exists()) {
+        // Extract the user data
         const userData = userDoc.data();
+
+        // Return the favorites array, or an empty array if it doesn't exist
         return userData.favourites || [];
       }
     } catch (error) {
       console.error("Error fetching user favourites:", error);
     }
 
+    // Return an empty array if there was an error or the user document doesn't exist
     return [];
   }
 
+  /**
+   * Asynchronously checks if a recipe is favorited by a user.
+   *
+   * @async
+   * @param {string} uid - The ID of the user.
+   * @param {string} recipeId - The ID of the recipe to check.
+   * @returns {Promise<boolean>} A promise that resolves to a boolean indicating if the recipe is favorited.
+   */
   async function isRecipeFavourited(uid, recipeId) {
+    // Fetch the user's favorites
     const favourites = await fetchUserFavourites(uid);
+
+    // Check if the recipe ID is included in the favorites array
     return favourites.includes(recipeId);
   }
 
@@ -481,25 +507,27 @@ export const UserProvider = ({ children }) => {
    * @type {Object}
    */
   const providerValue = {
-    user,
-    isLoggedIn,
-    createUser,
-    signIn,
-    signInWithGoogle,
-    updateUser,
-    sendPasswordReset,
-    logout,
-    error,
-    getErrorMessage,
-    loading,
-    addUserFavourites,
-    removeUserFavourites,
-    fetchUserFavourites,
-    isRecipeFavourited,
+    user, // user state
+    isLoggedIn, // isLoggedIn state
+    createUser, // createUser function
+    signIn, // signIn function
+    signInWithGoogle, // signInWithGoogle function
+    updateUser, // updateUser function
+    sendPasswordReset, // sendPasswordReset function
+    logout, // logout function
+    error, // error state
+    getErrorMessage, // getErrorMessage function
+    loading, // loading state
+    addUserFavourites, // addUserFavourites function
+    removeUserFavourites, // removeUserFavourites function
+    fetchUserFavourites, // fetchUserFavourites function
+    isRecipeFavourited, // isRecipeFavourited function
   };
 
   /**
-   * Returns a UserContext.Provider with the value prop set to providerValue.
+   * Renders a Provider component to provide a value to child components using React Context.
+   *
+   * @returns {JSX.Element} The Provider component with the provided value.
    */
   return (
     <UserContext.Provider value={providerValue}>

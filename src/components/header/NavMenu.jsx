@@ -17,7 +17,6 @@ function NavMenu({ isDropdown }) {
   const navigate = useNavigate();
 
   function handleYourRecipesClick() {
-    console.log("Clicked on Your Recipes!");
     setRecipeFetchType("USER");
     navigate("/");
   }

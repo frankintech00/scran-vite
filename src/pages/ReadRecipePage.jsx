@@ -20,6 +20,11 @@ import {
 } from "../components";
 import { useParams, useLocation } from "react-router-dom";
 
+/**
+ * Renders the Read Recipe page.
+ *
+ * @returns {JSX.Element} The Read Recipe page component.
+ */
 function ReadRecipePage() {
   const { getRecipe, deleteRecipe, addComment, getComment, deleteComment } =
     useContext(RecipeContext);
@@ -33,9 +38,18 @@ function ReadRecipePage() {
   const [rating, setRating] = useState(0);
 
   useEffect(() => {
-    getRecipe(id).then((recipeData) => {
+    /**
+     * Fetches the recipe data based on the provided ID.
+     *
+     * @param {string} recipeId - The ID of the recipe.
+     * @returns {void}
+     */
+    const fetchRecipe = async (recipeId) => {
+      const recipeData = await getRecipe(recipeId);
       setRecipe(recipeData);
-    });
+    };
+
+    fetchRecipe(id);
   }, [id, getRecipe]);
 
   if (!recipe) {

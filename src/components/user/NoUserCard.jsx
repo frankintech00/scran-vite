@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import { Logo } from "../../components";
 
+/**
+ * Component for displaying the user card.
+ * @returns {JSX.Element} User card component.
+ */
 function UserCard() {
   return (
     <div className="card bg-base-100 shadow-2xl aspect-[3/4] text-primary">

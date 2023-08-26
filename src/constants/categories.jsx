@@ -1,3 +1,8 @@
+/**
+ * Array of recipe categories.
+ *
+ * @type {string[]}
+ */
 export const CATEGORIES = [
   "Breakfast",
   "Cake",

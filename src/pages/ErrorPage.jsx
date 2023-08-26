@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import Cat from "../assets/cat.jpg";
 
+/**
+ * Renders the Error Page component.
+ *
+ * @returns {JSX.Element} The Error Page component.
+ */
 const ErrorPage = () => {
   return (
     <div className="flex flex-col items-center justify-top min-h-screen bg-primary bg-opacity-5 text-center shadow-xl rounded-lg py-10">

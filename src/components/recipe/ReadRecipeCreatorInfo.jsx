@@ -1,6 +1,18 @@
 import { BiUser } from "react-icons/bi";
 
+/**
+ * ReadRecipeCreatorInfo Component.
+ *
+ * This component displays the creator's information along with the date of creation.
+ *
+ * @param {Object} props - Component properties.
+ * @param {string|null} props.photoURL - The URL of the creator's profile photo.
+ * @param {string|null} props.displayName - The display name of the creator.
+ * @param {Object} props.createdAt - A Firebase timestamp object representing the date of creation.
+ * @returns {JSX.Element} The ReadRecipeCreatorInfo component.
+ */
 function ReadRecipeCreatorInfo({ photoURL, displayName, createdAt }) {
+  // Convert the Firebase timestamp to a readable string format
   const publishedDate = createdAt
     .toDate()
     .toLocaleString("en-US", {
@@ -16,6 +28,7 @@ function ReadRecipeCreatorInfo({ photoURL, displayName, createdAt }) {
 
   return (
     <div className="flex items-center md:w-1/2">
+      {/* Display profile photo or a default icon */}
       {photoURL ? (
         <img
           src={photoURL}
@@ -29,12 +42,14 @@ function ReadRecipeCreatorInfo({ photoURL, displayName, createdAt }) {
       )}
 
       <div className="flex flex-col">
+        {/* Display the creator's name */}
         <div className="text-lg">
           By{" "}
           <span className="underline font-semibold font-serif text-secondary">
             {displayName || "Anonymous"}
           </span>
         </div>
+        {/* Display the date of creation */}
         <div>Published: {publishedDate}</div>
       </div>
     </div>
