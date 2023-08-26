@@ -55,10 +55,16 @@ function ReadRecipePage() {
             displayName={recipe ? recipe.creatorDisplayName : ""}
             createdAt={recipe ? recipe.createdAt : new Date()}
           />
+
           <div className="md:w-1/2 flex justify-end">
-            <p className="text-lg"> Save this Recipe</p>
-            <FavouriteRecipes recipeId={id} />
+            {isLoggedIn && (
+              <>
+                <p className="text-lg"> Save this Recipe</p>
+                <FavouriteRecipes recipeId={id} />
+              </>
+            )}
           </div>
+
           <ReadRecipeRating recipe={recipe} />
           <div className="flex flex-col gap-1 my-4 w-1/2 items-end">
             <SocialShareButtons
