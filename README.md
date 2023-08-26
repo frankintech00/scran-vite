@@ -22,53 +22,41 @@ A cross-platform, user-friendly recipe sharing and management application develo
 
 ---
 
-## Non-Functional Requirements
-
-- **Reliability**: Ensured through thorough testing and error handling.
-- **Scalability**: Designed to handle increased usage and data.
-- **Security**: High-level security with Firebase for user authentication.
-- **Performance**: Optimized for minimal loading times and efficiency.
-
----
-
 ## Installation
 
 ### Prerequisites
 
 Make sure you have Node.js and npm installed.
 
-\`\`\`bash
+# template-vite-react-tailwind-v3
+
+- **template of:** vite + react
+- **tailwindcss:** v3.x
+
+## Started
+
+```bash
 yarn
-
 # or `npm install`
-
-\`\`\`
+```
 
 ---
 
 ## Development
 
-Start the development server.
-
-\`\`\`bash
+```bash
 yarn dev
-
 # or `npm run dev`
-
-\`\`\`
+```
 
 ---
 
 ## Build
 
-Compile and bundle the app for deployment.
-
-\`\`\`bash
+```bash
 yarn build
-
 # or `npm run build`
-
-\`\`\`
+```
 
 ---
 
@@ -83,7 +71,3 @@ The app is deployed on Firebase Hosting.
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ---
-
-<p align="center">
-<img src="./powered-by-vitawind-bright.png">
-</p>
