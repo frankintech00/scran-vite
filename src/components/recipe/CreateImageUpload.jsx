@@ -24,7 +24,7 @@ function CreateImageUpload({ onImageChange }) {
       </label>
       <input
         role="file-input"
-        className="file-input file-input-bordered file-input-primary w-full max-w-xs"
+        className="file-input file-input-bordered file-input-primary file-input-sm w-full max-w-xs"
         type="file"
         id="recipeImage"
         name="recipeImage"

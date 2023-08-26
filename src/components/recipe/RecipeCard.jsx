@@ -2,12 +2,14 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Rating } from "@smastrom/react-rating";
 import { RecipeContext } from "../../contexts/RecipeContext";
+import { UserContext } from "../../contexts/UserContext";
 import { FavouriteRecipes } from "..";
 
 function RecipeCard({ recipe }) {
   const id = recipe.id ? recipe.id : recipe.objectID;
 
   const { setRecipeFetchType, setSelectedCategory } = useContext(RecipeContext);
+  const { isLoggedIn } = useContext(UserContext);
 
   const handleCategoryClick = (cat) => {
     setSelectedCategory(cat);
@@ -44,7 +46,7 @@ function RecipeCard({ recipe }) {
                 </div>
               ))}{" "}
           </div>
-          <FavouriteRecipes recipeId={id} />
+          {isLoggedIn && <FavouriteRecipes recipeId={id} />}
         </div>
         <div className="card-actions">
           <Link to={`/recipe/${recipe.id}`}>

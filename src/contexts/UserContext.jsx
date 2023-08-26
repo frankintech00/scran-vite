@@ -284,6 +284,20 @@ export const UserProvider = ({ children }) => {
       // Sign in using a popup window
       const { user } = await signInWithPopup(auth, provider);
 
+      // Check if the user document already exists
+      const userRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userRef);
+
+      // If the user doesn't already exist, create a new document in the 'users' collection
+      if (!userDoc.exists()) {
+        await setDoc(userRef, {
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          favourites: [],
+        });
+      }
+
       // Set user state with the signed-in user data
       setUser(user);
 
