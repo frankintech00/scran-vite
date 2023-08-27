@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scran Documentation components/user/UpdateProfile.jsx</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+             
+                <a class="image" href="index.html">
+                    <img src="../assets/scran-logo.png" alt="logo">
+                </a>
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Scran | A Recipe App for the Web</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#AppRoutes">AppRoutes</a></li><li><a href="global.html#AverageRating">AverageRating</a></li><li><a href="global.html#CATEGORIES">CATEGORIES</a></li><li><a href="global.html#CategoryBadges">CategoryBadges</a></li><li><a href="global.html#CreateCategorySelection">CreateCategorySelection</a></li><li><a href="global.html#CreateDirectionsList">CreateDirectionsList</a></li><li><a href="global.html#CreateImageUpload">CreateImageUpload</a></li><li><a href="global.html#CreateIngredientsList">CreateIngredientsList</a></li><li><a href="global.html#CreateRecipeDescription">CreateRecipeDescription</a></li><li><a href="global.html#CreateRecipeInfo">CreateRecipeInfo</a></li><li><a href="global.html#CreateRecipeNotes">CreateRecipeNotes</a></li><li><a href="global.html#CreateRecipePage">CreateRecipePage</a></li><li><a href="global.html#CreateRecipeTitle">CreateRecipeTitle</a></li><li><a href="global.html#DIFFICULTIES">DIFFICULTIES</a></li><li><a href="global.html#ErrorMessage">ErrorMessage</a></li><li><a href="global.html#ErrorPage">ErrorPage</a></li><li><a href="global.html#FavouriteRecipes">FavouriteRecipes</a></li><li><a href="global.html#ForgotUpdatePassword">ForgotUpdatePassword</a></li><li><a href="global.html#HomePage">HomePage</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#Logo">Logo</a></li><li><a href="global.html#ProtectedRoute">ProtectedRoute</a></li><li><a href="global.html#ReadRecipeButtons">ReadRecipeButtons</a></li><li><a href="global.html#ReadRecipeCategories">ReadRecipeCategories</a></li><li><a href="global.html#ReadRecipeComments">ReadRecipeComments</a></li><li><a href="global.html#ReadRecipeCreatorInfo">ReadRecipeCreatorInfo</a></li><li><a href="global.html#ReadRecipeDescription">ReadRecipeDescription</a></li><li><a href="global.html#ReadRecipeDirections">ReadRecipeDirections</a></li><li><a href="global.html#ReadRecipeImage">ReadRecipeImage</a></li><li><a href="global.html#ReadRecipeInfo">ReadRecipeInfo</a></li><li><a href="global.html#ReadRecipeIngredients">ReadRecipeIngredients</a></li><li><a href="global.html#ReadRecipeNotes">ReadRecipeNotes</a></li><li><a href="global.html#ReadRecipePage">ReadRecipePage</a></li><li><a href="global.html#ReadRecipeRating">ReadRecipeRating</a></li><li><a href="global.html#ReadRecipeReviews">ReadRecipeReviews</a></li><li><a href="global.html#ReadRecipeTitle">ReadRecipeTitle</a></li><li><a href="global.html#RecipeCard">RecipeCard</a></li><li><a href="global.html#SearchResultsPage">SearchResultsPage</a></li><li><a href="global.html#SignIn">SignIn</a></li><li><a href="global.html#SocialShareButtons">SocialShareButtons</a></li><li><a href="global.html#UpdateProfile">UpdateProfile</a></li><li><a href="global.html#UpdateRecipePage">UpdateRecipePage</a></li><li><a href="global.html#UserCard">UserCard</a></li><li><a href="global.html#UserProvider">UserProvider</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#auth">auth</a></li><li><a href="global.html#categories">categories</a></li><li><a href="global.html#db">db</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#getErrorMessage">getErrorMessage</a></li><li><a href="global.html#provider">provider</a></li><li><a href="global.html#storage">storage</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/user/UpdateProfile.jsx</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
+
+/**
+ * A component that allows the user to update their profile information.
+ * @returns {JSX.Element} The UpdateProfile component.
+ */
+const UpdateProfile = () => {
+  const { user, updateUser, error } = useContext(UserContext);
+  const [displayName, setDisplayName] = useState(user.displayName);
+  const [image, setImage] = useState(null);
+  const [thumbUrl, setThumbUrl] = useState(user.photoURL);
+
+  /**
+   * Handles the change event of the profile picture input element.
+   * @param {Object} e - The change event object.
+   */
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+
+      // To preview the image
+      const url = URL.createObjectURL(e.target.files[0]);
+      setThumbUrl(url);
+    }
+  };
+
+  return (
+    &lt;div className="flex flex-col items-center h-screen mt-10 text-primary">
+      &lt;div className="w-full max-w-md p-6 rounded-lg shadow-2xl  lg:max-w-xl">
+        &lt;h1 className="mb-6 text-3xl font-semibold text-center">
+          Edit Profile
+        &lt;/h1>
+        &lt;form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+          &lt;div className="flex flex-col items-center space-y-6">
+            &lt;div className="avatar">
+              &lt;div className="avatar rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                &lt;img src={thumbUrl} alt={user.displayName} height="20" />
+              &lt;/div>
+            &lt;/div>
+            &lt;label className="label" htmlFor="profilePicture">
+              &lt;span className="text-primary text-lg">
+                Choose a new profile picture
+              &lt;/span>
+            &lt;/label>
+            &lt;input
+              className="file-input file-input-bordered file-input-primary w-full max-w-xs"
+              type="file"
+              id="profilePicture"
+              name="profilePicture"
+              onChange={handleImageChange}
+            />
+          &lt;/div>
+          &lt;div>
+            &lt;label className="label" htmlFor="displayName">
+              &lt;span className="text-primary text-lg">Display Name&lt;/span>
+            &lt;/label>
+            &lt;input
+              required
+              type="text"
+              id="displayName"
+              name="displayName"
+              placeholder="Display Name"
+              className="w-full input input-bordered input-primary"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+            />
+          &lt;/div>
+          &lt;div>
+            &lt;p className="text-red-700 mb-4 text-lg">{user.email}&lt;/p>
+            &lt;h3 className="text-primary">
+              You can't change the e-mail address you signed up with.
+            &lt;/h3>
+          &lt;/div>
+          &lt;div>
+            &lt;h3 className="text-primary mb-2">
+              If you want to change your password, click the link below.
+            &lt;/h3>
+            &lt;Link to="/forgot-password" className="underline link-accent">
+              Change your password
+            &lt;/Link>
+          &lt;/div>
+          &lt;div>
+            {error &amp;&amp; &lt;p className="my-5 text-error">{error}&lt;/p>}{" "}
+            &lt;button
+              type="button"
+              className="flex items-center justify-center shadow-md btn btn-block btn-primary"
+              onClick={() => updateUser(displayName, image)}
+            >
+              Update Profile
+            &lt;/button>
+          &lt;/div>
+        &lt;/form>
+      &lt;/div>
+    &lt;/div>
+  );
+};
+
+export default UpdateProfile;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>
