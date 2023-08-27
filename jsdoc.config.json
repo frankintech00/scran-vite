@@ -23,7 +23,6 @@
     },
     "better-docs": {
       "name": "Scran | A Recipe App for the Web",
-      "logo": "./src/assets/logo.png",
       "title": "Scran Documentation"
     }
   }
