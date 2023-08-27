@@ -19,7 +19,7 @@ function Header() {
   const navigate = useNavigate();
 
   return (
-    <header className="w-full fixed inset-x-0 top-0 z-50 flex flex-wrap justify-around bg-base-100 shadow space-y-1 lg:space-y-0 p-2">
+    <header className="w-full fixed inset-x-0 top-0 z-50 flex flex-wrap justify-around bg-base-100 shadow space-y-2 lg:space-y-0 p-2">
       <div className="w-10/12 order-2 lg:w-2/12 lg:order-1 flex justify-center items-center">
         <div
           className="link"
@@ -33,15 +33,17 @@ function Header() {
           <Logo className="w-32 md:w-44" />
         </div>
       </div>
-      <div
-        className="dropdown w-2/12 order-1 lg:hidden flex justify-center"
-        data-testid="hamburgerIcon"
-      >
-        <button tabIndex={0} className="btn btn-ghost">
-          <HamburgerIcon />
-        </button>
-        <NavMenu isDropdown={true} />
-      </div>
+      {isLoggedIn && (
+        <div
+          className="dropdown w-2/12 order-1 lg:hidden flex justify-center"
+          data-testid="hamburgerIcon"
+        >
+          <button tabIndex={0} className="btn btn-ghost">
+            <HamburgerIcon />
+          </button>
+          <NavMenu isDropdown={true} />
+        </div>
+      )}
       <div
         className="hidden w-3/12 order-1 lg:flex lg:w-5/12 lg:order-2  justify-center items-center"
         data-testid="navMenu"

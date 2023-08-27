@@ -15,7 +15,7 @@ function SignInDropdown() {
     <div className="dropdown dropdown-end" data-testid="signInDropdown">
       <button
         tabIndex={0}
-        className="btn btn-primary btn-block btn-sm"
+        className="btn btn-primary btn-block md:btn-sm btn-xs"
         onClick={() => setIsOpen(!isOpen)}
       >
         <p className="text-xs md:text-base">Sign In</p>
