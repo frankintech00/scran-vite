@@ -1,3 +1,7 @@
+/**
+ * @file This is the main entry point for the application. It sets up React concurrent mode and renders the App component into the DOM.
+ */
+
 // Importing necessary libraries, components and styles
 import React from "react";
 import { createRoot } from "react-dom/client";
@@ -5,14 +9,22 @@ import "./index.css";
 import App from "./App";
 import "@smastrom/react-rating/style.css";
 
-// Getting the root DOM node where the app will be attached
+/**
+ * Gets the root DOM node where the React application will be attached.
+ * @type {HTMLElement}
+ */
 const rootContainer = document.getElementById("root");
 
-// Creating a root for the app in concurrent mode
+/**
+ * Creates a React root for Concurrent Mode rendering.
+ * @type {ReactRoot}
+ */
 const root = createRoot(rootContainer);
 
-// Rendering the app component into the root DOM node
-// Wrapping the app component with React.StrictMode for additional checks during development
+/**
+ * Renders the App component into the DOM.
+ * Wraps the App component with React.StrictMode for additional checks and warnings in development.
+ */
 root.render(
   <React.StrictMode>
     <App />

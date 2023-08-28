@@ -1,3 +1,7 @@
+/**
+ * @file Implements a ProtectedRoute component that wraps other components to enforce user authentication.
+ */
+
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";

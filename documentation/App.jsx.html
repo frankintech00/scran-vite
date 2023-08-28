@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Scran Documentation constants/difficulties.jsx</title>
+  <title>Scran Documentation App.jsx</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>constants/difficulties.jsx</h1>
+                    <h1>App.jsx</h1>
                 </header>
                 
 
@@ -90,11 +90,47 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * Array of recipe difficulties.
- *
- * @type {string[]}
+ * @file This is the main App component file. It sets up the application's routing and context providers.
  */
-export const DIFFICULTIES = ["Easy", "Medium", "Hard"];
+
+// Importing necessary libraries, components and context providers
+import React from "react";
+import { UserProvider } from "./contexts/UserContext";
+import AppRoutes from "./routes/routes";
+import { BrowserRouter } from "react-router-dom";
+import { Header } from "./components";
+import RecipeProvider from "./contexts/RecipeContext";
+
+/**
+ * The App component serves as the root component of the application.
+ * It wraps all the child components within BrowserRouter, UserProvider, and RecipeProvider
+ * to provide routing and context functionality across the application.
+ *
+ * @returns {JSX.Element} Returns the main application JSX markup, including the Header and AppRoutes components.
+ */
+function App() {
+  return (
+    // Using BrowserRouter to enable routing in the app
+    &lt;BrowserRouter>
+      {/* Using UserProvider to provide user context to all components within */}
+      &lt;UserProvider>
+        {/* Using RecipeProvider to provide recipe context to all components within */}
+        &lt;RecipeProvider>
+          {/* Rendering the Header component */}
+          &lt;Header />
+          {/* Applying global styles for the app */}
+          &lt;div className="pt-36 lg:pt-24 mx-5 mb-40 max-w-screen-xl xl:mx-auto">
+            {/* Rendering the Routes for the app*/}
+            &lt;AppRoutes />
+          &lt;/div>
+        &lt;/RecipeProvider>
+      &lt;/UserProvider>
+    &lt;/BrowserRouter>
+  );
+}
+
+// Exporting the App component to be used in other parts of the application
+export default App;
 </code></pre>
         </article>
     </section>

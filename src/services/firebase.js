@@ -1,4 +1,8 @@
 /**
+ * @file This file initializes Firebase services like Auth, Firestore, and Storage, and exports them for use throughout the application.
+ */
+
+/**
  * Imports necessary modules and components from Firebase and other libraries.
  */
 import { initializeApp } from "firebase/app";

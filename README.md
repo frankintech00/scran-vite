@@ -60,9 +60,19 @@ yarn build
 
 ---
 
+## Documentation
+
+Full documentation for the application is in the documentation folder.
+
+---
+
+---
+
 ## Deployment
 
 The app is deployed on Firebase Hosting.
+
+[Scran on Firebase Hosting](https://scran-vite-2b11a.web.app/)
 
 ---
 
