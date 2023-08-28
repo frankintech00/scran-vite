@@ -40,13 +40,19 @@ function NavMenu({ isDropdown }) {
                 </Link>
               </li>
               <li>
-                <a onClick={handleYourRecipesClick}>
+                <a
+                  onClick={handleYourRecipesClick}
+                  data-testid="yourRecipesLink"
+                >
                   <FaUtensils className="mr-0.5" />
                   Your Recipes
                 </a>
               </li>
               <li>
-                <a onClick={handleYourFavouritesClick}>
+                <a
+                  onClick={handleYourFavouritesClick}
+                  data-testid="yourFavouritesLink"
+                >
                   <FaHeart className="mr-0.5" />
                   Your Favourites
                 </a>

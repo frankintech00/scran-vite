@@ -46,4 +46,7 @@ export default defineConfig({
     globals: true,
     css: true,
   },
+  server: {
+    host: "127.0.0.1",
+  },
 });
