@@ -12,18 +12,13 @@
   "opts": {
     "encoding": "utf8",
     "destination": "documentation/",
-    "recurse": true,
-    "template": "./node_modules/better-docs"
+    "recurse": true
   },
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false,
     "default": {
       "outputSourceFiles": true
-    },
-    "better-docs": {
-      "name": "Scran | A Recipe App for the Web",
-      "title": "Scran Documentation"
     }
   }
 }
