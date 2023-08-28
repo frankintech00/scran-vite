@@ -66,8 +66,6 @@ Full documentation for the application is in the documentation folder.
 
 ---
 
----
-
 ## Deployment
 
 The app is deployed on Firebase Hosting.
