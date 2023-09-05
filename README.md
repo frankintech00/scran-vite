@@ -11,8 +11,10 @@ A cross-platform, user-friendly recipe sharing and management application develo
 
 **Live Demo:** [Scran on Firebase Hosting](https://scran-vite-2b11a.web.app/)
 
-user: user3@email.com
-password: password
+**Mock login credentials**
+
+**Email:** user3@email.com  
+**Password:** password
 
 ---
 
