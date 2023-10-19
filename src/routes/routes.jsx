@@ -1,10 +1,4 @@
-/**
- * @file Defines the routes for the application, using both public and protected routes.
- */
 
-/**
- * Imports React and necessary components from react-router-dom and custom components.
- */
 import React from "react";
 import { Route, Routes as Router } from "react-router-dom";
 import {
@@ -24,12 +18,7 @@ import {
 import ProtectedRoute from "./protectedRoutes";
 import { Loading } from "../components";
 
-/**
- * The AppRoutes function defines the routes for the application.
- * It uses the Routes component from react-router-dom to define both public and protected routes.
- *
- * @returns {JSX.Element} The Router component populated with the defined routes for the application.
- */
+
 function AppRoutes() {
   return (
     <Router>
@@ -80,5 +69,5 @@ function AppRoutes() {
   );
 }
 
-// Exporting the AppRoutes component for use in other parts of the application
+
 export default AppRoutes;

@@ -22,7 +22,6 @@ function CreateRecipePage() {
   const { createRecipe, imageUpload, recipe, setRecipe } =
     useContext(RecipeContext);
   const { isLoggedIn } = useContext(UserContext);
-
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
 
