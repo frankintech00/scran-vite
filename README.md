@@ -1,6 +1,13 @@
 # Scran: Recipe Sharing and Management Application
 
-A cross-platform, user-friendly recipe sharing and management application. The project incorporates Vite, React, and TailwindCSS v3.x, and is hosted on Firebase.
+Scran Vite is a web application built using Vite, React, and Firebase. The project is structured with a focus on modularity and scalability.
+
+## Features
+
+- **User Authentication**: The application integrates Firebase for user authentication, ensuring secure sign-in and sign-up processes.
+- **Recipe Management**: Users can view, add, and manage recipes. The `RecipeContext` provides centralized state management for recipes.
+- **User Context**: The `UserContext` provides centralized state management for user-related data and operations.
+- **Routing**: The application uses a dedicated routing system to manage different views and pages.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
