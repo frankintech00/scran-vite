@@ -4,7 +4,7 @@ A cross-platform, user-friendly recipe sharing and management application. The p
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-**Author:** Francis Kelly  
+**Author:** Frank Kelly
 
 **Live Demo:** [Scran on Firebase Hosting](https://scran-vite-2b11a.web.app/)
 
