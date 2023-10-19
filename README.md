@@ -1,13 +1,10 @@
 # Scran: Recipe Sharing and Management Application
 
-A cross-platform, user-friendly recipe sharing and management application developed as part of the MSc Software Development program at the University of Strathclyde. The project incorporates Vite, React, and TailwindCSS v3.x, and is hosted on Firebase.
+A cross-platform, user-friendly recipe sharing and management application. The project incorporates Vite, React, and TailwindCSS v3.x, and is hosted on Firebase.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 **Author:** Francis Kelly  
-**University:** University of Strathclyde  
-**Course:** MSc Software Development  
-**Final Dissertation Project**
 
 **Live Demo:** [Scran on Firebase Hosting](https://scran-vite-2b11a.web.app/)
 

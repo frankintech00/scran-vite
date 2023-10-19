@@ -12,7 +12,7 @@ export default defineConfig({
         name: "Scran | A Recipe App for the Web",
         short_name: "Scran",
         description:
-          "Scran is a web application that allows users to search for recipes, add their own recipes, and create a shopping list based on the recipes they have selected. It was created as part of a Masters project for the MSc in Software Development at the University of Starthclyde.",
+          "Scran is a web application that allows users to search for recipes, add their own recipes, and create a shopping list based on the recipes they have selected.",
         icons: [
           {
             src: "/assets/android-chrome-192x192.png",
