@@ -104,6 +104,9 @@ function SignIn() {
                 Create an Account
               </Link>
             </p>
+            <p className=" my-2 text-right">Mock Login: </p>
+            <p className="text-right">Email - user3@user.com </p>
+            <p className="text-right">Password - password</p>
           </form>
         </div>
       )}
