@@ -1,6 +1,6 @@
 # Scran: Recipe Sharing and Management Application
 
-Scran Vite is a web application built using Vite, React, and Firebase. The project is structured with a focus on modularity and scalability.
+Scran is a web application built using Vite, React, and Firebase. The project is structured with a focus on modularity and scalability.
 
 ## Features
 
